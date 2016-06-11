@@ -1,0 +1,14 @@
+% This file defines the Metafont font mf/K.mf.tmp.
+% {limn output Aug 21 02:48:43 1994 from imageto output Aug 21 02:48:16 1994}
+% Generated Thu Mar 27 23:06:37 1997.
+% This font is in the public domain.
+true_design_size# := 14.000pt#;
+input Hibzrstp;
+font_coding_scheme := "Egyptian font A";
+font_identifier := "mf/K.mf.tmp";
+input HieroFonteK_font.mf;
+
+def mamodif= identity  reflectedabout((w/2,h), (w/2,0)); enddef;
+def depart= 128; enddef;
+input HieroFonteK_font.mf;
+bye.

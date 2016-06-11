@@ -1,0 +1,27 @@
+% Useful TeX macros for Egypto and Hiero
+
+\@ifundefined{EGYPT@}{\relax}{\endinput}
+
+
+\def\EGYPT@{defini}
+%macro utile: \echange{token a remplacer}{texte de remplacement}{texte
+%              						a traiter}
+%
+%	On peut l'utiliser pour:
+% -du texte pur
+% -des macros
+
+% A useful macro: * you have a list of entry with a character between
+% them, like this: {A text-Another Text-Yet another one}
+% And you want to apply a function to every part of it,
+% (or  simply change the  character)
+% if you macro has the form : \def\mymacro#1\relax{....},
+% this one is for you.
+
+\def\echange#1#2#3{%
+\def\echangeaux##1##2{\ifx##2\end\def\next{##1}%
+\else\ifx##2#1\relax\def\next{\echangeaux{##1#2}}\else\def\next{\echangeaux{##1##2}}\fi\fi%
+\next}%
+\echangeaux#3\relax\end}
+
+

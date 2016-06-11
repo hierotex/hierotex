@@ -1,0 +1,14 @@
+% This file defines the Metafont font mf/N.mf.tmp.
+% {limn output Jul 27 11:37:08 1993 from imageto output Jul 20 14:47:07 1993}
+% Generated Thu Mar 27 23:07:27 1997.
+% This font is in the public domain.
+true_design_size# := 14.000pt#;
+input Hibzrstp;
+font_coding_scheme := "Egyptian font N";
+font_identifier := "mf/N.mf.tmp";
+input HieroFonteN_font.mf;
+
+def mamodif= identity  reflectedabout((w/2,h), (w/2,0)); enddef;
+def depart= 128; enddef;
+input HieroFonteN_font.mf;
+bye.
