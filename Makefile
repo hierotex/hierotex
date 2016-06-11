@@ -18,48 +18,48 @@ default :
 	@echo "		  veryveryclean -> everything that can be built with the"
 	@echo "			right tools"
 
+TAR=tar -cvf
+TARZ=tar -zcvf
 
-TAR=tar -X Exclude -cvf
-TARZ=tar -X Exclude -zcvf
-save :  ../egyptoS.tar
+publish : HieroTeX-$(EGYPTO_USER_VERSION).tgz HieroType1-$(EGYPTO_USER_VERSION).tgz
 
-publish : ../HieroTeX-$(EGYPTO_USER_VERSION).tgz ../HieroType1-$(EGYPTO_USER_VERSION).tgz
-
-../HieroType1-$(EGYPTO_USER_VERSION).tgz : FORCE distclean
-	$(TARZ) $@ -h -C .. \
+HieroType1-$(EGYPTO_USER_VERSION).tgz : FORCE distclean
+	$(TARZ) $@ \
 		texmf/fonts/type1 \
-		texmf/dvips\
+		texmf/dvips \
 		texmf/pdftex
 
-../HieroTeX-$(EGYPTO_USER_VERSION).tgz : FORCE distclean
-	$(TARZ) $@  -C ..  HieroTeX/Seshnesu  HieroTeX/texmf \
-		 HieroTeX/LIZEZMOI  HieroTeX/Licence\
-		 HieroTeX/README_FIRST\
-		 HieroTeX/Makefile\
-		 HieroTeX/variable.mk
-
+HieroTeX-$(EGYPTO_USER_VERSION).tgz : FORCE distclean
+	$(TARZ) $@ --transform 's,^,/HieroTeX/,' \
+	   Seshnesu \
+	   texmf/tex \
+	   texmf/doc \
+	   texmf/fonts/source \
+		 LIZEZMOI \
+		 Licence \
+		 README_FIRST \
+		 Makefile \
+		 variable.mk
 
 distclean: FORCE clean
 	-(cd Seshnesu; $(MAKE) distclean)	
-	-(cd texmf/doc/latex/hierotex; $(MAKE) clean)
+	#-(cd texmf/doc/latex/hierotex; $(MAKE) clean)
 
 clean : FORCE
 	-$(RM) -f *~ "#*#"
 	-(cd Seshnesu; $(MAKE) clean)	
-	-(cd texmf/doc/latex/hierotex; $(MAKE) clean)
+#	-(cd texmf/doc/latex/hierotex; $(MAKE) clean)
 
 veryclean : clean
 	-(cd Seshnesu; $(MAKE) veryclean)	
-	-(cd texmf/doc/latex/hierotex; $(MAKE) veryclean)
+#	-(cd texmf/doc/latex/hierotex; $(MAKE) veryclean)
 
 veryveryclean : clean
 	-(cd Seshnesu; $(MAKE) veryclean)	
-	-(cd texmf/doc/latex/hierotex; $(MAKE) veryveryclean)
-
+#	-(cd texmf/doc/latex/hierotex; $(MAKE) veryveryclean)
 
 ## Makefile for a possible tetex installation
-
-tetex-install: FORCE
+install: FORCE
 	(cd Seshnesu; make sesh)
 	-$(INSTALL) -d $(BINDIR)
 	-$(INSTALL) -d $(TEXSTYLE)
