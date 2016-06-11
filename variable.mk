@@ -20,12 +20,12 @@ SESHDIR=/usr/local/lib/sesh
 
 # If you want a user installation of hierotex, without root access,
 # the following values may help you. Uncomment them if needed.
-BINDIR=$(HOME)/hierotex/bin
-TEXROOT=`/usr/bin/kpsewhich -var-value=TEXMFHOME`
-TEXSTYLE=$(TEXROOT)/tex/latex/hierotex
-FONTDIR=$(TEXROOT)/fonts/source/public/hierotex
-TEXDOC=$(TEXROOT)/doc/latex/hierotex
-SESHDIR=$(HOME)/hierotex/lib/sesh
+#BINDIR=$(HOME)/hierotex/bin
+#TEXROOT=`/usr/bin/kpsewhich -var-value=TEXMFHOME`
+#TEXSTYLE=$(TEXROOT)/tex/latex/hierotex
+#FONTDIR=$(TEXROOT)/fonts/source/public/hierotex
+#TEXDOC=$(TEXROOT)/doc/latex/hierotex
+#SESHDIR=$(HOME)/hierotex/lib/sesh
 
 # Programs used in the installation process
 INSTALL=/usr/bin/install
