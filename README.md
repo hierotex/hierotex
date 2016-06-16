@@ -1,5 +1,5 @@
 HieroTeX
---------
+========
 
 This is a copy of the HieroTeX LaTeX package, for typesetting hieroglyhs.
 
@@ -12,7 +12,7 @@ The original webpage is longer available online, but is accessible via the Inter
 You are welcome to file a pull request for any enhancements or updates.
 
 Changes
-=======
+-------
 
 - 1/12/03 new version of HieroTeX. It fixes mainly installation problems. A proper TDS (Tex directory structure) is provided for the sake of TeX distributors.
 - 4/11/02 a new version of HieroTeX. Some bugs removed, more documentation on installing type 1 fonts. Postscript Type 1 fonts available [here](https://web.archive.org/web/20120930234009/http://webperso.iut.univ-paris8.fr/~rosmord/archives/HieroType1-3.1.4.tgz)
