@@ -69,7 +69,6 @@ veryclean : clean
 # systems without bison and flex
 
 distclean : seshl.c sesh.c sesh.h seshSource.h clean 
-	-/bin/rm -f sesh
 	-makedepend --  # suppress the informations added by makedepend.
 
 veryveryclean : veryclean
