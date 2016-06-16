@@ -57,5 +57,6 @@ LATEX=pdflatex
 
 # VERSIONS NUMBERS : You don't want to modify them (except in case of patches)
 EGYPTO_USER_VERSION=3.5.1
+HIEROTYPE_VERSION=3.1.4
 SESH_VERSION=2.9.6
 

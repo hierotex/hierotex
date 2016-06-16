@@ -9,7 +9,7 @@ SRCSTY=texmf/tex/latex/hierotex
 default : 
 	@echo " General Sesh installation "
 	@echo
-	@echo "make tetex-install tries to install everything"
+	@echo "make install tries to install everything"
 	@echo "you should edit variable.mk first"
 	@echo
 	@echo "other targets : save publish"
@@ -21,9 +21,9 @@ default :
 TAR=tar -cvf
 TARZ=tar -zcvf
 
-publish : HieroTeX-$(EGYPTO_USER_VERSION).tgz HieroType1-$(EGYPTO_USER_VERSION).tgz
+publish : HieroTeX-$(EGYPTO_USER_VERSION).tgz HieroType1-$(HIEROTYPE_VERSION).tgz
 
-HieroType1-$(EGYPTO_USER_VERSION).tgz : FORCE distclean
+HieroType1-$(HIEROTYPE_VERSION).tgz : FORCE distclean
 	$(TARZ) $@ \
 		texmf/fonts/type1 \
 		texmf/dvips \
