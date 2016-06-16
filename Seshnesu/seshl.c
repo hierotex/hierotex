@@ -24,12 +24,6 @@
 #include <stdlib.h>
 #ifndef _WIN32
 #include <unistd.h>
-#else
-#ifndef YY_ALWAYS_INTERACTIVE
-#ifndef YY_NEVER_INTERACTIVE
-extern int isatty YY_PROTO(( int ));
-#endif
-#endif
 #endif
 
 /* Use prototypes in function declarations. */
@@ -69,6 +63,7 @@ extern int isatty YY_PROTO(( int ));
 #else
 #define YY_PROTO(proto) ()
 #endif
+
 
 /* Returned upon end-of-file. */
 #define YY_NULL 0
@@ -927,6 +922,7 @@ char *yytext;
 
 #define G(x) {yylval=find_sign(x); return HIEROGLYPHE;}
 #define Commence(x) BEGIN(x); etat=x;
+#define INITIAL0 0
 
 PRIVATE void computeShading(Shading *h);
 
@@ -943,7 +939,7 @@ int dieze=0;
 int couleur=0;
 int signe_lu= FALSE;
 int signe_deja_lu= FALSE;
-int etat= INITIAL;
+int etat= INITIAL0;
 extern int numligne;
 void TLIGNE();
 
@@ -1126,10 +1122,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 64 "seshl.l"
+#line 65 "seshl.l"
 
  	switch(etat)
-	{ case INITIAL: BEGIN(INITIAL);break;
+	{ case INITIAL0: BEGIN(INITIAL0);break;
 	  case HieroText: BEGIN(HieroText);break;
 	  case InSignDecl: fprintf(stderr, "aaa\n"); BEGIN(InSignDecl); ; break;
 	}
@@ -1233,19 +1229,19 @@ do_action:	/* This label is used only to access EOF actions. */
 	{ /* beginning of action switch */
 case 1:
 YY_RULE_SETUP
-#line 79 "seshl.l"
+#line 80 "seshl.l"
 {ECHO; return TEXTE;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 80 "seshl.l"
+#line 81 "seshl.l"
 {ECHO; numligne++; return TEXTE;}
 	YY_BREAK
 case 3:
-#line 82 "seshl.l"
+#line 83 "seshl.l"
 case 4:
 YY_RULE_SETUP
-#line 82 "seshl.l"
+#line 83 "seshl.l"
 { TLIGNE();
 	  Commence(HieroText); 
                                           signe_lu= FALSE;
@@ -1253,12 +1249,12 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 87 "seshl.l"
+#line 88 "seshl.l"
 BEGIN(DEFINE1);
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 88 "seshl.l"
+#line 89 "seshl.l"
 { char *pt;
 	char *s= strdup(yytext);
 	TLIGNE();
@@ -1269,17 +1265,17 @@ YY_RULE_SETUP
 	Commence(HieroText);}
 	YY_BREAK
 case 7:
-#line 98 "seshl.l"
+#line 99 "seshl.l"
 case 8:
 YY_RULE_SETUP
-#line 98 "seshl.l"
+#line 99 "seshl.l"
 { TLIGNE(); Commence(INITIAL); return FINHIEROGS;}
 	YY_BREAK
 case 9:
-#line 101 "seshl.l"
+#line 102 "seshl.l"
 case 10:
 YY_RULE_SETUP
-#line 101 "seshl.l"
+#line 102 "seshl.l"
 {yylval.une_donnee.texte= les_ligatures[0];
  /*  mieux vaudrait des noms symboliques */
 	  signe_lu= TRUE;
@@ -1288,52 +1284,52 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 107 "seshl.l"
+#line 108 "seshl.l"
 return POINTROUGE;
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 108 "seshl.l"
+#line 109 "seshl.l"
 return POINTNOIR;
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 110 "seshl.l"
+#line 111 "seshl.l"
 {yylval.une_donnee.texte= les_ligatures[1];
 	 signe_lu= TRUE;
 	 return LIGATURE;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 114 "seshl.l"
+#line 115 "seshl.l"
 {yylval.une_donnee.texte= les_ligatures[2];
                                           signe_lu= TRUE;
 	 return LIGATURE;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 117 "seshl.l"
+#line 118 "seshl.l"
 {yylval.une_donnee.texte= les_ligatures[3];
                                           signe_lu= TRUE;
 	 return LIGATURE;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 120 "seshl.l"
+#line 121 "seshl.l"
 {yylval.une_donnee.texte= les_ligatures[4];
                                          signe_lu= TRUE;
 	 return LIGATURE;} 
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 123 "seshl.l"
+#line 124 "seshl.l"
 {yylval.une_donnee.texte= les_ligatures[5];
               	 signe_lu= TRUE;
 	 return LIGATURE;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 127 "seshl.l"
+#line 128 "seshl.l"
 { yylval.une_donnee =find_sign("aAv",0); 
 	  if (!signe_trouve) {REJECT } 
 	  else { signe_lu= TRUE; return HIEROGLYPHE;}
@@ -1341,17 +1337,17 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 132 "seshl.l"
+#line 133 "seshl.l"
 { yylval.une_donnee =find_sign("Y1v",0); 
 	  if (!signe_trouve) {REJECT } 
 	  else { signe_lu= TRUE; return HIEROGLYPHE;}
 	}
 	YY_BREAK
 case 20:
-#line 138 "seshl.l"
+#line 139 "seshl.l"
 case 21:
 YY_RULE_SETUP
-#line 138 "seshl.l"
+#line 139 "seshl.l"
 { yylval.une_donnee =find_sign(yytext,0); 
 	  if (!signe_trouve) {REJECT } 
 	  else { signe_lu= TRUE; return HIEROGLYPHE;}
@@ -1359,42 +1355,42 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 143 "seshl.l"
+#line 144 "seshl.l"
 {traite(yytext+1);}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 144 "seshl.l"
+#line 145 "seshl.l"
 {Commence(InSignDecl); return SIGNDECL;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 145 "seshl.l"
+#line 146 "seshl.l"
 {yylval.un_entier= atoi(yytext); fprintf(stderr, "\nHERE\n");return INTEGER;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 146 "seshl.l"
+#line 147 "seshl.l"
 {yylval.chaine = strdup(yytext); fprintf(stderr, "\nHERE1\n");return STRING;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 147 "seshl.l"
+#line 148 "seshl.l"
 {Commence(INITIAL); return ENDDECL;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 148 "seshl.l"
+#line 149 "seshl.l"
 {fprintf(stderr, "espace\n");} 
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 149 "seshl.l"
+#line 150 "seshl.l"
 {fprintf(stderr, "char\n");}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 150 "seshl.l"
+#line 151 "seshl.l"
 { int i;
 	  for (i=4; yytext[i] && (yytext[i] == ' ' || yytext[i]== '\t');
 	       i++);
@@ -1408,20 +1404,20 @@ YY_RULE_SETUP
 	}
 	YY_BREAK
 case 30:
-#line 162 "seshl.l"
+#line 163 "seshl.l"
 case 31:
 YY_RULE_SETUP
-#line 162 "seshl.l"
+#line 163 "seshl.l"
 { 
                                           yylval.un_separateur= S_intersignes; 
                                           return SEPARATEUR;
                                         }
 	YY_BREAK
 case 32:
-#line 167 "seshl.l"
+#line 168 "seshl.l"
 case 33:
 YY_RULE_SETUP
-#line 167 "seshl.l"
+#line 168 "seshl.l"
 {
                                           TLIGNE(); 
                                           yylval.un_separateur= S_espace; 
@@ -1430,7 +1426,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 172 "seshl.l"
+#line 173 "seshl.l"
 {
                                          numligne++;
                                          yylval.un_separateur= S_espace; 
@@ -1438,10 +1434,10 @@ YY_RULE_SETUP
                                         }
 	YY_BREAK
 case 35:
-#line 179 "seshl.l"
+#line 180 "seshl.l"
 case 36:
 YY_RULE_SETUP
-#line 179 "seshl.l"
+#line 180 "seshl.l"
 {
                                           TLIGNE(); 
                                           yylval.un_separateur= S_finligne;
@@ -1449,10 +1445,10 @@ YY_RULE_SETUP
                                         }
 	YY_BREAK
 case 37:
-#line 186 "seshl.l"
+#line 187 "seshl.l"
 case 38:
 YY_RULE_SETUP
-#line 186 "seshl.l"
+#line 187 "seshl.l"
 { 
                                           TLIGNE();
                                           yylval.un_separateur= S_finpage;
@@ -1461,94 +1457,94 @@ YY_RULE_SETUP
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 191 "seshl.l"
+#line 192 "seshl.l"
 {TLIGNE(); return '*';}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 192 "seshl.l"
+#line 193 "seshl.l"
 {TLIGNE(); {return ':'; }}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 193 "seshl.l"
+#line 194 "seshl.l"
 BEGIN(TEXTEIMBR);
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 194 "seshl.l"
+#line 195 "seshl.l"
 return DROITEGAUCHE;
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 195 "seshl.l"
+#line 196 "seshl.l"
 return GAUCHEDROITE;
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 196 "seshl.l"
+#line 197 "seshl.l"
 return LEFTRIGHT;
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 197 "seshl.l"
+#line 198 "seshl.l"
 {TLIGNE(); return RIGHTLEFT;}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 199 "seshl.l"
+#line 200 "seshl.l"
 { yylval.une_donnee.texte= strdup(yytext+1);
 	  return TEXTESUPER;
 	}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 202 "seshl.l"
+#line 203 "seshl.l"
 return KERNING;
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 203 "seshl.l"
+#line 204 "seshl.l"
 return POINT;
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 204 "seshl.l"
+#line 205 "seshl.l"
 return POINTPOINT;
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 205 "seshl.l"
+#line 206 "seshl.l"
 return SMALLSPACE;
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 206 "seshl.l"
+#line 207 "seshl.l"
 {traite(yytext); /* les macros-definitions !!! */}
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 207 "seshl.l"
+#line 208 "seshl.l"
 return HACHUREG;
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 208 "seshl.l"
+#line 209 "seshl.l"
 return HACHUREH;
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 209 "seshl.l"
+#line 210 "seshl.l"
 return HACHUREV;
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 210 "seshl.l"
+#line 211 "seshl.l"
 return HACHURET;
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 211 "seshl.l"
+#line 212 "seshl.l"
 {
   	  computeShading(&(yylval.shading));
 	  return SHADING;
@@ -1556,235 +1552,235 @@ YY_RULE_SETUP
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 215 "seshl.l"
+#line 216 "seshl.l"
 return HACHUREGA;
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 216 "seshl.l"
+#line 217 "seshl.l"
 return HACHUREHA ;
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 217 "seshl.l"
+#line 218 "seshl.l"
 return HACHUREVA;
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 218 "seshl.l"
+#line 219 "seshl.l"
 return HACHURETA;
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 219 "seshl.l"
+#line 220 "seshl.l"
 return HAPLOGRAPHIE;
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 220 "seshl.l"
+#line 221 "seshl.l"
 return LACUNE;
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 221 "seshl.l"
+#line 222 "seshl.l"
 return  LIGNELACUNE;
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 222 "seshl.l"
+#line 223 "seshl.l"
 {TLIGNE(); return DSTSUPERFETATOIRE;}
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 223 "seshl.l"
+#line 224 "seshl.l"
 {TLIGNE(); return FSTSUPERFETATOIRE;}
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 224 "seshl.l"
+#line 225 "seshl.l"
 {TLIGNE(); return DSTEFFACE;}
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 225 "seshl.l"
+#line 226 "seshl.l"
 {TLIGNE(); return FSTEFFACE;}
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 226 "seshl.l"
+#line 227 "seshl.l"
 {TLIGNE(); return  DSTDISPARU ;}
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 227 "seshl.l"
+#line 228 "seshl.l"
 {TLIGNE(); return  FSTDISPARU ;}
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 228 "seshl.l"
+#line 229 "seshl.l"
 {TLIGNE(); return  DSTRAJOUTSCRIBE;}
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 229 "seshl.l"
+#line 230 "seshl.l"
 {TLIGNE(); return  FSTRAJOUTSCRIBE;}
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 230 "seshl.l"
+#line 231 "seshl.l"
 {TLIGNE(); return  DSTRAJOUTAUTEUR;}
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 231 "seshl.l"
+#line 232 "seshl.l"
 {TLIGNE(); return  FSTRAJOUTAUTEUR;}
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
-#line 232 "seshl.l"
+#line 233 "seshl.l"
 {TLIGNE(); yylval.un_typegroupe= S_carto; return DEBUTCONSTRUCTION;}
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 233 "seshl.l"
+#line 234 "seshl.l"
 {TLIGNE(); yylval.un_typegroupe= S_debcarto; return DEBUTCONSTRUCTION;}
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
-#line 234 "seshl.l"
+#line 235 "seshl.l"
 {TLIGNE(); yylval.un_typegroupe= S_milcarto; return DEBUTCONSTRUCTION;}
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 235 "seshl.l"
+#line 236 "seshl.l"
 {TLIGNE(); yylval.un_typegroupe= S_fincarto; return DEBUTCONSTRUCTION;}
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 236 "seshl.l"
+#line 237 "seshl.l"
 {TLIGNE(); return CARTF;}
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 237 "seshl.l"
+#line 238 "seshl.l"
 {TLIGNE(); yylval.un_typegroupe= S_serekh; return DEBUTCONSTRUCTION;}
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 238 "seshl.l"
+#line 239 "seshl.l"
 {TLIGNE(); yylval.un_typegroupe= S_enceinte; return DEBUTCONSTRUCTION;}
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
-#line 239 "seshl.l"
+#line 240 "seshl.l"
 {TLIGNE(); yylval.un_typegroupe= S_chateau; return DEBUTCONSTRUCTION;}
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 240 "seshl.l"
+#line 241 "seshl.l"
 {TLIGNE(); yylval.un_typegroupe= S_debserekh; return DEBUTCONSTRUCTION;}
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
-#line 241 "seshl.l"
+#line 242 "seshl.l"
 {TLIGNE(); yylval.un_typegroupe= S_milserekh; return DEBUTCONSTRUCTION;}
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
-#line 242 "seshl.l"
+#line 243 "seshl.l"
 {TLIGNE(); yylval.un_typegroupe= S_finserekh; return DEBUTCONSTRUCTION;}
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 243 "seshl.l"
+#line 244 "seshl.l"
 {TLIGNE(); yylval.un_typegroupe= S_debenceinte; return DEBUTCONSTRUCTION;}
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 244 "seshl.l"
+#line 245 "seshl.l"
 {TLIGNE(); yylval.un_typegroupe= S_milenceinte; return DEBUTCONSTRUCTION;}
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 245 "seshl.l"
+#line 246 "seshl.l"
 {TLIGNE(); yylval.un_typegroupe= S_finenceinte; return DEBUTCONSTRUCTION;}
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
-#line 246 "seshl.l"
+#line 247 "seshl.l"
 {TLIGNE(); yylval.un_typegroupe= S_debchateau; return DEBUTCONSTRUCTION;}
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 247 "seshl.l"
+#line 248 "seshl.l"
 {TLIGNE(); yylval.un_typegroupe= S_milchateau; return DEBUTCONSTRUCTION;}
 	YY_BREAK
 case 90:
 YY_RULE_SETUP
-#line 248 "seshl.l"
+#line 249 "seshl.l"
 {TLIGNE(); yylval.un_typegroupe= S_finchateau; return DEBUTCONSTRUCTION;}
 	YY_BREAK
 case 91:
-#line 250 "seshl.l"
-case 92:
 #line 251 "seshl.l"
+case 92:
+#line 252 "seshl.l"
 case 93:
 YY_RULE_SETUP
-#line 251 "seshl.l"
+#line 252 "seshl.l"
 {TLIGNE(); dieze=1-dieze; /* ne compliquons pas la grammaire */
 	  if (dieze==1) return DIEZE0;
 	  else return DIEZE1;}
 	YY_BREAK
 case 94:
 YY_RULE_SETUP
-#line 254 "seshl.l"
+#line 255 "seshl.l"
 {TLIGNE(); if (signe_lu) REJECT; dieze=1-dieze; return DIEZE0;}
 	YY_BREAK
 case 95:
 YY_RULE_SETUP
-#line 255 "seshl.l"
+#line 256 "seshl.l"
 {TLIGNE(); dieze=1-dieze; return DIEZE0;}
 	YY_BREAK
 case 96:
 YY_RULE_SETUP
-#line 256 "seshl.l"
+#line 257 "seshl.l"
 {TLIGNE(); dieze=1-dieze; return DIEZE1;}
 	YY_BREAK
 case 97:
 YY_RULE_SETUP
-#line 257 "seshl.l"
+#line 258 "seshl.l"
 {if (signe_lu) return OVERWRITE; else REJECT;}
 	YY_BREAK
 case 98:
 YY_RULE_SETUP
-#line 258 "seshl.l"
+#line 259 "seshl.l"
 {if (signe_lu) return OVERWRITE; else REJECT;}
 	YY_BREAK
 case 99:
 YY_RULE_SETUP
-#line 260 "seshl.l"
+#line 261 "seshl.l"
 {TLIGNE(); couleur=1-couleur; /* ne compliquons pas la grammaire */
 	  if (couleur==1) return COULEUR0;
 	  else return COULEUR1;}
 	YY_BREAK
 case 100:
 YY_RULE_SETUP
-#line 263 "seshl.l"
+#line 264 "seshl.l"
 {TLIGNE(); couleur=1; return COULEUR1;}
 	YY_BREAK
 case 101:
 YY_RULE_SETUP
-#line 264 "seshl.l"
+#line 265 "seshl.l"
 {TLIGNE(); couleur=0; return COULEUR0;}
 	YY_BREAK
 case 102:
 YY_RULE_SETUP
-#line 266 "seshl.l"
+#line 267 "seshl.l"
 {return REVERT;}
 	YY_BREAK
 case 103:
 YY_RULE_SETUP
-#line 267 "seshl.l"
+#line 268 "seshl.l"
 {
                                           yylval.un_entier= atoi(yytext+2); 
                                           return SIZE;  
@@ -1792,12 +1788,12 @@ YY_RULE_SETUP
 	YY_BREAK
 case 104:
 YY_RULE_SETUP
-#line 271 "seshl.l"
+#line 272 "seshl.l"
 
 	YY_BREAK
 case 105:
 YY_RULE_SETUP
-#line 272 "seshl.l"
+#line 273 "seshl.l"
 {
                                           yylval.un_entier= atoi(yytext+2); 
                                           return ROTATION;  
@@ -1805,12 +1801,12 @@ YY_RULE_SETUP
 	YY_BREAK
 case 106:
 YY_RULE_SETUP
-#line 276 "seshl.l"
+#line 277 "seshl.l"
 
 	YY_BREAK
 case 107:
 YY_RULE_SETUP
-#line 277 "seshl.l"
+#line 278 "seshl.l"
 {
 	  yylval.un_entier= 360-atoi(yytext+2)* 90; 
                                           return ROTATION;  
@@ -1818,47 +1814,47 @@ YY_RULE_SETUP
 	YY_BREAK
 case 108:
 YY_RULE_SETUP
-#line 281 "seshl.l"
+#line 282 "seshl.l"
 {TLIGNE(); return '(';}
 	YY_BREAK
 case 109:
 YY_RULE_SETUP
-#line 282 "seshl.l"
+#line 283 "seshl.l"
 {TLIGNE(); return ')';}
 	YY_BREAK
 case 110:
 YY_RULE_SETUP
-#line 284 "seshl.l"
+#line 285 "seshl.l"
 
 	YY_BREAK
 case 111:
 YY_RULE_SETUP
-#line 285 "seshl.l"
+#line 286 "seshl.l"
 
 	YY_BREAK
 case 112:
 YY_RULE_SETUP
-#line 286 "seshl.l"
+#line 287 "seshl.l"
 
 	YY_BREAK
 case 113:
 YY_RULE_SETUP
-#line 287 "seshl.l"
+#line 288 "seshl.l"
 {TLIGNE(); BEGIN(COMMENTAIRE);}
 	YY_BREAK
 case 114:
 YY_RULE_SETUP
-#line 288 "seshl.l"
+#line 289 "seshl.l"
 ;
 	YY_BREAK
 case 115:
 YY_RULE_SETUP
-#line 289 "seshl.l"
+#line 290 "seshl.l"
 return yytext[0];
 	YY_BREAK
 case 116:
 YY_RULE_SETUP
-#line 291 "seshl.l"
+#line 292 "seshl.l"
 { yylval.une_donnee.texte= strdup(yytext);
 	  yylval.une_donnee.texte[strlen(yylval.une_donnee.texte)-2]=0;
 	  return ROMAIN;
@@ -1866,22 +1862,22 @@ YY_RULE_SETUP
 	YY_BREAK
 case 117:
 YY_RULE_SETUP
-#line 295 "seshl.l"
+#line 296 "seshl.l"
 {TLIGNE(); yymore(); }
 	YY_BREAK
 case 118:
 YY_RULE_SETUP
-#line 297 "seshl.l"
+#line 298 "seshl.l"
 {TLIGNE();}
 	YY_BREAK
 case 119:
 YY_RULE_SETUP
-#line 298 "seshl.l"
+#line 299 "seshl.l"
 {TLIGNE(); BEGIN(HieroText);}
 	YY_BREAK
 case 120:
 YY_RULE_SETUP
-#line 300 "seshl.l"
+#line 301 "seshl.l"
 ECHO;
 	YY_BREAK
 			case YY_STATE_EOF(INITIAL):
@@ -2773,7 +2769,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 300 "seshl.l"
+#line 301 "seshl.l"
 
 
 void traite(texte)

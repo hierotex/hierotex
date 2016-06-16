@@ -1,10 +1,8 @@
-
 ## ALL THAT CAN CHANGE IS HERE, in variable.mk (ONLY TOUCH THE UPPER FILE !!)
 
 include ../variable.mk
 
 SRCS=Version.c fonctions.c fonctions.h general.h hache.h mynew.h quadra.c quadra.h sesh.y seshSource.h seshl.l flexaux.c
-
 
 # End of things you can change.
 CFLAGS=-g
@@ -61,8 +59,6 @@ configure:
 	for i in $$PATHS; do if [ -f $$i/$(YACC) ]; then ouyacc=trouve ; fi;done;\
 	if [ $${ouyacc:-rien} != rien  ] ; then $(DELFILE) sesh.c sesh.h; fi
 
-
-
 clean: FORCE
 	-/bin/rm -f *~ "#*#"
 
@@ -78,20 +74,19 @@ distclean : seshl.c sesh.c sesh.h seshSource.h clean
 
 veryveryclean : veryclean
 	-/bin/rm -f sesh
-	-/bin/rm -f  seshl.c
+	-/bin/rm -f seshl.c
 	-/bin/rm -f sesh.c
 	-/bin/rm -f sesh.h
 	-/bin/rm -f seshSource.h
 
-
 cleanyacclex : cleanyacc cleanlex
 
 cleanyacc :
-	-/bin/rm sesh.c
-	-/bin/rm sesh.h
+	-/bin/rm -f sesh.c
+	-/bin/rm -f sesh.h
 
 cleanlex :
-	-/bin/rm seshl.c
+	-/bin/rm -f seshl.c
 
 depend: 
 	makedepend -- $(CFLAGS) -- $(SRCS)

@@ -14,6 +14,7 @@
 
 #define G(x) {yylval=find_sign(x); return HIEROGLYPHE;}
 #define Commence(x) BEGIN(x); etat=x;
+#define INITIAL0 0
 
 PRIVATE void computeShading(Shading *h);
 
@@ -30,7 +31,7 @@ int dieze=0;
 int couleur=0;
 int signe_lu= FALSE;
 int signe_deja_lu= FALSE;
-int etat= INITIAL;
+int etat= INITIAL0;
 extern int numligne;
 void TLIGNE();
 
@@ -63,7 +64,7 @@ ESPSH	([ _\t\n\015=-]+)
 
 %%
  	switch(etat)
-	{ case INITIAL: BEGIN(INITIAL);break;
+	{ case INITIAL0: BEGIN(INITIAL0);break;
 	  case HieroText: BEGIN(HieroText);break;
 	  case InSignDecl: fprintf(stderr, "aaa\n"); BEGIN(InSignDecl); ; break;
 	}
