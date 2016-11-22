@@ -1,3 +1,4 @@
+---
 dist: trusty
 sudo: required
 
@@ -10,4 +11,4 @@ script:
   - (cd Seshnesu/ && make veryveryclean && make sesh)
   - make publish
   - sudo make install
-
+...
