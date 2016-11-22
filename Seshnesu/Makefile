@@ -5,7 +5,7 @@ include ../variable.mk
 SRCS=Version.c fonctions.c fonctions.h general.h hache.h mynew.h quadra.c quadra.h sesh.y seshSource.h seshl.l flexaux.c
 
 # End of things you can change.
-CFLAGS=-g
+CFLAGS=-g -Wall -Wextra
 
 WINCPPFLAGS=-DSESH_VERSION=\"$(SESH_VERSION)\"
 
