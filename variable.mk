@@ -15,8 +15,8 @@ TEXROOT=/usr/share/texmf
 TEXSTYLE=$(TEXROOT)/tex/latex/HieroTeX
 # Font directory
 FONTDIR=$(TEXROOT)/fonts/source/public/HieroTeX
-# define the directory which will include site-wide signs definitions
-SESHDIR=/usr/local/lib/sesh
+# Docs directory
+TEXDOC=$(TEXROOT)/doc/latex/hierotex
 
 # If you want a user installation of hierotex, without root access,
 # the following values may help you. Uncomment them if needed.
@@ -25,7 +25,6 @@ SESHDIR=/usr/local/lib/sesh
 #TEXSTYLE=$(TEXROOT)/tex/latex/hierotex
 #FONTDIR=$(TEXROOT)/fonts/source/public/hierotex
 #TEXDOC=$(TEXROOT)/doc/latex/hierotex
-#SESHDIR=$(HOME)/hierotex/lib/sesh
 
 # Programs used in the installation process
 INSTALL=/usr/bin/install
