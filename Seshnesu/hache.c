@@ -3,7 +3,7 @@
 													 table de hachage
 \***************************************************************************/
 #include "hache.h"
-#include <malloc.h>
+#include <stdlib.h>
 /* Dans le .h */
 typedef struct 
 {

@@ -6,7 +6,7 @@
 	 $Id: sesh.y,v 2.5 1995/06/07 11:28:00 rosmord Exp $
 ****************************************************************************/
 %{
-#include <malloc.h>
+#include <stdlib.h>
 #include "quadra.h"
 #include "fonctions.h"
 

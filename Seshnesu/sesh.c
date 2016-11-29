@@ -64,7 +64,7 @@
 /* Copy the first part of user declarations.  */
 #line 8 "sesh.y" /* yacc.c:339  */
 
-#include <malloc.h>
+#include <stdlib.h>
 #include "quadra.h"
 #include "fonctions.h"
 
