@@ -1,6 +1,8 @@
 HieroTeX
 ========
 
+[![Build Status](https://travis-ci.org/mike42/hierotex.svg?branch=master)](https://travis-ci.org/mike42/hierotex)
+
 This is a copy of the HieroTeX LaTeX package, for typesetting hieroglyhs.
 
 The original webpage is longer available online, but is accessible via the Internet Archive: [http://webperso.iut.univ-paris8.fr/~rosmord/archives/](https://web.archive.org/web/20120930234009/http://webperso.iut.univ-paris8.fr/~rosmord/archives/)
