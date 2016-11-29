@@ -36,9 +36,6 @@ RM=-/bin/rm
 # (however, Sbzr and sesh can be built with simpler versions of make)
 MAKE=make
 
-# The C compiler
-CC = gcc
-
 # small hack for cross compiling on linux for windows :
 # path to the MINGW c compiler.
 # You probably don't need to touch this line,
