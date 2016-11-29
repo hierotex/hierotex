@@ -2,8 +2,6 @@
 #include "quadra.h"
 #include "general.h"
 #include <stdio.h>
-/* #include <varargs.h>  */
-#include <malloc.h>
 #include <stdlib.h>
 #include <string.h>
 

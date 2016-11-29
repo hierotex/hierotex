@@ -1,7 +1,7 @@
 /* 
 	 Module supérieur de gestion de la mémoire.
 */
-#include <malloc.h>
+#include <stdlib.h>
 #include "quadra.h"
 #include "mynew.h"
 
