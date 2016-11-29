@@ -1,1 +1,8 @@
 *.o
+
+# Generated files (flex/bison)
+Seshnesu/sesh.c
+Seshnesu/sesh.h
+Seshnesu/seshSource.h
+Seshnesu/seshl.c
+
