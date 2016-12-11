@@ -1,3 +1,4 @@
+#include "config.h"
 #include "hache.h"
 #include "quadra.h"
 #include "general.h"
@@ -6,10 +7,6 @@
 #include <string.h>
 
 #include "fonctions.h"
-
-extern char * Version;
-
-
 
 PRIVATE TABLE signes;
 PUBLIC TABLE definitions;
@@ -577,7 +574,7 @@ PUBLIC int main(argc, argv)
 	
 	if (!argsOk)
 		{
-			fprintf(stderr, "sesh nesou, version (%s)\n", Version);
+			fprintf(stderr, "%s\n", PACKAGE_STRING);
 			fprintf(stderr, "usage %s [-def SIGNDEFINITIONFILE]\n", argv[0]);
 			exit(0);
 		}
