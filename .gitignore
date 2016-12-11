@@ -16,16 +16,17 @@ Makefile.in
 /install-sh
 /missing
 /stamp-h1
+/ylwrap
 
-# Generated files (gcc)
-
-*.o
+# Other generated files (flex, bison, autotools, gcc)
+config.h
+config.log
+config.status
+Makefile
+sesh/*.o
+sesh/.deps/
 sesh/sesh
-
-# Generated files (flex/bison)
-
 sesh/sesh.c
 sesh/sesh.h
-sesh/seshSource.h
 sesh/seshl.c
-
+sesh/seshSource.h
