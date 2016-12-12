@@ -155,7 +155,7 @@ _type_ * CONCAT2(new_,_type_) ()\
 }\
 void  CONCAT2(_type_,_cleanup)()\
 {\
-	int i;\
+	unsigned int i;\
 	for (i= 0; i< CONCAT2(_type_,_stack).nombre_de_piles; i++)\
 	{\
 		int j;\
@@ -170,7 +170,7 @@ void  CONCAT2(_type_,_cleanup)()\
 }\
 void  CONCAT2(_type_,_destroy)()\
 {\
-  int i;\
+  unsigned int i;\
   for (i= 0; i< CONCAT2(_type_,_stack).nombre_de_piles; i++)\
     {\
 			 free((CONCAT2(_type_,_stack).piles[i]));\
