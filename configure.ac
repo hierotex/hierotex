@@ -19,5 +19,5 @@ AC_PROG_YACC
 
 # Checks for library functions.
 
-AC_CONFIG_FILES([Makefile sesh/Makefile])
+AC_CONFIG_FILES([Makefile sesh/Makefile texmf/Makefile texmf/doc/latex/hierotex/Makefile])
 AC_OUTPUT
