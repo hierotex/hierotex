@@ -1,0 +1,662 @@
+% Mode pour la composition de textes d'Egypto.
+% Le but est de permettre de g\'erer au mieux 
+% les exemples, pour retirer des produits 
+% annexes.
+% La translit\'eration suivra le "manuel de codage"; 
+% COMPATIBLE AVEC  NFSS2 <<<< NOTER LE II !!!!!
+
+% This is a LaTeX file for typesetting Egyptological texts.
+
+% Use:
+
+% \Montitre{...} allows you to define the document's title 
+% (To be used in Cross-references )
+
+% \eg to use the translitteration font
+
+% \def\SourceTexte{Name of the text} to tell LaTeX what text you are
+%                                    typing
+
+% \def\EXEMPLE{example} To use this style in english
+\def\EXEMPLE{Exemple}
+
+% There are currently three ways to write some translitteration
+% (apart from \eg)
+%
+% 1) the translit environment:
+% it takes 3 arguments: 
+%       * name of the text
+%       * page number or recto/verso (exxs {4} or {recto} 
+%       * line number(s) (could be column number) (exxs {4} {4-9}
+%
+% One important thing is that TeX ``understands'' these numbers.
+% i.e. there are commands to change the line number and the page 
+% number. such things are usefull for cross-references
+%
+% you can  type a translitteration, and ``\traduction'' to start
+% typing the translation.
+% example:
+%
+% \begin{translit}{O. fooBar XIV}{verso}{10-15}
+% iw.i rx.kw mdw nTr
+% \traduction
+% I know the hieroglyphs
+% \end{translit}
+%
+% 2) the exemple environment.
+% a translit environment with the word ``Exemple'' in front of 
+% it, and numbered . To write ``example'',  use 
+% \def\EXEMPLE{Example}
+%
+% these two environments write a line in ``*.dic'' where *
+% is the name of your TeX file.
+%
+%* translit writes:
+% \Citation{name of the source}{references}{document's title}{
+%                       page number in document}
+%
+%* exemple writes:
+% \Exemple{name of the source}{references}{document's title}
+%         {exemple number}{page number in document}
+%(all on the same line)
+%
+% 3) the \traduction{}{} macro. It takes two arguments,
+% the first being a translitteration, the second a translation.
+% you have separates foonotes 
+% and, by default, the text is given in two columns 
+% wich can spread over pages. useful to translate poetry.
+% if you want the translation under  the translitteration, you
+% can type 
+%         \def\EcritTraduction{\EcritTraductionEnLigne}
+% and 
+%             \def\EcritTraduction{\EcritTraductionEnColonne}
+% to switch back. In the column version, the second column is
+% a verse-like environment
+%
+%
+%
+%                                                       3
+% \affligne shows the line number above a vertical line |
+%
+% \affpage shows the page number in a cartouche
+%
+% \| increases the line number and shows it.
+%
+% \* increases the page number and shows it. 
+%               (the line number becomes 1)
+%
+% \numligne{<VALUE>} gives a value to the line number and shows it
+%
+% \numpage{<VALUE>} the same for page number.
+%
+% \dico{Y}{translation}{comments}
+% Can be used to make an index of terms. ex:
+% \dico{XAa}{to free}{transitive verb} %
+% it writes in the .dic file :
+%\DicoIndex {XAa}{ to free }{transitive verb }{P. Leyde I 350}
+%           {verso,13}{name of the text}{2}
+% that is, what you wrote, plus the references .
+% it is to be used inside an environment. 
+% You can also use it with hieroglyphic words. If you intend to use
+% TeX \write  command with hieroglyphs, you should look at the way it's done
+%
+% Grammatical signs and al.
+% the zero-subject (i.e. the empty set) is bound to \zero
+%
+% there is a environment for typesetting grammatical rules:
+% its name is gramrule.
+% a word typed there appears in slanted font, and `~X ' 
+% writes X in translitteration (the space is mandatory).
+% 
+% the possib environment allows to type different cases, with 
+% an accolade in front of them. (\\ to part the cases)
+% 
+% the pile macro allows to write some text in a column 
+% 
+% example of use:
+%        
+% \begin{gramrule} 
+% ~ir + \begin{possib}
+%       infinitive\\
+%       prospective ~sDm.f \\
+%       ~mrr.f\\
+%       \end{possib} 
+%     + \pile{whatever\\you \\want\\}
+%
+
+\message{egypto.sty V2.0a (second NUMBERED VERSION :-)^^J}
+\input EgypUtil.sty
+
+
+\def\@montitre{\ }
+% Un remplacement pour \title. . .
+\def\Montitre#1{\def\@montitre{#1}}
+
+
+% Les fontes pour la translitt\'eration\,:
+% translitteration fonts: 
+% works with both the old font encoding and nfss2 (NOT nfss!!!)
+
+\expandafter\ifx\csname DeclareFontShape\endcsname\relax%
+% OLD FONT SYSTEM..... AWFUL LOOKING BUT  WORKING
+\newfam\egfam
+\def\eg{\protect\peg}
+
+\let\old@ixpt=\ixpt
+\let\old@xpt=\xpt
+\let\old@xiipt=\xiipt
+\let\old@viipt=\viipt
+\let\old@viiipt=\viiipt
+\let\old@xivpt=\xivpt
+\let\old@xviipt=\xviipt
+\def\ixpt{\old@ixpt\def\peg{\@getfont\peg\egfam\@ixpt{diacr9}}}
+\def\xpt{\old@xpt\def\peg{\@getfont\peg\egfam\@xpt{diacr10}}}
+\def\xiipt{\old@xiipt\def\peg{\@getfont\peg\egfam\@xiipt{diacr12}}}
+\def\viipt{\old@viipt\def\peg{\@getfont\peg\egfam\@viipt{diacr7}}}
+\def\viiipt{\old@viiipt\def\peg{\@getfont\peg\egfam\@viiipt{diacr8}}}
+\def\xivpt{\old@xivpt\def\peg{\@getfont\peg\egfam\@xivpt{diacr9 scaled
+\magstep2}}}
+\def\xviipt{\old@xviipt\def\peg{\@getfont\peg\egfam\@xviipt{diacr9 scaled \magstep3}}}
+\else                           % NFSS2
+\def\eg{\fontencoding{OT1}\fontfamily{diacr}\selectfont}
+% Pbs eventuels avec nfss2 et french
+\def\family{\fontfamily}
+\def\shape{\fontshape}
+\def\series{\fontseries}
+\input OT1diacr.fd
+\DeclareTextFontCommand{\texteg}{\fontencoding{OT1}\fontfamily{diacr}\selectfont}
+\fi
+
+% Besoins\,: On doit pouvoir\,:
+%               \'ecrire des traductions de textes
+%               *translit, suivie de traduction au dessous
+%               *les 2 c\^ote \`a c\^ote.
+%               ins\'erer des exemples
+% Et, dans tous ces cas\,:
+%       - donner des d\'efinitions de mots, qui seront 
+%         sauvegard\'ees, avec les r\'ef\'erences, pour 
+%         construire un index, ou pour g\'en\'erer un lexique, voire
+%         des donn\'ees pour un dictionnaire
+%
+%       - mettre des num\'eros de lignes, not\'es de la fa\c{c}on
+%         usuelle. 
+%       - mettre des remarques. CF IFAO
+
+% La citation est l'unit\'e de base. Elle est optionellement
+% num\'erot\'ee, 
+% mais elle a toujours une r\'ef\'erence. cette r\'ef\'erence est
+% accessible par toutes les sous-parties de la citation; 
+% ce qui permet des renvois faciles.
+% Donn\'ees \`a traiter pour le texte:
+% pour chaque r\'eference, il faut:
+%
+% Document ou` est utilise' le texte
+% De'signation du texte, 
+% Page OU recto/verso OU Pagededepart-pagefinale
+%
+% Pour un mot:
+% [Le lemme en translit.] [Le mot en translit.] ....
+%... [com. grammatical] [la traduction] 
+%... [la ref. du texte] [la ligne dans le texte] 
+%... [la ref. dans le document] ... [le nom du document]
+
+% Il faut savoir\,: 
+% * si le texte comporte plusieurs pages ou une seule=>
+% * quelle est la page
+% * quelle est la ligne du texte
+% 
+% Selon le type de Texte, les refs seront diff\'erentes.
+
+
+% Le Texte est d\'esign\'e par la variable \SourceTexte
+\def\SourceTexte{\message{Aucun texte n'est precis\'e.}
+\message{Si vous ne voulez pas en utiliser, }
+\message{Tapez \string\PasDeReferences}}
+\def\EdiTexte{}
+
+\def\DicoIndex#1#2#3#4#5#6#7{} % a voir + tard
+
+% Le document est-il organis'e en pages, ou en recto/verso?
+% Dans ce cas, recto=0, verso=1
+\newif\ifRectoVerso\RectoVersofalse 
+
+%Le num\'ero de la ligne\,:
+% s'il est nul, c'est que l'on n'a pas utilis\'e de num\'erotation
+\newcount\numeroligne
+\numeroligne=0
+
+% le nume'ro de la page:
+\newcount\numeropage
+\numeropage=0
+
+% Les r\'ef\'erences...
+\newwrite\diconame
+\immediate\openout\diconame=\jobname.dic
+
+%% Deux macros pour afficher page(s) et 
+%% ligne(s)
+
+\def\lapage{%
+\ifRectoVerso%
+\ifnum\the\numeropage=0recto\else verso\fi%
+\else\the\numeropage\fi%
+}
+
+\def\laligne{\the\numeroligne}
+
+% \dico{Y}{TRADUCTION}{commentaire}
+% ins\`ere Y dans le fichier '.dic', 
+% en rajoutant les commentaires, la traduction, et, last but not
+% least,  les r\'ef\'erences
+% 
+
+\def\dico{\bgroup\@sanitize\@dico}
+\long\def\@dico#1#2#3{\edef\@tmpa{%
+    \immediate\write\diconame{%
+      \string\DicoIndex{#1}{#2}{#3}{\SourceTexte}{\References}%
+      {\@montitre}{\thepage}}}\expandafter\egroup\@tmpa\ignorespaces}
+
+
+%%\immediate\write\diconame{%
+%%\noexpand\DicoIndex{#1}{#2}{#3}{\SourceTexte}{\References}%
+%%{\@montitre}{\thepage}}\ignorespaces}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Fournit les r\'ef\'erences du texte\,:
+%
+% \FixeReferences{Nom}{type}{Page(s)}{Ligne(s)}{Edition}
+%
+
+%% modifiable : affichage du numéro de page.
+\def\afficheReference#1#2#3#4{%
+{\sc\it
+\uppercase{#1}}\ifRectoVerso, #2\else\ifnum\numeropage=0\else,
+ p. #2\fi\fi\ \echange{-}{--}{#3} \hfill {\sc\it 
+\uppercase{#4}}
+}
+
+\def\recto{0}\def\verso{1}
+\def\rien{\relax}
+
+\def\FixeReference#1#2#3#4{{
+\global\def\SourceTexte{#1}
+\global\def\EdiTexte{#4}
+\def\mangetout##1\relax{\relax}
+% Le numero de page
+\EstRectoVerso{#2}%
+\ifRectoVerso
+\expandafter\global\numeropage\csname #2\endcsname
+\else 
+\echange{-}{\relax\mangetout}{\global\numeropage#2}
+\fi
+\echange{-}{\relax\mangetout}{\global\numeroligne#3}
+}}
+
+\newcommand{\setPageAndLine}[2]{%
+  \global\numeropage=#1%
+  \global\numeroligne=#2%
+}
+
+\def\EstRectoVerso#1{{\def\GetPrems##1{\edef\prems{##1}\eat}%
+\def\eat##1\relax{}\GetPrems#1\relax% Maintenant, \prems designe le
+%                                   % premier token de la liste
+\ifcat\prems1\relax\global\RectoVersofalse\else\global\RectoVersotrue\fi
+}}
+
+
+\def\References{\lapage,\laligne}
+
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% affichages...
+
+\def\affligne{
+$\stackrel{\mbox{\rm\tiny\laligne}}%
+{\vrule width 0.05pt height 1ex}$%
+}
+
+\def\affpage{%
+\setbox0=\hbox{\vbox{\hrule\vskip0.2ex\hbox{\rm\footnotesize\lapage}\vskip0.2ex\hrule}}
+\unitlength=\ht0%
+\hskip 0.2ex
+\picture(0.1,1)(0,-0.5)
+\oval(0.25,0.9)[l]
+\endpicture%
+\box0%
+\picture(0.24,1)(0,-0.5)
+\put(0.1,0){\oval(0.25,0.9)[r]}
+\endpicture
+\hskip 0.2ex
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% le num\'ero de ligne
+%
+\def\numligne#1{\global\numeroligne=#1%
+\affligne%
+}%
+
+
+% affichage avec incr\'ement de la ligne.
+%
+\def\|{%
+\global\advance\numeroligne by 1%
+\affligne}
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Les Pages
+\def\numpage#1{
+\global\numeropage=#1%
+\global\numeroligne=1%
+\affpage%
+}%
+
+\def\*{%
+\global\advance\numeropage by 1%
+\global\numeroligne=1%
+\affpage}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Pour les exemples grammaticaux, et les citations courtes:
+%
+
+% Il faut plus espacer les hieroglyphes que normalement
+
+% pour que c,a marche sans hiero.sty
+\expandafter\ifx\csname @displayhieroglyphestrue\endcsname\relax
+\def\@displayhieroglyphestrue{\relax}
+\fi
+
+
+\newenvironment{translit}[4]{
+%
+% D'abord, les re'fe'rences
+\FixeReference{#1}{#2}{#3}{#4}
+\vspace{\topsep}
+\immediate\write\diconame{%
+\noexpand\Citation{\SourceTexte}{\References}%
+{#4}{\thepage}}\ignorespaces
+\noindent{\sc
+\lowercase{#1}}\ifRectoVerso, #2\else\ifnum\numeropage=0\else,
+ p. #2\fi\fi\ \echange{-}{--}{#3} \hfill {\sc 
+\lowercase{#4}}\par
+%
+% L'indentation pompe'e sur latex
+%
+\list{}{
+\topsep0.5ex
+\partopsep0ex
+\parsep\parskip
+\@beginparpenalty \@highpenalty
+\leftmargin 1em
+\rightmargin 1em
+\listparindent 0em
+\itemindent 0em
+}
+%
+\def\traduction{\par\rm\it}
+\@displayhieroglyphestrue
+\item[]
+\eg
+}{%
+\endlist
+}
+
+
+% Exemple nume'rote'
+\newcounter{exemple}
+\setcounter{exemple}{0}
+
+\newenvironment{exemple}[4]{%
+
+\begingroup
+\@displayhieroglyphestrue
+%
+% D'abord, les re'fe'rences
+\FixeReference{#1}{#2}{#3}{#4}
+\refstepcounter{exemple}
+\vspace{\topsep}
+\immediate\write\diconame{%
+\noexpand\Exemple{\SourceTexte}{\References}%
+{#4}{\theexemple}{\thepage}}\ignorespaces
+\noindent {\bf \EXEMPLE\ \arabic{exemple}} \hskip1em plus 2em 
+\afficheReference{#1}{#2}{#3}{#4}
+
+\par
+%
+% L'indentation pompe'e sur latex
+%
+\list{}{
+\topsep0.5ex
+\partopsep0ex
+\parsep\parskip
+\@beginparpenalty \@highpenalty
+\leftmargin 1em
+\rightmargin 1em
+\listparindent 0em
+\itemindent 0em
+}
+\def\traduction{\par\rm\it}
+\item[]
+\eg
+}{%
+\endlist
+\endgroup
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%       Un style analogue \`a minipage, mais pouvant d\'eborder sur
+% plusieurs pages si on le lui demande poliment.
+%
+\long\def\BeginCreateVBox#1#2{%
+    \global\setbox#1=\vbox\bgroup
+        \hsize #2\textwidth\hsize%
+        \columnwidth\hsize
+        \def\@mpfn{mpfootnote}\def\thempfn{\,\arabic{mpfootnote}}\c@mpfootnote\z@
+        \let\@footnotetext\@mpfootnotetext
+        \let\@listdepth\@mplistdepth \@mplistdepth\z@%
+        \@minipagerestore\global\@minipagetrue %% \global added 24 May 89
+        \everypar{\global\@minipagefalse\everypar{}}%
+}
+
+\def\EndCreateVBox{%
+        \par\vskip-\lastskip
+        \ifvoid\@mpfootins\else
+        \vskip\skip\@mpfootins\footnoterule\unvbox\@mpfootins\fi
+        \global\@minipagefalse   %% added 24 May 89
+\egroup}
+
+% copi\'e de multicols.sty:
+\def\reinsere@footnotes{\ifvoid\footins\else
+        \insert\footins{\unvbox\footins}\fi}
+
+% 
+\def\EcritTraduction{\EcritTraductionEnColonne}
+%\def\EcritTraduction{\EcritTraductionEnLigne}
+\long\def\EcritTraductionEnLigne#1#2{%
+%\BeginCreateVBox0{\linewidth}
+%\eg
+%#1
+%\vspace{2ex}\par\rm
+%#2
+%\EndCreateVBox
+%\unvbox0
+\bgroup
+\eg #1
+\vspace{2ex}\par\rm
+#2
+\egroup
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%                        Ecriture en colonnes
+%                        long a`  lire\ldots{} !
+%
+%
+\newbox\boiteA
+\newbox\boiteB
+\newdimen\tmpdim%
+%
+\long\def\EcritTraductionEnColonne#1#2{%
+\def\DemiLigneA{\dimen\tw@}
+\def\DemiLigneB{\dimen4}
+%
+\DemiLigneA= \linewidth
+\advance \DemiLigneA by -2em
+\advance \DemiLigneA by -1pt
+\divide\DemiLigneA 2
+\DemiLigneB=\DemiLigneA
+\advance\DemiLigneA by -3em
+\advance\DemiLigneB by 3em
+%
+\BeginCreateVBox\boiteA\DemiLigneA%
+\eg \noindent#1
+\EndCreateVBox
+                                %
+\BeginCreateVBox\boiteB\DemiLigneB{%
+\def\\{\par}
+\parindent 0em
+\everypar{\hangafter 1\hangindent 2em}
+\tolerance=800
+ #2
+}\EndCreateVBox
+% Maintenant, nous avons totalement la main...
+\def\HauteurLigne{\dimen0}
+
+\ifdim \ht\boiteA > \ht\boiteB %
+        \HauteurLigne=\ht\boiteA%
+        \def\totoA{}
+        \def\totoB{\vfill}
+\else 
+        \HauteurLigne=\ht\boiteB
+        \def\totoA{\vfill}
+        \def\totoB{}
+\fi
+\setbox\boiteA=\vbox to \HauteurLigne{\hsize\DemiLigneA\unvbox\boiteA\totoA}%
+\setbox\boiteB=\vbox to
+\HauteurLigne{\hsize\DemiLigneB\unvbox\boiteB\totoB}%
+\nobreak
+\vspace{0.5em}%
+%
+%Bon, maintenant, on a un probl\`eme avec les notes de bas de page.
+% Vu leur fr\'equence en Egypto, (cf. certaines publications...
+% On ne peut pas le laisser de c\^ot\'e.
+% On s'inspire de la solution utilis\'ee dans multicols.sty:
+{
+\output{\global\setbox\@ne=\vbox{\unvbox\@cclv}}\eject
+\box\@ne
+\global\dimen255=\ht\footins
+\reinsere@footnotes
+}
+%Maintenant, la hauteur des footnotes est probablement dans dime255
+% (s'il n'y en a pas trop!)
+\tmpdim=\@colroom%
+\advance\tmpdim by -\pagetotal  % tmpdim contient l'espace restant
+\advance\tmpdim by -\pageshrink % tmpdim contient l'espace restant
+\advance\tmpdim by -1ex % tmpdim contient l'espace restant
+\advance\tmpdim by -\dimen255   % tjrs \`a la bonne valeur (que des
+                                % op. atomiques depuis le set, y
+                                % compris dans \reinsere@footnotes
+\@whiledim\tmpdim<\ht\boiteA
+\do{%
+%\showthe\pagedepth
+%\showthe\insertpenalties
+\nobreak%
+\hbox to \linewidth{%
+\vsize\tmpdim
+\hbox to \DemiLigneA{\vsplit\boiteA to \tmpdim}
+\hfill%
+\vrule width 0.5pt%
+\hfill%
+\hbox to \DemiLigneB{\vsplit\boiteB to \tmpdim}
+}
+\ifdim \ht\boiteA > \ht\boiteB %
+        \HauteurLigne=\ht\boiteA%
+        \def\totoA{}
+        \def\totoB{\vfill}
+\else 
+        \HauteurLigne=\ht\boiteB
+        \def\totoA{\vfill}
+        \def\totoB{}
+\fi
+\setbox\boiteA=\vbox to \HauteurLigne{\hsize\DemiLigneA\unvbox\boiteA\totoA}%
+\setbox\boiteB=\vbox to \HauteurLigne{\hsize\DemiLigneB\unvbox\boiteB\totoB}%
+%\vfil
+%\topskip=0pt
+\break\vfilneg%
+%\vbox to 0pt{\hsize0pt}%
+%\tmpdim=\pagegoal%
+\tmpdim=\@colroom
+\advance\tmpdim by -\pagetotal  % tmpdim contient l'espace restant
+\advance\tmpdim by -\pageshrink % tmpdim contient l'espace restant
+}
+\hbox to \linewidth{%
+\hbox to \DemiLigneA{\box\boiteA}%
+\hfill%
+\vrule width 0.5pt%
+\hfill%
+\hbox to \DemiLigneB{\box\boiteB}%
+}
+\vspace{2em}                            %
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \'ecrit la traduction de #1 dans #2
+
+% maintenant, on peut commencer:
+%
+\long\def\traduction#1#2{%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\tracingall
+\begingroup %pour que tout soit local...
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%       D\'efinitions locales & utiles
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% les signes <> pour les insertions
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% l'\'ecriture elle-m\^eme
+\EcritTraduction{#1}{#2}
+\endgroup
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Commandes utiles pour les textes grammaticaux
+
+% Symboles utiles
+\def\zero{$\emptyset$\,\,}
+%%\def\~~{$\sim$} 
+
+% pour taper une re`gle de grammaire
+\newenvironment{gramrule}{%
+\begingroup%
+\def~##1 {{\eg ##1 }}
+\sl
+}{
+\endgroup
+}
+
+% accolades verticales
+\newenvironment{possib}{%
+\setbox0=\hbox\bgroup\begin{tabular}{@{}l@{}}%
+}{%
+\end{tabular}\egroup
+\hbox{$\left\{\vcenter{\hsize\ht0\box0}\right.$}}
+
+% Souligner un texte
+\long\def\accolade#1#2{%
+        \mbox{$\underbrace{\hbox{#1}}_{\hbox{#2}}$}}
+
+% empiler du texte pour gagner de la place
+\def\pile#1{%
+\begin{tabular}{@{}c@{}}%
+#1\end{tabular}}
+
+% remise en \'etat des catcodes:
+

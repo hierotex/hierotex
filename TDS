@@ -1,0 +1,13 @@
+
+documents structure (from texmf directory)
+
+tex files :
+tex/latex/hierotex
+fonts/sources/public/hierotex
+doc/latex/hierotex
+notds
+notds/sesh
+notds/utils
+
+
+

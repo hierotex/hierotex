@@ -1,0 +1,16 @@
+As an help for package providers, this version of HieroTeX tries to
+conform to the TeX Directory Structure (DTS).
+
+Everything under the "texmf" directory should move to one of your texmf directories.
+(for instance under linux/debian, I would type 
+     cp -R texmf /usr/share
+     and follow by typing texhash).
+
+The rest of the files :
+
+* hierotex uses a pre-processor called "sesh", which is a C
+  program. The sources are included and should compile fine. I also
+  include a version of the executable program as a courtesy for m/s
+  windows users, as the later, unlike real operating systems, doesn't
+  include a C compiler.
+

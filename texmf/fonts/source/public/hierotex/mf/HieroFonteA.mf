@@ -1,0 +1,14 @@
+% This file defines the Metafont font mf/A.mf.tmp.
+% {limn output Aug 20 18:49:00 1994 from imageto output Aug 20 18:46:06 1994}
+% Generated Thu Mar 27 22:58:42 1997.
+% This font is in the public domain.
+true_design_size# := 14.000pt#;
+input Hibzrstp;
+font_coding_scheme := "Egyptian font A";
+font_identifier := "mf/A.mf.tmp";
+input HieroFonteA_font.mf;
+
+def mamodif= identity  reflectedabout((w/2,h), (w/2,0)); enddef;
+def depart= 128; enddef;
+input HieroFonteA_font.mf;
+bye.

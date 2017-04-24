@@ -1,0 +1,72 @@
+\def\fileversion{v2.0e}
+%\DeclareFontEncoding{OT1}{}{}
+\DeclareFontFamily{OT1}{diacr}{}
+%\DeclareErrorFont{OT1}{diacr}{m}{n}{10}
+\DeclareFontShape{OT1}{diacr}{m}{n}{
+<7> diacr7
+<8> diacr8
+<5-9> diacr9
+<10-11> diacr10
+<12> diacr12
+<14> diacr9
+<17> diacr9
+<->  diacr12
+}{}
+
+\DeclareFontShape{OT1}{diacr}{bx}{n}{
+<->  diacrb10
+}{}
+
+\DeclareFontShape{OT1}{diacr}{m}{sl}{
+<7> diacr7
+<8> diacr8
+<5-9> diacr9
+<10-11> diacr10
+<12> diacr12
+<14> diacr9
+<17> diacr9
+}{}
+
+\DeclareFontShape{OT1}{diacr}{m}{sc}{
+<7> diacr7
+<8> diacr8
+<5-9> diacr9
+<10-11> diacr10
+<12> diacr12
+<14> diacr9
+<17> diacr9
+}{}
+
+\DeclareFontShape{OT1}{diacr}{m}{it}{
+<7> diacr7
+<8> diacr8
+<5-9> diacr9
+<10-11> diacr10
+<12> diacr12
+<14> diacr9
+<17> diacr9
+}{}
+
+\DeclareFontShape{OT1}{diacr}{bx}{sl}{
+<7> diacr7
+<8> diacr8
+<5-9> diacr9
+<10-11> diacr10
+<12> diacr12
+<14> diacr9
+<17> diacr9
+}{}
+
+\DeclareFontShape{OT1}{diacr}{bx}{sc}{
+<7> diacr7
+<8> diacr8
+<5-9> diacr9
+<10-11> diacr10
+<12> diacr12
+<14> diacr9
+<17> diacr9
+}{}
+
+\endinput
+
+

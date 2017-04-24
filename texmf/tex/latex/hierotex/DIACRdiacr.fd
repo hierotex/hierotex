@@ -1,0 +1,77 @@
+\def\fileversion{v2.0e}
+%\DeclareFontEncoding{DIACR}{}{}
+\DeclareFontFamily{DIACR}{diacr}{}
+%\DeclareErrorFont{DIACR}{diacr}{m}{n}{10}
+\DeclareFontShape{DIACR}{diacr}{m}{n}{
+<7> diacr7
+<8> diacr8
+<5-9> diacr9
+<10-11> diacr10
+<12> diacr12
+<14> diacr9
+<17> diacr9
+<->  diacr12
+}{}
+
+\DeclareFontShape{DIACR}{diacr}{bx}{n}{
+<->  diacrb10
+}{}
+
+\DeclareFontShape{DIACR}{diacr}{m}{sl}{
+<7> diacr7
+<8> diacr8
+<5-9> diacr9
+<10-11> diacr10
+<12> diacr12
+<14> diacr9
+<17> diacr9
+}{}
+
+\DeclareFontShape{DIACR}{diacr}{m}{sc}{
+<7> diacr7
+<8> diacr8
+<5-9> diacr9
+<10-11> diacr10
+<12> diacr12
+<14> diacr9
+<17> diacr9
+}{}
+
+\DeclareFontShape{DIACR}{diacr}{m}{it}{
+<7> diacr7
+<8> diacr8
+<5-9> diacr9
+<10-11> diacr10
+<12> diacr12
+<14> diacr9
+<17> diacr9
+}{}
+
+\DeclareFontShape{DIACR}{diacr}{bx}{sl}{
+<7> diacr7
+<8> diacr8
+<5-9> diacr9
+<10-11> diacr10
+<12> diacr12
+<14> diacr9
+<17> diacr9
+}{}
+
+\DeclareFontShape{DIACR}{diacr}{bx}{sc}{
+<7> diacr7
+<8> diacr8
+<5-9> diacr9
+<10-11> diacr10
+<12> diacr12
+<14> diacr9
+<17> diacr9
+}{}
+
+%%% \DeclareTextCommand{cmd}{DIACR}[NUM][DEFAULT]{}{DEFINITION}
+%%% \DeclareTextSymbol{cmd}{DIACR}{SLOT}
+%%% \DeclareTextComposite{cmd}{DIACR}{letter}{SLOT}
+\DeclareFontEncoding{DIACR}{}{}
+
+\endinput
+
+

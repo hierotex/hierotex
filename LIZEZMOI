@@ -1,0 +1,117 @@
+(C) 1993,1994,2002 Serge Rosmorduc
+2 rue Ibsen 
+29200 Brest (FRANCE)
+(Attention, ce fichier commence très sérieusement à dater !)
+
+rosmord@iut.univ-paris8.fr
+
+D'abord, la licence: Cet ensemble est distribue' sous les termes de la
+licence "bibliothe`que" de GNU. Pour le redistribuer, vous devez:
+
+* laisser ce fichier intact (en particulier mes coordonne'es)
+* vous ne pouvez restreindre les droits des personnes auquelles vous les
+redistribuez: C'est a` dire que vous ne pouvez pas, me^me si vous
+re'alisez une extension de cet ensemble, en restreindre la distribution
+* par contre, si vous e'crivez un programme qui utilise les fontes
+hie'roglyphiques, vous devrez les fournir avec ledit programme,
+accessibles, afin qu'on puisse les modifier. Vous n'e^tes pas force' de
+fournir le source de votre programme ni de permettre que celui-ci soit
+redistribuable 
+
+
+Ceci est une beta version d'un ensemble de fichiers
+permettant de taper des textes E'gyptologiques en TeX. 
+
+Il comporte:
+
+* des fontes diacritiques (diacr*)
+* des fontes hie'roglyphiques 
+* des fichiers pour latex:
+	egypto.sty, hiero.sty, hierLtx.sty, OT1diacr.fd
+
+ egypto.sty sert a` taper des translite'rations, a` ge'rer les
+ re'fe'rences, a` indexer des termes, etc...
+
+ Utilisation:
+
+ *egypto.sty:
+
+ \Montitre{texte} pre'cise le titre du document.
+
+ \def\SourceTexte{texte} pre'cise le texte traduit.
+
+ \dico translit : traduction ( commentaire )
+	permet de donner la traduction d'un mot ; si le commentaire est
+	absent, les parenthe`ses doivent quand me^me exister.
+	La traduction est sauve'e dans un fichier dont le nom se
+	termine en .dic , le fichier contient e'galement les re'fe'rences
+	du texte.
+
+ \numligne{nombre} permet de fixer la ligne du texte e'dite'.
+ \numpage.............................page...................
+
+ \| incre'mente de 1 la ligne
+ \* ....................page
+
+ LES QUATRE COMMANDES PRECEDENTES AFFICHENT DE PLUS LA LIGNE OU LA PAGE
+ SELON LES FORMATS HABITUELS: LA PAGE DANS UN CARTOUCHE, LA LIGNE SUR UNE
+ BARRE VERTICALE.
+ 
+ les environnements translit et exemple:
+
+ Ils ont le me^me effet, sauf que exemple affiche exemple, et nume'rote.
+ Ils prennent trois arguments:
+
+ Le texte d'origine,
+ la page (ou : recto , verso pour un ostracon)
+ la ligne (ou un intervale se'pare' par un tiret)
+
+ Dans l'environnement, on peut commencer la traduction par:
+ \traduction.
+
+
+ La commande \traduction{translit}{traduction} 
+
+ Elle est utilise'e pour les longues traductions ; on peut pre'ciser la
+ pre'sentation : soit la translite'ration puis la traduction, 
+ soit les deux co^te a` co^te, ce qui est utile pour des poe`mes.
+
+ les signes < et > produisent des crochets.
+
+ Commandes pour la grammaire:
+
+ \zero: l'ensemble vide
+ \~~ un grand signe tilde.
+
+ *l'environnement gramrule:
+ permet de donner facilement une re`gle de grammaire:
+ le texte est en e'criture slanted, et un mot pre'ce'de' de ~ et suivi
+ d'un blanc est e'crit en translite'ration.
+
+ *l'environnement possib: 
+ permet de de'crire une se'rie de possibilite's entre accolades.
+ On fera suivre chaque ligne de \\
+
+ \accolade{texte}{sous texte} permet de souligner un texte d'une accolade,
+ avec un commentaire en dessous (par exemple, pour marque le sujet )
+
+ \pile{texte \\ texte \\ ...\\}
+ permet d'empiler du texte, centre'
+
+
+
+
+ *LA TRANSLITERATION:
+
+	le texte est tap'e selon le manuel de codage 
+	(i.e. A pour aleph, a pour ayn, ....)
+
+Dans l'avenir:
+
+	Un programme pour e'crire les textes avec une facilite'
+	raisonnable. (probablement pour X-windows d'abord... si quelqu'un
+	connai^t bien le mac, c,a me serais utile)
+
+	des ame'liorations des modes latex.
+
+
