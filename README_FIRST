@@ -1,9 +1,20 @@
     Sesh Nesou, a TeX package for hieroglyphic typesetting 
-	Copyright (C) 1993,1994,1995,2002 Serge Rosmorduc
+	Copyright (C) 1993,1994,1995,2002,2017 Serge Rosmorduc
 
+This work may be distributed and/or modified under the
+conditions of the LaTeX Project Public License, either version 1.3
+of this license or (at your option) any later version.
+The latest version of this license is in  http://www.latex-project.org/lppl.txt
+and version 1.3 or later is part of all distributions of LaTeX
+version 2005/12/01 or later.
+
+This work consists of all the files listed in manifest.txt
+	
 **********************************************************************
 Latest distribution available on 
-	http://webperso.iut.univ-paris8.fr/~rosmord/archives
+	http://hierotex.qenherkhopeshef.org/
+sources :
+	http://qenherkh@ssh.qenherkhopeshef.org:~/repository/git/hierotex.git
 
 PLEASE ! if you use this package, send me a mail, so that :
 	1) I've got an idea of who use it on what machine
@@ -11,19 +22,6 @@ PLEASE ! if you use this package, send me a mail, so that :
 
 **********************************************************************
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 1, or (at your option)
-any later version.
-
-      This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-General Public License for more details.
-
-      You should have received a copy of the GNU General Public
-License along with this program; if not, write to the Free Software
-Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 **********************************************************************
 
@@ -31,16 +29,6 @@ This is a set of utilities for hieroglyphic typesetting in LaTeX.
 You will find it quite changed since the previous version :
 
 * many improvement in sesh
-
-**********************************************************************
-		            IMPORTANT : 
-
-Well, not so important, but : I give this program under the GNU
-Licence, and I don't ask for anything... except that I'd like to know
-a little what happens to my program. I'd be very glad to receive news
-from you, even something short like : "I got it out of sheer
-curiosity". If you use it, even a little, I'd be very glad to receive
-your comments. A few demo files would also be very welcome. 
 
 **********************************************************************
 
