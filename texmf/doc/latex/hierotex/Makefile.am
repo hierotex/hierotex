@@ -1,13 +1,12 @@
 BUILT_SOURCES = EGypto.tex signlist.tex
-EXTRA_DIST = EGypto.tex signlist.tex
-CLEANFILES = EGypto.pdf EGypto.log EGypto.dic EGypto.aux
+EXTRA_DIST = EGypto.htx EGypto.tex signlist.tex
+CLEANFILES = EGypto.pdf EGypto.log EGypto.dic EGypto.aux EGypto.tex
 doc_DATA = EGypto.pdf
-EGYPTO_sources = EGypto.htx
 
 .htx.tex:
 	$(srcdir)/../../../../sesh/sesh < $< > $@
 
 .tex.pdf:
-	TEXMFHOME=$(srcdir)/../../../ updmap
+	TEXMFHOME=$(srcdir)/../../../ updmap -user
 	TEXINPUTS="$(srcdir):" TEXMFHOME=$(srcdir)/../../../ lualatex $<
 

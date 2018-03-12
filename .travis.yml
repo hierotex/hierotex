@@ -10,7 +10,7 @@ compiler:
 
 install:
   - sudo apt-get update
-  - sudo apt-get install -y bison
+  - sudo apt-get install -y bison flex automake autotools-dev
   - sudo apt-get --no-install-recommends -y install texlive texlive-luatex
   - aclocal
   - autoheader
