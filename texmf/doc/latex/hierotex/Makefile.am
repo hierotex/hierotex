@@ -6,7 +6,8 @@ doc_DATA = EGypto.pdf
 .htx.tex:
 	$(srcdir)/../../../../sesh/sesh < $< > $@
 
+# Different usage of updmap depending on version
 .tex.pdf:
-	TEXMFHOME=$(srcdir)/../../../ updmap -user
+	TEXMFHOME=$(srcdir)/../../../ updmap -user || TEXMFHOME=$(srcdir)/../../../ updmap
 	TEXINPUTS="$(srcdir):" TEXMFHOME=$(srcdir)/../../../ lualatex $<
 
