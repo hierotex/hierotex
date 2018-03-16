@@ -1,7 +1,11 @@
 BUILT_SOURCES = EGypto.tex signlist.tex
 EXTRA_DIST = EGypto.htx EGypto.tex signlist.tex
 CLEANFILES = EGypto.pdf EGypto.log EGypto.dic EGypto.aux EGypto.tex
-doc_DATA = EGypto.pdf
+
+# Deploy doc with source files
+texmfdir = $(prefix)/share/texmf
+texmfdocdir = $(texmfdir)/doc/latex/@PACKAGE@
+texmfdoc_DATA = EGypto.pdf EGypto.htx EGypto.tex signlist.tex
 
 .htx.tex:
 	$(srcdir)/../../../../sesh/sesh < $< > $@
