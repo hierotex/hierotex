@@ -9,7 +9,6 @@
 #undef YYLMAX
 #define YYLMAX 10240
 #include <string.h>
-#include <strings.h>
 #include <stdio.h>
 
 #define G(x) {yylval=find_sign(x); return HIEROGLYPHE;}
@@ -70,8 +69,8 @@ ESPSH	([ _\t\n\015=-]+)
 	}
                                         /* infamous trick. # should have ONE meaning */
                                         if ( signe_lu )
-                                        { 
-                                           if (signe_deja_lu) 
+                                        {
+                                           if (signe_deja_lu)
                                               { signe_deja_lu = FALSE; signe_lu= FALSE; }
                                            else
                                               { signe_deja_lu= TRUE;}
@@ -81,7 +80,7 @@ ESPSH	([ _\t\n\015=-]+)
 <INITIAL>(\n)	{ECHO; numligne++; return TEXTE;}
 <INITIAL>"\\hieroglyph"[ \n\t]*         |
 <INITIAL>"\\begin{hieroglyph}"[ \n\t]*	{ TLIGNE();
-	  Commence(HieroText); 
+	  Commence(HieroText);
                                           signe_lu= FALSE;
                                           return DEBUTHIEROGS;}
 
@@ -120,24 +119,24 @@ ESPSH	([ _\t\n\015=-]+)
 	 return LIGATURE;}
 <HieroText>200	{yylval.une_donnee.texte= les_ligatures[4];
                                          signe_lu= TRUE;
-	 return LIGATURE;} 
+	 return LIGATURE;}
 <HieroText>20	{yylval.une_donnee.texte= les_ligatures[5];
               	 signe_lu= TRUE;
 	 return LIGATURE;}
 
-<HieroText>"aA\\r1"	{ yylval.une_donnee =find_sign("aAv",0); 
-	  if (!signe_trouve) {REJECT } 
+<HieroText>"aA\\r1"	{ yylval.une_donnee =find_sign("aAv",0);
+	  if (!signe_trouve) {REJECT }
 	  else { signe_lu= TRUE; return HIEROGLYPHE;}
 	}
 
-<HieroText>"Y1\\r3"	{ yylval.une_donnee =find_sign("Y1v",0); 
-	  if (!signe_trouve) {REJECT } 
+<HieroText>"Y1\\r3"	{ yylval.une_donnee =find_sign("Y1v",0);
+	  if (!signe_trouve) {REJECT }
 	  else { signe_lu= TRUE; return HIEROGLYPHE;}
 	}
 
 <HieroText>{ident}	|
-<HieroText>([A-Z]|Aa){entier}A*	{ yylval.une_donnee =find_sign(yytext,0); 
-	  if (!signe_trouve) {REJECT } 
+<HieroText>([A-Z]|Aa){entier}A*	{ yylval.une_donnee =find_sign(yytext,0);
+	  if (!signe_trouve) {REJECT }
 	  else { signe_lu= TRUE; return HIEROGLYPHE;}
 	}
 
@@ -146,7 +145,7 @@ ESPSH	([ _\t\n\015=-]+)
 <InSignDecl>{entier}	{yylval.un_entier= atoi(yytext); fprintf(stderr, "\nHERE\n");return INTEGER;}
 <InSignDecl>[a-zA-Z0-9.'`_@]+	{yylval.chaine = strdup(yytext); fprintf(stderr, "\nHERE1\n");return STRING;}
 <InSignDecl>"#enddecl"	{Commence(INITIAL); return ENDDECL;}
-<InSignDecl>" "|\t|\n|\r	{fprintf(stderr, "espace\n");} 
+<InSignDecl>" "|\t|\n|\r	{fprintf(stderr, "espace\n");}
 <InSignDecl>.	{fprintf(stderr, "char\n");}
 <HieroText>"#def"{ESPS}{ligident}	{ int i;
 	  for (i=4; yytext[i] && (yytext[i] == ' ' || yytext[i]== '\t');
@@ -160,31 +159,31 @@ ESPSH	([ _\t\n\015=-]+)
 	    yyerror("Mauvaise definition");
 	}
 <HieroText>"="{ESPSO}	|
-<HieroText>"-"{ESPSO}	{ 
-                                          yylval.un_separateur= S_intersignes; 
+<HieroText>"-"{ESPSO}	{
+                                          yylval.un_separateur= S_intersignes;
                                           return SEPARATEUR;
                                         }
 <HieroText>{ESPSH}	|
 <HieroText>{ESPSH}"-"	{
-                                          TLIGNE(); 
-                                          yylval.un_separateur= S_espace; 
+                                          TLIGNE();
+                                          yylval.un_separateur= S_espace;
                                           return SEPARATEUR;
                                         }
 <HieroText>\n	{
                                          numligne++;
-                                         yylval.un_separateur= S_espace; 
+                                         yylval.un_separateur= S_espace;
                                          return SEPARATEUR;
                                         }
 
 <HieroText>{ESPSOH}"!="{INTEGER}"%"{ESPSOH}            |
 <HieroText>{ESPSOH}"!"{ESPSOH}	{
-                                          TLIGNE(); 
+                                          TLIGNE();
                                           yylval.un_separateur= S_finligne;
                                           return SEPARATEUR;
                                         }
 
 <HieroText>{ESPSOH}"!!="{INTEGER}"%"{ESPSOH}            |
-<HieroText>{ESPSOH}"!!"{ESPSOH}	{ 
+<HieroText>{ESPSOH}"!!"{ESPSOH}	{
                                           TLIGNE();
                                           yylval.un_separateur= S_finpage;
                                           return SEPARATEUR;
@@ -266,18 +265,18 @@ ESPSH	([ _\t\n\015=-]+)
 
 <HieroText>\\	{return REVERT;}
 <HieroText>\\s[0-9]	{
-                                          yylval.un_entier= atoi(yytext+2); 
-                                          return SIZE;  
+                                          yylval.un_entier= atoi(yytext+2);
+                                          return SIZE;
                                         }
 <HieroText>\\{INTEGER}
 <HieroText>\\R{INTEGER}	{
-                                          yylval.un_entier= atoi(yytext+2); 
-                                          return ROTATION;  
+                                          yylval.un_entier= atoi(yytext+2);
+                                          return ROTATION;
                                         }
 <HieroText>\\t{INTEGER}
 <HieroText>\\r{INTEGER}	{
-	  yylval.un_entier= 360-atoi(yytext+2)* 90; 
-                                          return ROTATION;  
+	  yylval.un_entier= 360-atoi(yytext+2)* 90;
+                                          return ROTATION;
 	}
 <HieroText>"("{ESPSO}	{TLIGNE(); return '(';}
 <HieroText>{ESPSOH}")"{ESPSO}	{TLIGNE(); return ')';}
@@ -308,7 +307,7 @@ void traite(texte)
   if ((result= trouve(texte, definitions)))
     {
       for (i=strlen(result) -1; i> -1; i--)
-        unput(result[i]);		
+        unput(result[i]);
     }
   else
   {
@@ -352,7 +351,7 @@ computeShading(Shading *h)
       }
 }
 
-/* 
+/*
  * Local Variables:
  * mode: c
  * tab-width: 40

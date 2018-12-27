@@ -1,8 +1,42 @@
-*.o
+# http://www.gnu.org/software/automake
 
-# Generated files (flex/bison)
-Seshnesu/sesh.c
-Seshnesu/sesh.h
-Seshnesu/seshSource.h
-Seshnesu/seshl.c
+Makefile.in
+
+# http://www.gnu.org/software/autoconf
+/aclocal.m4
+/autom4te.cache
+/autoscan-*.log
+/autoscan.log
+/compile
+/config.h.in
+/configure
+/configure.scan
+/depcomp
+/install-sh
+/missing
+/stamp-h1
+/ylwrap
+
+# Other generated files (flex, bison, autotools, gcc)
+config.h
+config.log
+config.status
+hierotex-*
+Makefile
+sesh/.deps/
+sesh/*.o
+sesh/sesh
+sesh/sesh.c
+sesh/sesh.h
+sesh/seshl.c
+sesh/seshSource.h
+
+# Generated files from tex build
+*.aux
+*.bbl
+*.blg
+*.dic
+*.log
+*.pdf
+texmf/doc/latex/hierotex/bib.bib
 

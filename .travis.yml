@@ -10,11 +10,16 @@ compiler:
 
 install:
   - sudo apt-get update
-  - sudo apt-get install -y bison
-  - sudo apt-get --no-install-recommends -y install texlive
+  - sudo apt-get install -y bison flex automake autotools-dev
+  - sudo apt-get --no-install-recommends -y install texlive texlive-luatex
+  - aclocal
+  - autoheader
+  - autoconf
+  - automake --add-missing
 
 script:
-  - (cd Seshnesu/ && make veryveryclean && make sesh)
-  - make publish
+  - ./configure
+  - make
   - sudo make install
+  - make distcheck
 ...

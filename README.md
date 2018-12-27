@@ -1,7 +1,7 @@
 HieroTeX
 ========
 
-[![Build Status](https://travis-ci.org/mike42/hierotex.svg?branch=master)](https://travis-ci.org/mike42/hierotex)
+[![Build Status](https://travis-ci.org/hierotex/hierotex.svg?branch=master)](https://travis-ci.org/hierotex/hierotex)
 
 This is a copy of the HieroTeX LaTeX package, for typesetting hieroglyhs.
 

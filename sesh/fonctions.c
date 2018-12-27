@@ -1,3 +1,4 @@
+#include "config.h"
 #include "hache.h"
 #include "quadra.h"
 #include "general.h"
@@ -6,10 +7,6 @@
 #include <string.h>
 
 #include "fonctions.h"
-
-extern char * Version;
-
-
 
 PRIVATE TABLE signes;
 PUBLIC TABLE definitions;
@@ -85,7 +82,6 @@ PUBLIC void defineNewChar(charname, chardef)
 PRIVATE void read_sign_file(fname)
 		 char * fname;
 {
-	struct donne *i;
 	FILE *f;
 	int numLine= 0;
 	if ((f= fopen(fname, "r")) != NULL) {
@@ -322,7 +318,7 @@ PRIVATE void quadra_parenthese(debut, q, external, sens)
 {
 	printf("%s", debut);
 	affiche_hiero(q->contenu.des_quadras, external, sens);
-	printf("}%\n");
+	printf("}%%\n");
 }
 
 /*
@@ -555,7 +551,7 @@ PUBLIC int main(argc, argv)
 	int argc;
 	char ** argv;
 {
-	/*extern */int yydebug;
+	extern int yydebug;
 	int lastArg= 1;
 	int argsOk= TRUE;
 
@@ -577,7 +573,7 @@ PUBLIC int main(argc, argv)
 	
 	if (!argsOk)
 		{
-			fprintf(stderr, "sesh nesou, version (%s)\n", Version);
+			fprintf(stderr, "%s\n", PACKAGE_STRING);
 			fprintf(stderr, "usage %s [-def SIGNDEFINITIONFILE]\n", argv[0]);
 			exit(0);
 		}
@@ -586,7 +582,7 @@ PUBLIC int main(argc, argv)
 
 	readStaticDefinitionFiles();
 
-	yydebug= 1;
+	yydebug= 0;
 	initialise_quadras();
 	(void)yyparse();
 	libere_quadras();

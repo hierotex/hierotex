@@ -1,0 +1,1265 @@
+% Document Type: LaTeX
+% Master File: Egypto.tex
+\documentclass[final]{article}
+\usepackage{egypto}
+\usepackage[psfonts]{hiero}
+
+%%\overfullrule=5pt
+\newcommand{\HieroTeX}{Hiero\TeX{}}
+\title{\HieroTeX{}, A \LaTeX periment of hieroglyphic typesetting} \author{Serge
+  Rosmorduc\\ rosmord@iut.univ-paris8.fr} \def\comment#1{}
+
+\def\Backslash{$\backslash$}
+\def\htimage#1{{#1\relax}}
+
+\begin{document}
+ \maketitle
+
+ \begin{hieroglyph}
+   #def Hm' N42# #def bdS A7# #def bin G37# #def arm D40# #def knife
+   T30# #def copper N34# #def di' D37# #def hrw h-r:W*ra-Z1# #def
+   ink nw:k':A1# #def inr O39# #def iw' D54# #def k' V31A# #def nn
+   M22-M22-n:n# #def nxt A24 # #def rmn D41# #def king A42# #def sxA
+   A2# #def wnn wn:n:n# #def swA Z9# #def neg D35# #def wAt N31#
+ \end{hieroglyph}
+
+\begin{center}
+  \begin{hieroglyph}
+    <z:a:r-D-rw:z-m-r:d-W:k-A1>
+  \end{hieroglyph}
+\end{center}
+  
+\section{License}
+\begin{center}
+  Sesh Nesout, a TeX package for hieroglyphic typesetting\\
+  Copyright (C) 1993-2001 Serge Rosmorduc
+\end{center}     
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 1, or (at your option)
+any later version.
+     
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WA\-RRANTY; without even the implied warranty of
+MERCHANTABI\-LITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+     
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+\section{Introduction}
+If you use \LaTeX{}, and want to typeset hieroglyphic texts, this
+package is for you. If you want to typeset hieroglyphs, and don't know
+\LaTeX, then have a look at the file {\tt EGypto.tex}, to get an idea
+of what \LaTeX{} looks like. 
+
+You can use also use the (ugly, but getting better) fonts for your own
+programs. There are both a metafont and gsf (postscript type I) fonts.
+The fonts were made with the GNU fontutils.
+
+\section{Installation}
+As \LaTeX{} works on so many machines, I can't really give you
+detailed informations. So I assume you know a little about it.
+
+\subsection{Windows (MikTeX)}
+
+There are a number of \LaTeX{} versions available for windows. Most of
+them are free. The installation procedure described here is for
+Mik\TeX, which you can fetch at:
+\begin{quotation}
+  \texttt{http://www.miktex.org/2.1/index.html}
+\end{quotation}
+
+After installing MiKTex, you need to install the fonts and sty for
+Hieroglyphs that you got from unpacking the tgz file. Note that Winzip
+unpacks tgz files.
+
+Put the MF and AUXMF folders in the following directories:
+\begin{verbatim}
+MiKTeX\fonts\source\Hierotex\MF
+MiKTeX\fonts\source\Hierotex\AUXMF
+\end{verbatim}
+
+Put the sty files at the following directories:
+\begin{verbatim}
+MiKTeX\latex\hierotex\Hierltx.sty
+MiKTeX\latex\hierotex\hiero.sty
+\end{verbatim}
+
+The next step is to run:
+\begin{verbatim}
+MiKTeX\miktex\config\config.bat
+\end{verbatim}
+
+Then make sure the sesh.exe file in in your path.
+
+\subsection{Unix installation with tetex}
+
+If you are using Unix and the tetex distribution, the simpler thing to
+do is:
+\begin{enumerate}
+\item edit variable.mk in the HieroTeX directory.  You need to check
+  the variables DESTDIR, BINDIR, TEXROOT are correct for you.
+\item type ``\texttt{make tetex-install}''. You might need to be root for this
+  to work. That's all.
+\end{enumerate}
+
+\paragraph{What to do if you can't log as root ?}
+type:
+\begin{verbatim}
+mkdir $HOME/bin
+mkdir $texmf
+\end{verbatim}
+
+edit variables.mk and set the following variables:
+\begin{verbatim}
+# Destination directory. Usually /usr, /usr/local or $(HOME)
+DESTDIR=$(HOME)
+# Place where the binary goes
+BINDIR=$(DESTDIR)/bin
+# Root of the tex tree the files should be installed into.
+TEXROOT=$(DESTDIR)/texmf
+# Tex Style file directory
+TEXSTYLE=$(TEXROOT)/tex/latex/HieroTeX
+# Font directory
+FONTDIR=$(TEXROOT)/fonts/source/public/HieroTeX
+\end{verbatim}
+
+Now, get sure that the \texttt{texmf.cnf} configuration file for your system defines:
+\begin{verbatim}
+TEXMF = {$HOMETEXMF,!!$TEXMFMAIN}
+\end{verbatim}
+If this is not the case, you may define it as an environment variable.
+
+Now, you can type \texttt{make tetex-install}
+
+\subsection{Installing the postscript type 1 fonts on linux}
+
+This is optionnal, but gives nice results for postscript and above all
+pdf files. Beware : \textbf{to get a decent pdf output, you need to
+  use pdflatex.} At least, that's what I have seen. Using
+\texttt{dvips} and then \texttt{ps2pdf} produces a file where the
+hieroglyphic fonts are still coded in type 3 postscript fonts, which
+look horrible in acrobat. The version of ps2pdf shipped with the 3.0
+debian actually produced an file acrobat couldn't read (well, at least
+on my machine)
+
+I'm afraid this is an area where things can be quite different from
+one \TeX{} variant to another. There are two ways to go : user
+install, and system-wide install. I will describe user-specific
+install here. The system I use runs a Debian 3.0 Linux, with tetex
+installed.
+
+Download the fonts (file \texttt{HieroType1-VERSION.tgz}).  insert them in the
+\texttt{texmf} hierarchy you used. For instance, I did put them in
+\texttt{texmf/fonts/type1}, in my home directory (get sure the TEXMF
+path is properly defined in texmf.cnf). You can simply run :
+\begin{verbatim}
+cd ; tar zxvf hieroType1.tgz
+\end{verbatim}
+
+Now, run \texttt{texhash}. The fonts should work with latex and dvips, and pdflatex.
+
+The configuration files are in \texttt{texmf/dvips} for latex and
+dvips, and in \texttt{texmf/pdftex} for \texttt{pdflatex}.  If things
+work funny, have a look at the files \texttt{pdftex.cfg} and
+\texttt{config.ps} in these directories, and compare them with your
+system's default. If you want to make a system-wide install, the idea
+is the same, except that I strongly suggest not to overwrite your
+system's \texttt{config.ps} and \texttt{pdftex.cfg} with my own. The important lines to add are :
+\begin{itemize}
+\item in \texttt{config.ps} :
+\begin{verbatim}
+% This shows how to add your own map file.
+% Remove the comment and adjust the name:
+p +hierofonts.map
+\end{verbatim}
+
+\item in \texttt{pdftex.cfg} :
+\begin{verbatim}
+% This shows how to add your own map file. 
+% Remove the comment and adjust the name:
+map +hierofonts.map
+map +diacrFonts.map
+\end{verbatim}
+\end{itemize}
+
+\section{Typesetting hieroglyphs}
+
+% I provide two ways of typesetting hieroglyphs. The first one only uses
+% the power  of \LaTeX{}, and the second use a C program as a
+% pre-processor.
+
+% \subsection{The hard way}
+% If you want to use only  \LaTeX, and nothing else, you must include
+% the option \verb/hierLtx/ in your \verb=\documentstyle= line, like
+% this: 
+% \begin{verbatim}
+% \documentstyle[hierLtx]{article}
+% \end{verbatim}
+
+%         To type a hieroglyphic text directly, you can use the 
+% \verb.\.\verb.hieroglyphe. macro. You type the signs like this:
+% \begin{center}
+% \verb?\?\verb=hieroglyphe{A/1}= \\
+% to get:\\  
+% \begin {hieroglyph}              
+%   A1
+% \end {hieroglyph} % I cheat. too bad
+% \end{center}
+% Beware!  the numbers aren't exactly the one in Gardiner's grammar. To
+% find which number gives you which sign, you may use the \verb/testfont/ 
+% \TeX{} source, like this: 
+
+% let's suppose you want the sign list for ``man''. You type (on a
+% unix box, but the idea is the same elsewhere. Your input is {\sl slanted,} the computer's output is in typewriter font) :
+% \begin{flushleft}
+%   \tt {\sl tex testfont}\\
+%   \verb#This is TeX--XeT, Version 3.1415--1.0 (C version 6.1)#\\
+%   \verb#TeX--XeT Copyright (C) 1992 by Dante e.V.#\\
+%   \verb#(/usr/TeX/lib/texmf/tex/plain/testfont.tex#\\
+%   \verb#Name of the font to test =# {\sl A\/}\\
+%   \verb#Now type a test command (\help for help):)#\\
+%   \verb#*#{\sl \Backslash table  \vspace{2ex}\/}\\
+%   \verb#*#{\sl \Backslash bye}\\
+%   \verb#[1]#\\
+%   \verb#Output written on testfont.dvi (1 page, 6088 bytes).#\\
+%   \verb#Transcript written on testfont.log.#\\
+% \end{flushleft}
+% Then, you can print the table.
+
+%         To type a complicated text, you can , like in the ``manuel'',
+% type: `\verb=-=' to separate two groups horizontally, and `\verb=:='
+% to separate two groups vertically. Accolades allow you to group signs.
+
+% \begin{center}
+%   \verb,\,\verb=hieroglyphe{{Q/3-X/1}:N/1}= \\
+%   \mbox{\begin {hieroglyph}
+%     p*t:pt
+%   \end {hieroglyph}}
+% \end{center} 
+% nice, isn't it\footnote{Actually, I'm cheating. See the file
+%   {\tt Ltxex.tex} for real example.}?
+
+
+
+% \subsection{The ``Easy'' Way}
+
+You need a C compiler, to build\footnote{see the file
+  \texttt{BUILD.txt}} the \verb/sesh/ program, or a compiled version
+thereof.  I intended the software to be called \EnPetit{\begin{hieroglyph} sw-t:n
+    -Y3-A1 -U4:a-Y1v
+\end{hieroglyph}}, but it's a little hard to type on a keyboard.
+
+You might also want the {\em Inventaire des signes hi\'eroglyphiques
+  en vue de leur saisie informatique, \/}~\cite{MANCOD} hereafter
+called {\em manuel de codage\/} (in English, French, and German).
+
+To use \texttt{sesh,} write your \LaTeX\ source with hieroglyphic texts in a
+\verb|hieroglyph| environment. Then, use sesh as a filter to obtain a 
+\LaTeX able result. As any polite program, sesh reads stdin and writes
+on stdout. 
+
+\paragraph{example:} 
+if your \LaTeX{} file, called \verb/foo.htx/, is:
+\begin{flushleft} \tt
+  \verb/\/\verb/documentclass{article}/\\
+  \verb/\/\verb/usepackage{hiero}/\\
+  \verb.\.\verb/begin{document}/ \\
+  \verb.\.\verb/begin{hieroglyph}/\\
+  A1
+  \verb/\/\verb/end{hieroglyph}/\\
+  \verb/\/\verb/end{document}/\\
+\end{flushleft}
+you should proceed like this:
+\begin{flushleft}
+  \texttt{sesh} \texttt{<} \textsl{foo.htx} \texttt{>} \textsl{foo.tex}\\
+  \texttt{latex} {\sl foo.tex}
+\end{flushleft}
+and you should get a dvi file containing the sign 
+\begin{hieroglyph}
+  A1
+\end{hieroglyph}.
+Beware that you can't use \LaTeX{} comments between the 
+beginning and the end of the \verb/hieroglyph/ environment. 
+
+
+\subsubsection{The hiero package and its options}
+
+To use \HieroTeX{}, you should include the \texttt{hiero} package,
+like this :
+\begin{verbatim}
+\usepackage{hiero}
+\end{verbatim}
+
+If you want to use the hieroglyphic postscript fonts, you should specify the \texttt{psfonts} option :
+\begin{verbatim}
+\usepackage[psfonts]{hiero}
+\end{verbatim}
+In this case, you should have the postscript fonts installed (see
+above). Please note that these fonts won't always look good in the dvi
+output. You have to look at the final postscript or pdf output to get
+an exact idea of the result. In particular, right-to-left signs won't
+look correct in dvi.
+
+\subsubsection{Hieroglyphs}
+
+The ``alphabetic'' signs can be called like shown in
+table~\ref{tab:alpha}.  The Letters A, i, a, w, b, p, f, m, n, r, h,
+H, x, X, z, s, S, q, k, g, t, T, d, and D are used both for the
+hieroglyphs and their transliteration.
+\begin{table}[htbp]
+  \begin{center}
+    \leavevmode
+    \EnPetit{
+    \begin{tabular}{|c|c|c|} \hline
+      \small\sc sign & \small\sc \vbox{\vskip 3pt\hbox{trans-}\hbox{litteration}} &
+      \small\sc code \\ \hline
+        \begin{hieroglyph} A 
+        \end{hieroglyph} & \eg A & A\\
+        \begin{hieroglyph} i 
+        \end{hieroglyph} & \eg i & i\\
+        \begin{hieroglyph} a 
+        \end{hieroglyph} & \eg a & a\\
+        \begin{hieroglyph} w 
+        \end{hieroglyph} & \eg w & w\\
+        \begin{hieroglyph} W 
+        \end{hieroglyph} & \eg w & W\\
+        \begin{hieroglyph} b 
+        \end{hieroglyph} & \eg b & b\\
+        \begin{hieroglyph} p 
+        \end{hieroglyph} & \eg p & p\\
+        \begin{hieroglyph} f 
+        \end{hieroglyph} & \eg f & f\\
+        \begin{hieroglyph} m 
+        \end{hieroglyph} & \eg m & m\\
+        \begin{hieroglyph} n 
+        \end{hieroglyph} & \eg n & n\\
+        \begin{hieroglyph} N 
+        \end{hieroglyph} & \eg n & N\\
+        \begin{hieroglyph} r 
+        \end{hieroglyph} & \eg r & r\\
+        \begin{hieroglyph} h 
+        \end{hieroglyph} & \eg h & h\\
+        \begin{hieroglyph} H 
+        \end{hieroglyph} & \eg H & H\\
+        \begin{hieroglyph} x 
+        \end{hieroglyph} & \eg x & x\\
+        \begin{hieroglyph} X 
+        \end{hieroglyph} & \eg X & X\\
+        \begin{hieroglyph} z 
+        \end{hieroglyph} & \eg z & z\\
+        \begin{hieroglyph} s 
+        \end{hieroglyph} & \eg s & s\\
+        \begin{hieroglyph} S 
+        \end{hieroglyph} & \eg S & S\\
+        \begin{hieroglyph} q 
+        \end{hieroglyph} & \eg q & q\\
+        \begin{hieroglyph} k 
+        \end{hieroglyph} & \eg k & k\\
+        \begin{hieroglyph} g 
+        \end{hieroglyph} & \eg g & g\\
+        \begin{hieroglyph} t 
+        \end{hieroglyph} & \eg t & t\\
+        \begin{hieroglyph} T 
+        \end{hieroglyph} & \eg T & T\\
+        \begin{hieroglyph} d 
+        \end{hieroglyph} & \eg d & d\\
+        \begin{hieroglyph} D 
+        \end{hieroglyph} & \eg D & D\\ \hline
+      \end{tabular}}
+    \end{center}
+    \caption{Alphabetical signs\label{tab:alpha}}
+  \end{table}
+  \sloppy Signs are named, either after their transliterations (for
+  example, \verb|xpr| is \EnPetit{\begin{hieroglyph} xpr
+\end{hieroglyph}}%
+) \fussy or after their Gardiner Code. See appendix~\ref{sec:signes}
+for a list of codes. For a complete list, see~\cite{MANCOD}, which
+intends to be {\em the\/} format for encoding hieroglyphic texts.
+
+A few codes are used for signs variants; these are \verb/pA'/ and
+\verb/k'/ which write
+\begin{hieroglyph}
+  pA'
+\end{hieroglyph} and 
+\begin{hieroglyph}
+  k'
+\end{hieroglyph}.
+
+
+\subsubsection{Special signs}
+You won't type only hieroglyphs. So: 
+\begin{description}
+\item[..] is a space
+\item[.] is a quater-space
+\item[//] is 
+  \begin{hieroglyph}
+    //
+  \end{hieroglyph}
+
+\item[h/] is 
+  \begin{hieroglyph}
+    h/
+  \end{hieroglyph}
+
+\item[v/] is 
+  \begin{hieroglyph}
+    v/
+  \end{hieroglyph}
+
+\item[/] is 
+  \begin{hieroglyph}
+    /
+  \end{hieroglyph}
+
+
+\item[o] is 
+  \begin{hieroglyph}
+    o
+  \end{hieroglyph}
+
+\item[O] is 
+  \begin{hieroglyph}
+    O
+  \end{hieroglyph}
+
+\end{description}
+
+\subsubsection{Grouping Signs}
+
+You can type adjacent signs with `-' , stack signs with `:', group
+signs with parenthesis, and use `\verb.*.' to separate signs on the
+same level. 
+
+A few examples: 
+\begin{flushleft}
+  \verb.\.\verb/begin{hieroglyph}/\\
+  \verb/p*t:pt-..-A-..-n:(x:t)*U30-A-xAst-qmA/\\
+  \verb/./\verb/end{hieroglyph}/\\
+\end{flushleft}
+gives 
+\begin{hieroglyph}
+  p*t:pt-..-A-..-n:(x:t)*U30-A-xAst-qmA
+\end{hieroglyph}
+
+you can type a `=' sign {\em after\/}  a `-' or a `:' to indicate a
+grammatical ending. More important, a {\em space, or any number of
+  spaces, tabulations, or newlines,}  indicate a word
+ending\footnote{Note that in the ``manuel'', a word ending is {\em
+    one\/} space. This is extremely inconvenient for \LaTeX{}, and, in
+  fact, for the general purpose of directly typing the text.}
+I strongly recommend that you type the word-separation spaces. The
+package will then try to cut the lines at word-separations, which is
+nicer and easier to read\footnote{You can use spaces directly to
+  separate words, if you want, without using a `-'. but this won't be
+  conform to the manuel encoding.}.
+
+
+\subsubsection{Sign Modifiers}
+
+\begin{description}
+\item[\Backslash{}\Backslash{}] after a signs inverts it:
+  \verb|A1-A1\| writes 
+  \begin{hieroglyph}
+    A1-A1\
+  \end{hieroglyph}
+
+\item[\Backslash{}s$n$] where $n$ is 1,2,3 or 4, diminishes the 
+  sign size: 
+  \begin{center}
+\verb/A1-A1\s1-A1\s2-A1\s3-A1\s4/ 
+  \end{center}
+draws
+  \begin{hieroglyph}
+    A1-A1\s1-A1\s2-A1\s3-A1\s4
+  \end{hieroglyph}
+  
+\item[\Backslash{}R$n$] rotates a figure by the angle $n$. This
+  excedes normal dvi capacities, so you must use a suitable graphic
+  driver : \texttt{dvips}  for postscript, or \texttt{pdftex} for pdf.
+To do this, include:
+\begin{verbatim}
+\usepackage[dvips]{graphicx}
+\end{verbatim}
+or 
+\begin{verbatim}
+\usepackage[pdftex]{graphicx}
+\end{verbatim}
+in your headings.
+  \verb|anx\R30|-G5
+  \begin{hieroglyph}
+    anx\R30-G5
+  \end{hieroglyph}
+\end{description}
+Alternatively, you can use the option \verb|useGraphicx| when loading
+the hiero package :
+\begin{verbatim}
+\package[useGraphicx]{hiero}
+\end{verbatim}
+Note that this option also switches on the use of postscript type1
+hieroglyphic fonts.
+
+\subsubsection{Cartouches and parenthesis}
+
+\begin{description}
+\item[\tt <- and ->] draw a cartouche around the embedded text:
+\begin{verbatim}
+ <-ra-mn:n-xpr->
+\end{verbatim}
+  \begin{hieroglyph}
+    <-ra-mn:n-xpr->
+  \end{hieroglyph}
+
+  
+\item[\tt <S and >] draw a serekh: 
+\begin{verbatim}
+G5 -<S-nTr-X:t->
+\end{verbatim}
+  \begin{hieroglyph}
+    G5 -<S-nTr-X:t->
+  \end{hieroglyph}
+  
+
+\item[\tt <H >] draw a \htimage{\eg Hwt-}sign.
+\begin{verbatim}
+<H-pA-i-i-A1-Htp:t*p>
+\end{verbatim}
+  \begin{hieroglyph}
+    <H-pA-i-i-A1-Htp:t*p>
+  \end{hieroglyph}
+\end{description}
+The letters {\em b, m and e,} used after the beginning sign, allow you
+to draw only the beginning, middle, or ending of construction. 
+So, for example, 
+\verb/<Se-nTr->/ writes
+\begin{hieroglyph}
+  <Se-nTr->
+\end{hieroglyph}.
+
+The parenthesis are:
+\begin{description}
+\item[{[[...]]}] for 
+  \begin{hieroglyph}
+    [[+l text +s ]]
+  \end{hieroglyph};
+\item[{[\{...\}]}] for 
+  \begin{hieroglyph}
+    ["+l text +s "]
+  \end{hieroglyph};
+\item[{[\&...\&]}] for 
+  \begin{hieroglyph}
+    [&+l text +s &]
+  \end{hieroglyph}.
+\end{description}
+
+
+\subsubsection{Shading and stacking}
+
+\verb|-#-| \ldots \verb|-#-| shades a text\footnote{The previous
+  versions of sesh allowed one to do without the `-'. but I decided to
+  revert to the manual, to be able to use the \# to stack signs.}:
+\verb/-#-A1-A2-#-/ writes 
+\begin{hieroglyph}
+  -#-A1-A2-#-
+\end{hieroglyph}.
+
+You can shade a part of a group with \verb.#//., 
+\verb.#h/., \verb.#v/., and \verb.#/.:
+\verb.A1#//. is 
+\begin{hieroglyph}
+  A1#//
+\end{hieroglyph}; 
+\verb.A1#h/. is 
+\begin{hieroglyph}
+  A1#h/
+\end{hieroglyph}; 
+\verb.A1#v/. is 
+\begin{hieroglyph}
+  A1#v/
+\end{hieroglyph}, and 
+\verb.A1#/. is 
+\begin{hieroglyph}
+  A1#/
+\end{hieroglyph}.
+
+It is possible to specify which quarters of a cadrat will be shaded.
+This is done by writing \verb|#| after the cadrat, and the numbers of
+the cadrat quarters to shade. The quarters are numbered this way:
+\begin{center}
+  \begin{tabular}{cc}
+    1 & 2 \\
+    3 & 4\\
+  \end{tabular}
+\end{center}
+The following example demonstrates the system:
+\begin{verbatim}
+  n:(x:t)*U30#13-..-n:(x:t)*U30#124-..-n:(x:t)*U30#14-..-n:(x:t)*U30#1234
+\end{verbatim}
+\begin{hieroglyph}
+  n:(x:t)*U30#13-..-n:(x:t)*U30#124-..-n:(x:t)*U30#14-..-n:(x:t)*U30#1234
+  n:(x:t)*U30#13-n:(x:t)*U30#124-n:(x:t)*U30#14-n:(x:t)*U30#1234
+\end{hieroglyph}
+
+\comment{
+There is a limited possibility for shading other parts of groups.
+For example: \verb.p*t#v/:pt.. 
+\begin{hieroglyph}
+  p*t#v/:pt
+\end{hieroglyph}, and a new shading system will probably appear in the
+next ``manuel''.  
+}
+
+\verb/#/ on his own allows to stack signs: 
+\verb/m#a/ is 
+\begin{hieroglyph}
+  m#a
+\end{hieroglyph}.
+
+\subsubsection{Text Orientation}
+
+If you use a version of TeX--Xet (a patch designed to allow you to
+type right-to-left text as well as left-to-right, with the benefit of
+the line-cutting system), It is possible to reverse a whole part of
+the text. Simply type \verb/+dg/ right-to-left, and \verb/+gd/ for
+left-to-right (this is {\em not\/} part of the {\em manuel\/}).
+
+\expandafter\ifx\csname beginL\endcsname\relax % be sure the file 
+\def\beginL{\relax}             %can be compiled anyway.
+\def\beginR{\relax} \def\endR{\relax} \def\endL{\relax}
+
+{\bf BEWARE !!!! this file was not compiled with TeX--Xet, so the
+  example bellow is false. You should have gotten a dvi version of
+  this file (called \verb/doc.dvi/), without this message.} \fi
+
+Example:
+\begin{hieroglyph}
+  +dg G7 E1:D40 xa:a m wAs-t:niwt nbty +gd anx G7 E1:D40 xa:a m
+  wAs-t:niwt nbty
+\end{hieroglyph}, made like that: 
+\begin{verbatim}
+  +dg G7 E1:D40 xa:a m wAs-t:niwt nbty +gd anx G7 E1:D40 xa:a m
+  wAs-t:niwt nbty
+\end{verbatim}
+
+Testing compatibility with `\textbackslash'
+\begin{hieroglyph}
+  +dg A4\-C2-x*t:f-w-b:n-N8:f-m-Axt:t*1-iAb-t:t -+gd
+  A4\-C2-x*t:f-w-b:n-N8:f-m-Axt:t*1-iAb-t:t
+\end{hieroglyph}, made like that: 
+\begin{verbatim}
+  +dg A4\-C2-x*t:f-w-b:n-N8:f-m-Axt:t*1-iAb-t:t -+gd
+  A4\-C2-x*t:f-w-b:n-N8:f-m-Axt:t*1-iAb-t:t
+\end{verbatim}
+
+There is a more general right-to-left builtin, but it won't allow
+line-cutting: `+rl' and `+lr'. 
+example:
+\begin{verbatim}
+ +rl G5 -nTr-ms-w-t:Z2 +lr anx G5 -nTr-ms-w-t:Z2 
+\end{verbatim}
+\begin{hieroglyph}
+   +rl G5 -nTr-ms-w-t:Z2 +lr anx G5 -nTr-ms-w-t:Z2 
+\end{hieroglyph}. It will work in any case.
+
+Finally, if your ultimate output is postscript, you can use packages
+like pstricks to invert left-to-right text and make it into
+right-to-left.
+
+For Column-writing, the \LaTeX{} macro \verb/\EnColonne/ can be used.
+Its first argument is the column width. The one given in the following
+example isn't bad. 
+\begin{flushleft}
+  \Backslash{}\verb/EnColonne[1.2\Htm]{/\\
+  \Backslash\verb/begin{hieroglyph}/\\
+  \verb/#def wAt N31#/
+  \verb/sw*(t:di) -Htp -wp-wAt-wAt-wAt-!/\\
+  \verb/E16-nb-tA:idb\s2*Z1-Dsr-r-xAst-!/\\
+  \Backslash\verb/end{hieroglyph}/\\
+  \verb/}/\\
+\end{flushleft}
+\begin{center}
+\EnColonne[1.2\Htm]{
+  \begin{hieroglyph}
+    sw*(t:di) -Htp -wp-wAt-wAt-wAt-!
+    E16-nb-tA-idb\s2*Z1-Dsr-r-xAst-!
+  \end{hieroglyph}}
+\end{center}
+It is often necessary to use the \verb/\s/ construct to tune the sizes
+of the signs in column writing. 
+
+
+\subsubsection{Some text}
+
+\verb|+l .. +s| allows inserting of \LaTeX{} text;  
+\verb/|....-/ allows the insertion of superscript text:
+\begin{verbatim}
+<-+l Ramses II +s-> -A1-|1,2-di-anx
+\end{verbatim}
+\begin{hieroglyph}
+  <-+l Ramses II +s-> -A1-|1,2-di-anx
+\end{hieroglyph}
+
+
+\subsubsection{kerning}
+
+A non-manual feature of the present system allows to kern the
+signs. the sequence \verb.\!. is a negative space that can be used
+both in horizontal context:
+\begin{verbatim}
+zA-\!\!ra:.
+\end{verbatim}
+\mbox{
+  \begin{hieroglyph}
+      zA-\!\!ra:.
+    \end{hieroglyph}}
+and in vertical one: 
+\begin{verbatim}
+nD-D:\!\!\!\!Hr\s1
+\end{verbatim}
+  \mbox{
+    \begin{hieroglyph}
+      nD-D:\!\!\!\!Hr\s1
+    \end{hieroglyph}}
+
+
+\subsubsection{Size}
+
+The size of signs is controled by various \LaTeX{} macros:
+\begin{itemize}
+\item \verb/\DisplayHieroglyphs/ write the hieroglyphic texts in its
+  scope in a  big size, with a large spacing between lines so that the
+  reading is easy. 
+\item \verb/\TextHieroglyphs/ does the contrary. It is better for
+  in-text text. 
+\item \verb/\EnPetit{}/  writes its argument in the same format as 
+  \verb/\TextHieroglyphs/ does. 
+\item \verb/\SmallerText/ lowers the size of the signs. 
+\end{itemize}
+
+{\verb/\DisplayHieroglyphs/ \DisplayHieroglyphs
+This is an example: 
+\begin{center}
+  \mbox{\begin{hieroglyph}
+    ir-n-ir:r r r:t:a ir:f
+  \end{hieroglyph}}
+\end{center}
+looks good.  \verb/\TextHieroglyphs/
+\TextHieroglyphs \begin{hieroglyph}
+ir-n-ir:r r r:t:a ir:f
+\end{hieroglyph} is  better if you are in the bulk of the text.
+And  \verb/\SmallerText/ \SmallerText
+ \begin{hieroglyph}
+    ir-n-ir:r r r:t:a ir:f
+  \end{hieroglyph} is smaller
+and \verb/\SmallerText/ \SmallerText
+ \begin{hieroglyph}
+    ir-n-ir:r r r:t:a ir:f
+  \end{hieroglyph} is even smaller
+}
+
+\subsubsection{Macros}
+There is a limited macro facility (again, not part of the {\em manuel\/}). To
+define a macro, type
+\begin{verbatim}
+#def MACRONAME Body#
+\end{verbatim}
+Note the second `\verb/#/' sign.  MACRONAME can be any unused sequence
+of letters, simple quote, and point.
+
+This can be useful if a name appears often. 
+
+Example:
+
+\begin{minipage}{15em}
+\tt
+\noindent\verb|\begin{|hierogl{}yph\verb|}| % to avoid interpretation !!!!!
+\vspace{-2ex}
+\begin{verbatim}
+#def 'tA tA:N23*Z1#
+tr-t:r-n-wn:n:n-k-tp-Z1-'tA
+\end{hieroglyph}
+\end{verbatim}
+\end{minipage}
+\vspace{1ex}
+
+\begin{hieroglyph}
+#def 'tA tA:N23*Z1#
+tr-t:r-n-wn:n:n-k-tp-Z1-'tA
+\end{hieroglyph}
+\vspace{1ex}
+
+{\sloppy{} Note that, once defined, these macros can be used in all
+  subsequent \verb|hieroglyph| environment.  }
+\fussy
+
+A few useful definitions: 
+\begin{verbatim}
+#def Hm' N42#
+#def bdS A7#
+#def bin G37#
+#def arm D40#
+#def knife T30#
+#def copper N34#
+#def di' D37#
+#def hrw h-r:W*ra-Z1#
+#def ink nw:k':A1#
+#def inr O39#
+#def iw' D54#
+#def k' V31A#
+#def nn M22-M22-n:n#
+#def nxt A24#
+#def rmn D41#
+#def king A42#
+#def sxA A2#
+#def wnn wn:n:n#
+\end{verbatim}
+
+\subsection{\LaTeX\ macros}
+
+If you want the small signs to be on the baseline, type
+\verb|\SurLigne| out of a hieroglyph environment; the default is to
+center signs. To switch back to centered signs, type \verb|\Centrer|.
+In a cartouche, the text is always centered. You can handle the
+line-cutting algorithm by changing the two \TeX\ macros
+\verb|\Hrp| and \verb|\Hitmts|; the first rules what is
+inserted between signs, the second between words.  The default values
+tend to protect you from cutting a word, at the cost of some white
+space.
+
+
+
+\subsection{New Sign Definition}
+
+It is now possible to define new signs for \HieroTeX{}. The difficult
+part is that you have to create a font which \TeX{} can use, which is
+a bit \TeX{}nical. The font editor for tksesh can be used for such
+tasks. Another option is to create postscript type 1 font, which can be used by \TeX{}.
+
+Once the font is created and installed in TeX, you must declare both
+the font and the character to use it.
+
+\subsubsection{Character Definitions}
+
+
+First, you must create a file which describes the codes for the
+characters in the font. The file format is rather simple:
+on each line, you should have:
+\begin{quotation}
+  \textsl{SIGNCODE SPACE TEX\_NAME\_FOR\_THE\_FONT SPACE SIGN\_NUMBER\_IN\_FONT} 
+\end{quotation}
+at the time being, note that the fonts for \HieroTeX{} contain both
+left-to-right and right-to-left sign (it would be possible to reverse
+the signs with postscript, but it wouldn't appear correctly in dvi
+files). So, restrict yourself to the first 128 character codes. For
+reversal to work, character $128 + n$ should be character $n$
+reversed.
+
+The file which contains new character definitions may be:
+\begin{itemize}
+\item /usr/local/lib/sesh/fontDef.txt
+\item \$HOME/fontDef.txt
+\item specified when starting sesh, with the -def option:
+\begin{verbatim}
+sesh -def mydefs.txt <toto.htx >toto.tex
+\end{verbatim}
+\end{itemize}
+\subsubsection{Font Declaration}
+
+Second, the font must be declared in your \LaTeX{} file:
+\begin{verbatim}
+\declareHieroGlyphicFont{HIEROTEXFONTNAME}{TEXFONTNAME}
+\end{verbatim}
+
+\subsubsection{Example}
+
+The files \texttt{testNewSigns.tex, titi.mf and titi\_font.mf} contain
+a complete example. The \texttt{bzr} font is not needed, but it might
+be edited using \texttt{fontedit.tcl,} a program which is available
+with tksesh. The latest version of \texttt{fontedit.tcl} is able to
+create metafont (and postscript type 1) sources. Note that postscript
+type 1 fonts are not very easy to integrate in a latex environment.
+
+\section{Typesetting transliterations and references}
+The commands here described are defined in the \verb=egypto.sty= file.
+
+\subsection{Settings}
+
+\begin{description}
+  \item[\Backslash Montitre\{...\}] allows you to define the document's title 
+ (To be used in Cross-references )
+
+ \item[\Backslash eg] to use the transliteration font
+
+ \item[\Backslash def\Backslash SourceTexte\{Name of the text\}] to tell LaTeX what
+text you are  typing
+
+\item[\Backslash def\Backslash EXEMPLE\{example\}] To use this style in English
+
+\end{description}
+
+\subsection{Transliteration}
+
+ There are currently three ways to write some transliteration
+ (apart from \verb/\eg/)
+
+\begin{enumerate}
+ \item the translit environment:
+ it takes 3 arguments: 
+\begin{itemize}
+        \item name of the text
+        \item page number or recto/verso (exxs \verb/{4}/ or \verb/{recto}/
+        \item line number(s) (could be column number) (exxs.
+\verb/{4}/ \verb/{4-9}/ 
+        \item an alternative (possibly empty) reference in free text.
+\end{itemize}
+
+ One important thing is that TeX ``understands'' these numbers.
+ i.e.\ there are commands to change the line number and the page 
+ number. such things are useful for cross-references
+
+ you can  type a transliteration, and use ``\verb/\traduction/'' to start
+ typing the translation.
+
+ Example:
+
+\begin{verbatim}
+\begin{translit}{O. foobar XIV}{verso}{10-15}{LES 12,2-5}
+  iw.i rx.kw mdw nTr
+\traduction
+  I know the hieroglyphs
+\end{translit}
+\end{verbatim}
+ \begin{translit}{O. foobar XIV}{verso}{10-15}{LES 12,2-5}
+ iw.i rx.kw mdw nTr
+ \traduction
+ I know the hieroglyphs
+ \end{translit}
+
+ \item the exemple environment. \sloppy
+ a translit environment with the word ``Exemple'' in front of 
+ it, and numbered. To write ``example'',  use
+ \verb/\def\EXEMPLE{Example}/
+
+\fussy
+ these two environments write a line in ``\verb/*.dic/'' where \verb/*/
+ is the name of your TeX file.
+
+ ``translit'' writes:
+\begin{verbatim}
+ \Citation{name of the source}{references}{document's title}{
+                        page number in document}
+\end{verbatim}
+
+ ``exemple'' writes:
+\begin{verbatim}
+ \Exemple{name of the source}{references}{document's title}
+          {example number}{page number in document}
+\end{verbatim}
+(all on the same line)
+
+\item the \verb/\traduction{}{}/ macro. It takes two arguments,
+ the first being a transliteration, the second a translation.
+ you have separates footnotes 
+ and, by default, the text is given in two columns 
+ which can spread over pages, which is useful to translate poetry.
+ If you want the translation under  the transliteration, you
+ can type 
+         $$\hbox{\verb/\def\EcritTraduction{\EcritTraductionEnLigne}/}$$
+ and 
+         $$\hbox{\verb/\def\EcritTraduction{\EcritTraductionEnColonne}/}$$
+ to switch back. In the column version, the second column is
+ a verse-like environment
+  
+\end{enumerate}
+
+\subsection{Varia}
+
+  
+
+\begin{description}
+%\item[$<$ \rm and $>$] can be used to stress an error.  (in
+%  \verb/\traduction{}{}/ only; prone to change)
+
+                           
+\item[\Backslash affligne] shows the line number above a vertical
+  line: \affligne .
+
+\item[\Backslash affpage] shows the page number in a cartouche:
+  \affpage .
+
+\item[\Backslash \tt | ] increases the line number and shows it.
+
+\item[\Backslash \tt * ] increases the page number and shows it.  (the
+  line number becomes 1)
+
+\item[\Backslash numligne\{VALUE\}] gives a value to the line number
+  and shows it
+
+\item[\Backslash numpage\{VALUE\}] the same for page number.
+
+\item[\Backslash dico\{Y\}\{translation\}\{comments\}] Can be used to make
+  an index of terms. ex:
+  $$\hbox{\verb| \dico{XAa}{to free}{transitive verb}|}$$  writes in the
+  .dic file:
+\begin{verbatim}
+\DicoIndex {XAa}{ to free }{transitive verb }{P. Leyde I 350}
+{verso,13}{name of the text}{2}
+  
+\end{verbatim}
+that is, what you wrote, plus the references.  It is to be used
+inside an environment. The first argument may contain a
+\verb/hieroglyph/ environment.
+\end{description}
+
+\subsection{Grammatical signs and al.}
+
+ The zero-subject (i.e. the empty set) is bound to \verb/\zero/
+
+ There is a environment for typesetting grammatical rules:
+ its name is gramrule.
+ a word typed there appears in slanted font, and `\verb*/~X /' 
+ writes X in transliteration (the space is mandatory).
+ 
+ The possib environment allows to type different cases, with 
+ an accolade in front of them. (\verb/\\/ to part the cases)
+ 
+ The pile environment allows to write some text in a column.
+ 
+ Example of use:
+        
+\begin{verbatim}
+ \begin{gramrule} 
+ ~ir + \begin{possib}
+        infinitive\\
+        prospective ~sDm.f \\
+        ~mrr.f \\
+        \end{possib} 
+     + \pile{this is not\\to \\be taken seriously\\}
+  \end{gramrule}
+\end{verbatim}
+ \begin{gramrule} 
+ ~ir + \begin{possib}
+        infinitive\\
+        prospective ~sDm.f \\
+        ~mrr.f \\
+        \end{possib} 
+     + \pile{this is not\\to \\be taken seriously\\}
+  \end{gramrule}
+
+\section{To Do}
+\begin{itemize}
+\item Capital letters for transliteration (currently, it is quite
+  hard to type ``{\it R}\htimage{\eg a\/}''.
+\item fully and strictly implement the ``manuel de codage''. (but
+  waiting for a possible new version.)
+\end{itemize}
+
+\section{Recently Done}
+\begin{itemize}
+\item A right-to-left font, and a support for tex--xet.
+\item Improved sesh --- I now use an hash table for the signs. The
+  {\em manuel\/} is more or less supported, and should be so very quickly.
+\item Hieroglyphic typesetting improved. The sizes are better choosed,
+  the signs can be merged with text, and are now centered on the base
+  line.
+\item Can use NFSS2 now. (but still support the old system.)
+\item Added hieroglyphs in \verb/\dico..../;
+\item Added a possibility of reversed text in normal latex.
+\item 2000AD. long time after. fixed rotation stuff.
+\item cleaned up a new error for text in column. 
+\item 2001. The monolith on the moon hasn't been found nor is HAL
+  operational, yet there are two bugs less in Hiero\TeX{}: subgroup
+  scaling is now correct, and a bug has been fixed in right-to-left
+  text. Space (.) and quater-space (..) used to be swapped. New
+  shading system. New signs can now be added without recompiling. The
+  internal signs encoding was changed and simplified. To keep old dvi
+  files usable, we decided to change the fonts names.
+\item 2002 : a few days of work have : (a) fixed the shading system
+  which works more or less perfectly in horizontal mode~; (b) fixed
+  the ``philological signs'' system ([]...) so that it scales well
+  when in subgroups (it was simply a matter of adding
+  \texttt{\textbackslash scriptscriptstyle} in front of the \TeX{}
+  commands).  Large shaded areas are now shaded group by group, which
+  means the line-breaking algorithms work on them. Last but not least,
+  postscript type 1 fonts have been made for the hieroglyphs, and the
+  whole system works now with \texttt{pdflatex}.
+\end{itemize}
+
+\appendix{}
+\section{Examples}
+
+Here are a few examples, taken from various texts: Lef\`ebvre's {\it
+  Grammaire de l'\'Egyptien Classique,\/} Gardiner's {\it Egyptian
+  Grammar,\/} and Westcar.
+\vspace{2em}
+
+ \noindent{\bf \Large Le pseudoparticipe}
+
+ \paragraph{} 
+ Il exprime particuli\`erement l'{\bf \'etat} ou la {\bf condition} de qqn,
+ ou de qq.ch. Deux cas sont \`a distinguer, selon que le substantif (ou
+ pronom) auquel est appos\'e le pseudoparticipe est sujet ou objet du
+ verbe de la phrase.
+
+ \begin{enumerate}
+ \item le pseudoparticipe peut qualifier un substantif (ou pronom) {\em
+     sujet\/} de certains verbes, comme 
+   \EnPetit{\begin{hieroglyph} 
+     wr:r-S:ra
+   \end{hieroglyph}}
+   \htimage{\eg wrS\/} `` passer tout le jour \`a '', 
+   \EnPetit{\begin{hieroglyph}
+     s-Dr:r-A55
+   \end{hieroglyph}}
+ \htimage{\eg sDr\/} `` passer toute la nuit \`a '',  
+   \EnPetit{\begin{hieroglyph}
+     #def iw' D54#
+     pr:r-iw'
+   \end{hieroglyph}}
+ \htimage{\eg pri\/} au sens de `` devenir '' ;
+   \EnPetit{\begin{hieroglyph}
+     Dr:r
+   \end{hieroglyph}}
+ \htimage{\eg Dr\/} `` finir '' (par faire telle ou telle chose).
+   Ex.: 
+   \EnPetit{\begin{hieroglyph} 
+     #def neg D35#
+     #def bin G37#
+     neg s-Dr:r-a:A55
+     z:A1 H-q:r-w-bin:r d-mi-i-N23-A1
+   \end{hieroglyph}}
+ \htimage{\eg n sDr s Hqrw r dmi.i\/} jamais un homme ne passa la nuit \`a
+   avoir faim dans ma ville ({\it Menthuw.\/} 11). Litt. \`a l'\'etat
+   d'avoir faim.
+
+   S'il est sourd et que sa bouche ne puisse plus s'ouvrir, 
+   \EnPetit{\begin{hieroglyph} 
+     #def nn M22-M22-n:n#
+     p:r-r:iw' a:t*F51-Z2:f nb:t
+     nn-A7
+   \end{hieroglyph}}
+   tous ses membres deviennent faibles ({\it Ebers\/} 99, 20--21).
+
+   \EnPetit{\begin{hieroglyph}
+     #def Hm' N42#
+     Dr:r-i-n:f Hm'-s-A3
+   \end{hieroglyph}}
+ \htimage{\eg Dr.in.f Hms(w)\/} \`a la fin il s'assit ({\it Leb.\/} 75).
+
+   Comparer l'emploi, comme auxiliaires, devant \htimage{\eg sDm.n.f,\/} de \htimage{\eg
+     pri, sDr\/} et \htimage{\eg Dr,} \S 331.
+
+ \item Il peut qualifier un substantif [...]
+ \end{enumerate}
+
+
+ \noindent{\bf EXERCICE XXII}  
+
+ \par ({\it a\/}) {\it Translate into English: \/}
+
+ {\EnGros
+ \begin{hieroglyph}
+   +l (1) +s d:h-n:tp-=k-=w r ns-=Snwt:Snwt HAt:a m niwt:t-Z1 ns-A9-t m
+   i-p:t st-t:Z2-niwt +l (2) +s i-w gm-m-=n:=f Hm':t-B1 t:n
+   Hm':z-A3-ti-i tp:Z1-=s Hr:Z1 mA-\!A-st-t-rd-=s
+ \end{hieroglyph}
+ }
+
+
+ \noindent{\bf Un texte sym\'etrique}
+%{\EgypS 1234567}
+ \begin{center}
+
+   \mbox{\begin{hieroglyph}
+       +rl anx G5 E1 D40 xa m R19-t:niwt sw:t bit:t <ra-mn-xpr> di anx
+       +lr G5 E1 D40 xa m R19-t:niwt sw:t bit:t <ra-mn-xpr> di anx  
+ \end{hieroglyph}}
+\end{center}
+
+ \begin{hieroglyph}
+   G5 <S E1 D40 xa m R19*(t:niwt) > nbty wAH sw*t-i-i (ra:Z1)*mi m p*t:pt 
+   sxm*G8*(F9:F9) (Dsr:xa)*Z3 (sw:t)*(bit:t) <ra-mn-xpr> zA*\!\!\!(ra:.)
+   <G26-ms*nfr-xpr> O10 nb:t M:f (kA:t)*(N33:N33:N33) mr*i*i
+ \end{hieroglyph}
+
+ \begin{center}
+   \EnColonne[1.2\Htm]{
+     \begin{hieroglyph}
+       G5 <S E1 D40 xa m R19*(t\s1:niwt\s1) >-!
+       nbty wAH sw*\!t\s1*\!i*i (ra:Z1)*mi m (p*t:pt)-! 
+       sxm*G8 F9*F9  Dsr-xa-Z2-!
+       (sw:t)*(bit:t) <ra-mn-xpr>-! zA*\!\!\!(ra:.)
+       <-G26-ms*nfr-xpr->-! O10 nb-t M-f (kA:t)*(N33:N33:N33) mr*i*i
+     \end{hieroglyph}}
+ \end{center}
+
+\begin{hieroglyph}
+  
+\end{hieroglyph}
+
+
+ \noindent{\bf Un extrait de Westcar} 
+
+ {\EnGros\SurLigne
+   \begin{hieroglyph}
+     $-aHa-a:iw' p-W ir:=n sw-t:n zA G5-di':di'-f-Spsi r md-d:=t-A2-$
+     $-D:d-=f-$ -#-..-A2-n-z:p*.-..-..-#- . -#-..-..-#- m r:x-t:Y1 n
+     n:t-tyw-Z3A swA:iw' neg r:x-Y1:n-t-W -mA:Aa11-a:t*Z5-Y1:Z2 r
+     g:r-grg i-W wn:n x:r Hm-Z1-G7-=k m h-A-W-Y1:Z2-=k' D:z-=k'
+     D:d-=i-=n Hm-Z1-G7-=f i-Ss:z-t-A2 p-W G5-di':di'-f-Spsi zA-G7-=A1
+     D:d-=i-=n sw-t:n zA G5-di':di'-f-Spsi i-W wn:n n:D-s-bin:A1
+     Dd-Dd-i-Y1:A1 r:n-A2-=f Hm':z-A7-=f m Dd-Dd-Y1 <s-nfr-f:r-W>
+     -mA:Aa11 -xrw-W-A2 i-W:f m n:D-s-bin:A1 n rnp-t:100-10 i-W:=f
+     Hr-Z1 M42-m-A2 t:X3-N18:Z2 100*100*100:200 r-mn:n-rmn:F51 n E1-Z1
+     m i-W:f-F51:Z2 H-n:a s-wr:r-i-mw-A2 H-q:t-Hnqt:Z2 d:z-Hnqt 100 r
+     mn:n-Y1 m h-r-W-ra-Z1 p:n i-W:=f r:x-Y1 Tz-100:arm tp-Z1
+     H-s-q-swA:arm i-W:=f r:x-Y1 t:n-nw-W-qmA-pA'-Y1:Z2 ipt:t*pr-Z3A
+     n:t wn:n-t:pr n:t G26:t*y
+ \end{hieroglyph}
+ }
+
+Wadi Hammamat text M191, sent to me by J. KRAUS:
+\begin{hieroglyph}
+|1-sw:t-bit:t <-ra-nb-N17:N17-> anx D:t:N17 ms n sw-t-mwt i-D37-m-Sps N11:Z1*Z1-SA:x*t-ra-10*10:Z2 w-d:t:a m
+kA:Z1-t:Z2 |2-m Dw:Z1 p:n m S:Z1 wA-A-H-wAH nb anx-n:x F25-m b-i-A-t:F18 ir:t H-w
+U2:ir-A-A-xpr:r-w-Z3-nw:Z1-nTr-p:n-|3-D37:t-bAw-f:n-G23-t:Z2-ir:t-N25:t*Z1-m-U20:nw-i-i-N36
+b-s-t:D54-mw-Hr:Z1-n:H*A-Aa2:n-S:Z1-gm-t-W9*t:nb-m-Hr:ib-in:n-t:N25-|4-mH:Z1:a-10-r-mH:Z1:a-10-Hr*Z1:r-s
+nb-mH:t:Y2-m-mw-r-n:p:r-t*N23:Z2-s-s-D60-t-s-t:wr:r-ti-i-r-E29-Z3-s-S-|5-t:U30-A-ti-i-r-iwn
+Z2:N25-G4-Z3-pr:r:t*D54-h-A-A-t-Hr:Z1-M-s-Z4-i:n-mSa-Z2:n-tp*Z1:a:a-sw-t:n-Z3-xpr:r-w-Z3-|6-Xr:r-HAt:t*Z1
+D35-U2:ir-A-n-s-ir:t-nb-D35:A15-Hr*Z1:n-r:T:Z2-Hr:r-s-U27-bA-s-n-U36:f-D:\!\!\!\!\!s\s2-f
+i-s-T-g:r:t-s-d:x-A30-n:f-s-|7-r:x-n:f-mt:t*t-ra:Z1-p:n-x:mt:t-n:f-H-M2:n-t:Z4-z:p*O50-p:n
+n-U7:r-w-t:Aa2-U2:ir-A-A-bAw-f-r:x*t-|8-mn:n:x-Y2:Z2-U36-Z1:f-ir:f-U2:t:Y2-Hr:Z1-N25:t*Z1*Z1*Z1:f-n-zA:f
+<-ra-nb-N17:N17->-anx-D:t:N17-s-sDm-m-s-t-n:(.:t)*w-Z3-m-tA-U2:r-i-S:O49-|9-G23-t:Z2-n:t*t-Hr-km\:t:N23-M26-w-O49
+H-n:a-tA-M15-O49:t*.*Z1-wAH-s:n-tp:Z2-s:n-m-tA-d:wA-A-|10-s:n-nfr-Z3-U36-Z1:f-n-G21-H-H
+H-n:a-D:t:N17-!
+\end{hieroglyph}
+
+
+\section{Table of signs}
+\label{sec:signes}
+
+
+\def\showHvalue#1#2{\hbox to 0.33\textwidth{#1\hfil
+    #2\hfil}\linebreak[3]%
+  \hskip 0.1mm  plus 1cm minus 1cm}
+\EnPetit{\small
+\noindent{}\input signlist.tex
+}
+\section{Thanks}
+I want to thanks a few persons, whose help definitly helped improving
+this package.  In 1993, M.~Louet and Corler, then students in computer
+science at Brest University, wrote a X program for editing the fonts,
+which proved very useful for touching a few signs that were really
+ugly before. J\"urgen Kraus, egyptologist at Mainz university, has
+provided me with numerous bug reports and suggestions. Helmar Wodtke
+has sent me numerous ideas, and has published a number of Egyptology
+books with hieroglyphic texts using both parts of Hiero\TeX{} and
+software written by himself.
+
+\bibliography{bib} 
+\bibliographystyle{plain}
+
+\end{document}
+

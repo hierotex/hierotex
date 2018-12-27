@@ -4,6 +4,7 @@
 \***************************************************************************/
 #include "hache.h"
 #include <stdlib.h>
+#include <string.h>
 /* Dans le .h */
 typedef struct 
 {
