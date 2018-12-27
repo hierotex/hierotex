@@ -3,11 +3,10 @@
 Makefile.in
 
 # http://www.gnu.org/software/autoconf
-
-/autom4te.cache
-/autoscan.log
-/autoscan-*.log
 /aclocal.m4
+/autom4te.cache
+/autoscan-*.log
+/autoscan.log
 /compile
 /config.h.in
 /configure
@@ -22,11 +21,22 @@ Makefile.in
 config.h
 config.log
 config.status
+hierotex-*
 Makefile
-sesh/*.o
 sesh/.deps/
+sesh/*.o
 sesh/sesh
 sesh/sesh.c
 sesh/sesh.h
 sesh/seshl.c
 sesh/seshSource.h
+
+# Generated files from tex build
+*.aux
+*.bbl
+*.blg
+*.dic
+*.log
+*.pdf
+texmf/doc/latex/hierotex/bib.bib
+
