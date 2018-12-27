@@ -1,0 +1,1173 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%                impression de hieroglyphes en LaTeX
+%%                Hieroglyphs Writing in LaTeX  
+%%
+%%      (c) 1992-2002 S. Rosmorduc
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\NeedsTeXFormat{LaTeX2e}
+
+\ProvidesPackage{hiero}[2001/11/22 hieroglyphic package for Latex V2.8]
+\RequirePackage{ifthen}
+\RequirePackage{graphicx}
+
+%% The representation of hieroglyphic texts here is based on :
+%%  " Inventaire des signes hieroglyphiques en vue de leur saisie
+%%                             informatique "
+%% Jan Buurman-Nicolas Grimal-Michael Hainsworth-Jochen Hallof-
+%% Dirk Van Der Plas
+%%
+%% Memoires de l'Academie des Inscriptions et Belles Lettres
+%%
+%% (the text is in french, english, and german)
+
+%%% If we are processed by elatex, enable right-to-left righting.
+\ifx\TeXXeTstate\undefined
+\else
+        \TeXXeTstate=1
+\fi
+
+%% This package is intended for use with the C preprocessor ``sesh''.
+
+\newif\if@HUseTypeI
+
+
+% if this option is used, ps type 1 fonts will be used.
+
+\DeclareOption{psfonts}{%
+  \ifx\pdfoutput\undefined
+        \message{using default graphic output}
+     \else
+     \if\pdfoutput=1%
+        \PassOptionsToPackage{pdftex}{graphicx}
+     \fi
+  \fi
+  \@usePSHieroglyphicFonts
+}
+
+\def\H@useGraphics{}
+
+
+%% Declares a hieroglyphic font
+%%      first arg : the font base name as a TeX command (e.g. GA, GB...)
+%%                  (a `\' will be added automatically)
+%%      second arg : the name of the actual tex font.
+
+
+\newcommand{\declareHieroGlyphicFont}[2]{%
+  \expandafter\newfont\csname #1\endcsname{#2 scaled \magstep 2}
+  \expandafter\newfont\csname #1i\endcsname{#2 scaled \magstep 1}
+  \expandafter\newfont\csname #1ii\endcsname{#2}
+  \expandafter\newfont\csname #1iii\endcsname{#2 scaled 833}
+  \expandafter\newfont\csname #1iiii\endcsname{#2 scaled 694}
+  \expandafter\newfont\csname #1iiiii\endcsname{#2 scaled 582}  
+}
+
+%% Fonts definitions (quite a lot !)
+%% This version of \@declareHieroglyphicFonts uses the metafonts :
+\def\@declareHieroglyphicFonts{%
+  \@HUseTypeIfalse
+  \declareHieroGlyphicFont{GA}{HieroFonteA}
+  \declareHieroGlyphicFont{GB}{HieroFonteB}
+  \declareHieroGlyphicFont{GC}{HieroFonteC}
+  \declareHieroGlyphicFont{GD}{HieroFonteD}
+  \declareHieroGlyphicFont{GE}{HieroFonteE}
+  \declareHieroGlyphicFont{GF}{HieroFonteF}
+  \declareHieroGlyphicFont{GG}{HieroFonteG}
+  \declareHieroGlyphicFont{GH}{HieroFonteH}
+  \declareHieroGlyphicFont{GI}{HieroFonteI}
+  \declareHieroGlyphicFont{GK}{HieroFonteK}
+  \declareHieroGlyphicFont{GL}{HieroFonteL}
+  \declareHieroGlyphicFont{GM}{HieroFonteM}
+  \declareHieroGlyphicFont{GN}{HieroFonteN}
+  \declareHieroGlyphicFont{GO}{HieroFonteO}
+  \declareHieroGlyphicFont{GP}{HieroFonteP}
+  \declareHieroGlyphicFont{GQ}{HieroFonteQ}
+  \declareHieroGlyphicFont{GR}{HieroFonteR}
+  \declareHieroGlyphicFont{GS}{HieroFonteS}
+  \declareHieroGlyphicFont{GT}{HieroFonteT}
+  \declareHieroGlyphicFont{GU}{HieroFonteU}
+  \declareHieroGlyphicFont{GV}{HieroFonteV}
+  \declareHieroGlyphicFont{GW}{HieroFonteW}
+  \declareHieroGlyphicFont{GX}{HieroFonteX}
+  \declareHieroGlyphicFont{GY}{HieroFonteY}
+  \declareHieroGlyphicFont{GZ}{HieroFonteZ}
+  \declareHieroGlyphicFont{GAa}{HieroFonteAa}
+}
+
+\def\@usePSHieroglyphicFonts{
+  \@HUseTypeItrue
+  \def\@declareHieroglyphicFonts{%
+  \declareHieroGlyphicFont{GA}{HieroA}
+  \declareHieroGlyphicFont{GB}{HieroB}
+  \declareHieroGlyphicFont{GC}{HieroC}
+  \declareHieroGlyphicFont{GD}{HieroD}
+  \declareHieroGlyphicFont{GE}{HieroE}
+  \declareHieroGlyphicFont{GF}{HieroF}
+  \declareHieroGlyphicFont{GG}{HieroG}
+  \declareHieroGlyphicFont{GH}{HieroH}
+  \declareHieroGlyphicFont{GI}{HieroI}
+  \declareHieroGlyphicFont{GK}{HieroK}
+  \declareHieroGlyphicFont{GL}{HieroL}
+  \declareHieroGlyphicFont{GM}{HieroM}
+  \declareHieroGlyphicFont{GN}{HieroN}
+  \declareHieroGlyphicFont{GO}{HieroO}
+  \declareHieroGlyphicFont{GP}{HieroP}
+  \declareHieroGlyphicFont{GQ}{HieroQ}
+  \declareHieroGlyphicFont{GR}{HieroR}
+  \declareHieroGlyphicFont{GS}{HieroS}
+  \declareHieroGlyphicFont{GT}{HieroT}
+  \declareHieroGlyphicFont{GU}{HieroU}
+  \declareHieroGlyphicFont{GV}{HieroV}
+  \declareHieroGlyphicFont{GW}{HieroW}
+  \declareHieroGlyphicFont{GX}{HieroX}
+  \declareHieroGlyphicFont{GY}{HieroY}
+  \declareHieroGlyphicFont{GZ}{HieroZ}
+  \declareHieroGlyphicFont{GAa}{HieroAa}
+  }}
+
+
+\ProcessOptions\relax
+
+%% Useful symbols 
+\newfont{\EgypS}{Egyp}
+
+\@declareHieroglyphicFonts
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% TEST DECLARATIONS :
+%%%
+%%%
+
+%% text orientation
+%% Are we in right-to-left text ?
+\newif\if@rightleft
+\@rightleftfalse
+%% Are we in xet-tex supported right-to-left text ?
+%% (note : in this case, \@rightleft is also true)
+\newif\if@xettexrightleft
+\@xettexrightleftfalse
+%% Used to test if we should add extra \beginL or \beginR to balance the text.
+\newif\if@xettexon
+\@xettexonfalse
+%% Top level or embedded cadrat
+\newif\if@external
+\@externaltrue
+%% Horizontal or columnar text ?
+\newif\if@horizontal
+\@horizontaltrue
+
+%% shaded text
+\newif\if@shaded
+\@shadedfalse
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%     Command for displaying hieroglyphs
+%%%
+%%% \Acv{size}part of font/number\relax => gives you a character
+
+\def\smallSkipAroundSigns{\hskip 0.3mm}
+
+\def\Acv#1#2/#3\relax{%
+  \count0=#3%
+  \if@HUseTypeI%
+  \if@rightleft%
+        %%% The \@ensureLeftToRightEngine is used because pdfelatex (and only it) 
+        %%% disaprove violently of \reflectbox used inside a \beginR ... \endR environment.
+        \smallSkipAroundSigns%
+        \@ensureLeftToRightEngine{%
+          \reflectbox{{\csname #2#1\endcsname\char\count0}}}%
+        \smallSkipAroundSigns%
+  \else%
+        \smallSkipAroundSigns{\csname #2#1\endcsname\char\count0}\smallSkipAroundSigns%
+  \fi%
+\else%
+  \if@rightleft%
+    \advance\count0 by 128% in the hieroglyphic metafonts, a char C reverted drawing has code C + 128
+  \fi%
+  \smallSkipAroundSigns{\csname #2#1\endcsname\char\count0}\smallSkipAroundSigns%
+\fi%
+}
+
+%%%% front-end to sign :
+
+\def\Aca #1/#2/{\Acv{\Hta}#1/#2\relax}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%%                      SIZE SYSTEM
+%% there can be three groups of signs for size : long, high, and others
+%% but this isn't really useful except for column writing. 
+
+\def\MInEx{iiiii} % smaller font size available
+
+\newdimen\Htm % maximum height of a cadrat (we chosed the size
+                    % of the independant pronoun(inek)
+\newdimen\Htmi
+\newdimen\Htmii
+\newdimen\Htmiii
+\newdimen\Htmiiii
+\newdimen\Htmiiiii
+\newdimen\Htm@ % Constant value
+
+%%% \LargeHieroglyphs resets the size of hieroglyph
+%%% 
+\newcommand{\LargeHieroglyphs}{%
+  \newcount\@Hauteur              % sign size used
+  \@Hauteur=0
+  \newcount\@HauteurW              % sign size used
+  \@HauteurW=0
+  \newcount\@HauteurH              % sign size used
+  \@HauteurH=0
+  %% Font to use for the current sign
+  %% for long signs :
+  \def\HtaW{}% possible values : {} i ii iii iiii iiiii
+  %% for high signs :
+  \def\HtaH{}%
+  %%for other signs :
+  \def\Hta{}%
+  %% now compute the size of "inek" :
+  \setbox0=\vbox{%
+    \offinterlineskip%
+    \def\Hta{iiiii}%
+    \hbox{\Acv{\Hta}GW/57\relax}%
+    \hbox{\Acv{\Hta}GV/63\relax}%
+    \hbox{\Acv{\Hta}GA/32\relax}}%
+  %% if you want smaller cadrat, uncomment the line below,
+  %% to use the size of the aleph vulture as cadrat height.
+  \setbox0=\vbox{\hbox{\Acv{\Hta}GG/32\relax}}%
+                                %
+  \Htm=\ht0%
+  \advance\Htm by 0.025mm         % Htm : max size of wanted cadrat
+                                %  
+  \setbox0=\vbox{\hbox{\Acv{i}GG/32\relax}}%
+  \Htmi=\ht0%
+  \setbox0=\vbox{\hbox{\Acv{ii}GG/32\relax}}%
+  \Htmii=\ht0%
+  \setbox0=\vbox{\hbox{\Acv{iii}GG/32\relax}}%
+  \Htmiii=\ht0%
+  \setbox0=\vbox{\hbox{\Acv{iiii}GG/32\relax}}%
+  \Htmiiii=\ht0%
+  \setbox0=\vbox{\hbox{\Acv{iiiii}GG/32\relax}}%
+  \Htmiiiii=\ht0%
+}
+
+%%% Set all dimensions :
+\LargeHieroglyphs
+
+%% \Htm@ is a constant. It is set here once.
+\Htm@=\Htm
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Upper level commands dealing with cadrats and the like.
+%%%
+%%% The \Cadrat command can be redefined to deal with toggles.
+%%% It's currently used for shading
+
+\def\@UpperLevel#1#2{\if@shaded\fullShade{#1{#2}}\else#1{#2}\fi}
+
+\def\loneSign#1{\@UpperLevel\loneSigne@Aux{#1}}
+
+\def\Cadrat#1{\@UpperLevel\Cadrat@Aux{#1}}
+
+\def\loneSymbol#1{\if@external\@UpperLevel{}{{#1}}\else#1\fi}
+
+\def\HfullSpace{\loneSymbol{\HfullSpace@Aux}}
+
+\def\HquarterSpace{\loneSymbol{\HquarterSpace@Aux}}
+
+\def\HsmallSpace{\loneSymbol{\HsmallSpace@Aux}}
+\def\Hrevert#1{{\if@rightleft\@rightleftfalse\else\@rightlefttrue\fi#1}}
+
+%% \@aligner is used in front of all output boxes.
+\def\@aligner{\if@external\raise -\@Lower \fi}
+
+% using tex--xet
+\def\leftright{\if@xettexon\endR{}\fi\beginL\@rightleftfalse\@xettexrightleftfalse\@xettexontrue}
+\def\rightleft{\if@xettexon\endL{}\fi\beginR\@rightlefttrue\@xettexrightlefttrue\@xettexontrue}
+
+\def\@ensureLeftToRightEngine#1{\if@xettexon{}\beginL\fi#1\if@xettexon{}\endL\fi}
+
+%%\def\leftright{\@rightleftfalse\endR}
+%%\def\rightleft{\beginR\@rightlefttrue}
+
+\def\boxrightleft#1{{\@rightlefttrue{}#1}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%                      CODE FOR CARTOUCHE(s)
+%% 
+%% 
+%% The cartouche is made of various parts. Each extremity of the cartouche
+%% is built of three different elements, as displayed in the figure below.
+%% 
+%%    @start@cI              @regleC@I            @end@cI
+%%    @start@cII             text of cartouche    @end@cII
+%%    @start@cIII            @regleC@II           @end@cIII
+%% 
+%% \cartoucheBox = middle part
+%% \@fillerHeight = necessary height of cII fillers (more precisely, for horizontal cartouches,
+%%          \dimen\@fillerHeight is height of the text - 2*cartouche line width.
+
+\newbox\cartoucheBox
+\newdimen\@Lower
+\newdimen\@fillerHeight
+\@Lower=1.5mm                   % cartouche line + space
+% Now, the cartouche 
+
+\newdimen\cartoucheLineWidth             % width of cartouche line
+\cartoucheLineWidth=0.3mm
+
+%%%% VALUES FOR CARTOUCHES
+
+%%% Note : the cartouche are built from characters from the EgypS fonts.
+%%% These characters are mapped to the position for ``1'', ``2''...
+%%% 
+
+\def\@regleC@I{\if@horizontal\hrule height\cartoucheLineWidth\vskip0.2mm\else
+  \vrule width\cartoucheLineWidth\hskip0.2mm\fi}
+
+\def\@regleC@II{\if@horizontal\vskip0.2mm\hrule height\cartoucheLineWidth\relax\else
+  \hskip0.2mm\vrule width\cartoucheLineWidth\relax\fi}
+
+\def\@cadre@rempl{\if@horizontal\hskip 0.5mm\else\vskip 0.5mm\fi}
+
+\def\@end@cI{%
+  \if@horizontal
+  \if@xettexrightleft\hbox{1}\else\hbox{4}\fi
+  \else
+  \if@xettexrightleft\hbox{2}\else\hbox{3}\fi\fi}
+  
+\def\@end@cII{%
+  \if@horizontal
+  \if@xettexrightleft
+  {\setbox0=\hbox{1}%
+    \hbox{\hbox to \wd0{\hfil\vrule width \cartoucheLineWidth height \dimen\@fillerHeight}%
+      \vbox{\vbox to 0mm{\vss\hbox{5}\vss}\vskip0.5\dimen\@fillerHeight}}}%
+  \else
+  {\setbox0=\hbox{1}%
+    \hbox{\hbox to \wd0{\hfil\vrule width \cartoucheLineWidth height \dimen\@fillerHeight}%
+      \if@rightleft
+      \else
+      %% Draw the node (if in left-to-right mode)
+      \hss\vbox{\vbox to 0mm{\vss\hbox{5}\vss}\vskip0.5\dimen\@fillerHeight}%
+      \fi
+      }}%
+  \fi
+  \else
+  \hbox to 0mm{\hbox{\kern0.5\dimen\@fillerHeight\hbox to 0mm{\hss6\hss}}\hss}%
+  \hbox to \dimen\@fillerHeight{\leaders\hrule height\cartoucheLineWidth\hfil}%
+  \relax\fi}
+
+\def\@end@cIII{%
+  \if@horizontal
+  \if@xettexrightleft\hbox{2}\else\hbox{3}\fi
+  \else
+  \if@xettexrightleft\hbox{3}\else\hbox{2}\fi\fi}
+
+
+%% Could be written just like start@cIII, but 
+%% if we want to reserve some space (due to problems with cII),
+%% the current version of cI is more practical.
+
+\def\@start@cI{%
+  \if@horizontal
+  {%
+    \if@xettexrightleft\setbox0=\hbox{4}\else\setbox0=\hbox{1}\fi
+    \box0%
+    }%
+  \else
+  \if@xettexrightleft\hbox{1}\else\hbox{1}\fi\fi}
+  
+\def\@start@cII{%
+  \if@horizontal
+  %% Draw a vertical line
+  %% If we draw a cartouche in right to left mode
+  %% then draw the node.
+  {\setbox0=\hbox{1}%
+    \hbox{%
+      \if@rightleft{% draw the node
+        \vbox{\vbox to 0mm{\vss\hbox to 0mm{5\hss}\vss}\vskip0.5\dimen\@fillerHeight}%
+        }\hss%
+      \fi
+      \hbox to \wd0{\vrule width \cartoucheLineWidth height \dimen\@fillerHeight\hfil}}%
+    }%
+  \else
+  {%% Build a box with cartouche angle, 
+    %% to draw the line at the proper height.
+    \setbox0=\hbox{1}%
+    \hbox{\vbox to\ht0{%
+      \hbox to \dimen\@fillerHeight{\leaders\hrule height\cartoucheLineWidth\hfil}%
+      \vfil}}}%
+  \fi}
+
+\def\@start@cIII{%
+  \if@horizontal
+  \if@xettexrightleft\hbox{3}\else\hbox{2}\fi
+  \else
+  \if@xettexrightleft\hbox{4}\else\hbox{4}\fi\fi}
+
+
+\def\@init@cartoucheFrame#1{%
+  \offinterlineskip%
+  \EgypS%
+  \if@horizontal\relax%
+  \else\largeur@colonne=.8\largeur@colonne\relax\fi
+  \let\strut=\relax
+  {%
+    \@shadedfalse
+  %% Box \cartoucheBox contains the middle part of the cartouche
+  %% Box 2 is used to test the cartouche size
+  \global\setbox\cartoucheBox=\hbox{}%
+  \if@horizontal
+  %% Build an empty cartouche
+  \setbox2=\hbox{\vbox{\@start@cI\@start@cIII}\vbox{\@end@cI\@end@cIII}}%
+  %% Build a cartouche center
+  \global\setbox\cartoucheBox=\vbox{\@regleC@I\hbox{\Centrer\@cadre@rempl\hbox{#1}\@cadre@rempl}\@regleC@II}% peut etre dans une hbox
+  %% Now, we know which of the last two is larger.
+  \ifdim\ht2>\ht\cartoucheBox%
+  %% So, if the empty cartouche is larger, we shall increase the
+  %% cartouche center's size.
+  \global\setbox\cartoucheBox=\vbox to \ht2{\@regleC@I\vfill\hbox{\Centrer\@cadre@rempl\hbox{#1}\@cadre@rempl}\vfill\@regleC@II}%
+  \fi
+  %% Now, build the cartouche's extremities.
+  \global\dimen\@fillerHeight=\ht\cartoucheBox%
+  \global\advance\dimen\@fillerHeight by -\ht2%
+  \else% Same process for vertical cartouches
+  \setbox2=\vbox{\hbox{\@start@cI\@start@cIII}\hbox{\@end@cI\@end@cIII}}%
+  \global\setbox\cartoucheBox=\hbox{\@regleC@I\vbox{\@cadre@rempl\vbox{#1}\@cadre@rempl}\@regleC@II}%
+  \ifdim\wd2>\wd\cartoucheBox%
+  \global\setbox\cartoucheBox=\hbox to \wd2{\@regleC@I\hfill\vbox{\@cadre@rempl\vbox{#1}\@cadre@rempl}\hfill\@regleC@II}%
+  \fi
+  \global\dimen\@fillerHeight=\wd\cartoucheBox%
+  \global\advance\dimen\@fillerHeight by -\wd2%
+  \fi}}
+
+\def\@draw@cartouche@frame{{%
+    \if@horizontal%
+        %% Compute 
+        \dimen2=\cartoucheLineWidth%
+        \if@external\advance\dimen2 by \@Lower
+                \@decorateCartouche{%
+                  {\raisebox{-\dimen2}[0mm][\@Lower]{\@debut@cadre\copy\cartoucheBox\@end@cadre}}}
+         \else %% shouldn't happen. All cartouches are external.
+                \@decorateCartouche{%
+                  {\raisebox{-\dimen2}[0mm][0mm]{\@debut@cadre\copy\cartoucheBox\@end@cadre}}}
+         \fi%
+     \else%
+        \vbox{\@debut@cadre\box\cartoucheBox\@end@cadre}%
+     \fi%
+}}
+        
+
+\def\@decorateCartouche#1{{\loneSymbol{#1}}}
+%%\def\@decorateCartouche#1{#1}
+
+
+\def\@debut@cadre{%
+  \if@horizontal
+  {\if@rightleft
+    \hskip 2\cartoucheLineWidth%
+    \fi}%
+  \vbox to\ht\cartoucheBox%
+  \else
+  \hbox to\wd\cartoucheBox%
+  \fi{%
+    \@start@cI\@start@cII\@start@cIII}}
+
+\def\@end@cadre{\if@horizontal
+  \vbox to\ht\cartoucheBox{\@end@cI\@end@cII\@end@cIII}%
+  \else
+  \hbox to\wd\cartoucheBox{\@end@cIII\@end@cII\@end@cI}\fi}
+
+\def\cartouche#1{{\let\@cadre@rempl=\relax\@init@cartoucheFrame{#1}\@draw@cartouche@frame}}
+
+
+\def\debcartouche#1{{\let\@end@cI=\relax\let\@end@cII=\relax\let\@end@cIII=\relax
+    \@init@cartoucheFrame{#1}\@draw@cartouche@frame}}
+
+
+\def\milcartouche#1{{\let\@end@cI=\relax\let\@end@cII=\relax\let\@end@cIII=\relax
+    \let\@start@cI=\relax\let\@start@cII=\relax\let\@start@cIII=\relax
+    \@init@cartoucheFrame{#1}\@draw@cartouche@frame}}
+
+
+\def\endOfcartouche#1{{\let\@start@cI=\relax\let\@start@cII=\relax\let\@start@cIII=\relax
+    \@init@cartoucheFrame{#1}\@draw@cartouche@frame}}
+
+
+%% Now, castles 
+
+\def\@hori@ligne{%
+  \if@horizontal
+  \leaders\vrule width\cartoucheLineWidth\vfil\relax\else
+  \leaders\hrule height\cartoucheLineWidth\hfil\relax\fi}
+
+\def\@end@chateauII{%
+  \if@horizontal
+  {\setbox0=\hbox{8}%
+    \hbox to \wd0{\hfill\vrule width\cartoucheLineWidth height\dimen\@fillerHeight}}%
+  \else
+  \hbox to \dimen\@fillerHeight{\leaders\hrule height\cartoucheLineWidth\hfill}%
+  \relax\fi}
+
+\def\@coin@chateau{\hbox{8}}
+
+\def\@pas@coin@chateau{%%
+  {\setbox0=\hbox{8}%
+  \if@horizontal
+  \hbox to \wd0{\vrule height\cartoucheLineWidth width\wd0}%
+  \else
+  \vbox to \ht0{\hrule width\cartoucheLineWidth  height \ht0}%
+  \fi
+}}
+
+
+
+
+\def\chateau#1{{\let\@end@cI=\relax\let\@end@cIII=\@coin@chateau
+    \let\@start@cI=\relax\let\@start@cIII=\relax
+    \let\@end@cII=\@end@chateauII
+    \let\@end@cI=\@pas@coin@chateau
+    \let\@start@cII=\@hori@ligne
+    \@init@cartoucheFrame{#1}\@draw@cartouche@frame}}
+
+
+%% Now serekhs 
+
+\def\@serekh@eltH{\vbox{\hrule  width0mm height .75\cartoucheLineWidth\hrule  width
+    2mm height\cartoucheLineWidth\hrule  width0mm height .75\cartoucheLineWidth}}
+
+\def\@serekh@eltV{\hbox{\vrule  height0mm width .75\cartoucheLineWidth\vrule height
+    2mm width\cartoucheLineWidth\vrule  height0mm width .75\cartoucheLineWidth}}
+
+\def\@endOf@serekhII{%
+  \if@horizontal
+  {\setbox0=\@serekh@eltH
+    \hbox{%
+      \vbox to \dimen\@fillerHeight{\leaders\vrule width\cartoucheLineWidth\vfil}%
+      \vbox to \dimen\@fillerHeight{\hrule width\cartoucheLineWidth height\cartoucheLineWidth
+        \vfil
+        \hrule width\cartoucheLineWidth height\cartoucheLineWidth
+        }%
+      \vbox to \dimen\@fillerHeight{\leaders\vrule width\cartoucheLineWidth\vfil}%
+      \vbox to\dimen\@fillerHeight{\hrule  width 2mm height\cartoucheLineWidth
+        \cleaders\box0\vfill
+        \hrule  width 2mm height\cartoucheLineWidth}}}
+    \else
+  {\setbox0=\@serekh@eltV
+    \vbox{%
+      \hbox to \dimen\@fillerHeight{\leaders\hrule height\cartoucheLineWidth\hfil}%
+      \hbox to \dimen\@fillerHeight{\vrule height\cartoucheLineWidth width\cartoucheLineWidth
+        \hfil
+        \vrule height\cartoucheLineWidth width\cartoucheLineWidth
+        }%
+      \hbox to \dimen\@fillerHeight{\leaders\hrule height\cartoucheLineWidth\hfil}%
+      \hbox to\dimen\@fillerHeight{\vrule  height 2mm width\cartoucheLineWidth
+        \cleaders\box0\hfill
+        \vrule  height 2mm width\cartoucheLineWidth}}}
+  \relax\fi}
+
+\def\serekh#1{{\let\@end@cI=\relax\let\@end@cIII=\relax
+    \let\@start@cI=\relax\let\@start@cIII=\relax
+    \let\@end@cII=\@endOf@serekhII \let\@start@cII=\@hori@ligne
+    \@init@cartoucheFrame{#1}\@draw@cartouche@frame}}
+
+\def\endOfserekh#1{{\let\@end@cI=\relax\let\@end@cIII=\relax
+    \let\@start@cI=\relax\let\@start@cIII=\relax
+    \let\@end@cII=\@endOf@serekhII
+    \let\@start@cII=\relax    
+    \@init@cartoucheFrame{#1}\@draw@cartouche@frame}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%              end of cartouche
+
+\def\HfullSpace@Aux{{\phantom{\Acv{\Hta}GA/32\relax}}} %% the phantom of
+                                %% a white space
+
+\def\HquarterSpace@Aux{{\phantom{\Acv{\Hta}GX/32\relax}}} %% the fourth
+                                %% part of a cadrat
+\def\HToLine{\par}              % line change after -!
+
+\def\HsmallSpace@Aux{{\phantom{\Acv{\Hta}GZ/32\relax}}} %% the size of a ``Z1'' sign.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% For use with sesh
+%% 
+%% Couples of macros (mmx. \CadratLine and \CadratLineI are used thus :
+%%         CadratLineI is used for the top sign 
+%%         CadratLine is used for the others
+%% CadratLine : horizontal inside boxes
+%% HinterSignsSpace  : hspace between signs
+%% HwordSpace : hspace between words (same as HinterSignsSpace, breaks more easily)
+%% Hta : one of (nothing), i, ii, ... : font size used
+%% H@Reduction : tries to get a good width for horizontal arangement
+%% Himbt : resets the value of some macros when INSIDE a cadrat
+%% Hbt : a cadrat 
+%% InternalCadrat : a cadrat, when inside another cadrat
+%% Hunh : a lone hieroglyph, a long way from home
+%% LoneHorizontalLine : signs on the same level. used for signs in column 
+
+
+
+\def\negAROBspace{\hskip -1mm} % negative space
+
+\def\negAROBvspace{\vskip -1mm} % negative vertical space
+
+
+%%% Top line in a cadrat
+\def\CadratLineI#1{\hbox{\H@Reduction{#1}}}
+
+%%% normal line in a cadrat
+\def\CadratLine#1{\vskip 0.05\Htm plus 1fil\hbox{\H@Reduction{#1}}} % 
+
+
+%%% inter-sign space
+\def\HinterSignsSpace{\nolinebreak[1]\if@shaded\hskip 0.0mm\else\hskip 0.0mm plus 0.5mm\fi}
+
+%%% inter-word space
+\def\HwordSpace{\linebreak[3]\if@shaded\hskip 0.0mm\else\hskip 0.0mm plus 0.5mm\fi}
+
+\def\LoneHorizontalLine#1{#1}
+
+%\def\Hsmaller{%
+%\ifx\Hta\MInEx%
+%\else
+%\edef\Hta{\Hta i}\advance\@Hauteur by 1%
+%\fi}
+
+\def\Hsmaller{\@Smaller}
+
+\def\@Smaller{%
+  \ifx\Hta\MInEx%
+  \else
+  \edef\Hta{\Hta i}\advance\@Hauteur by 1%
+  \edef\HtaW{\HtaW i}\advance\@HauteurW by 1%
+  \edef\HtaH{\HtaH i}\advance\@HauteurH by 1%
+  \fi}
+
+\def\Horizontal@Smaller{\@Smaller}
+\def\Vertical@Smaller{\@Smaller}
+
+% Horizontal box.
+\def\H@Reduction#1{%  
+{\ifx\Hta\MInEx%
+  #1\else
+  \setbox0=\hbox{#1}%
+  \ifdim\wd0>1.3\Htm%      Un cadrat, c'est presque carre'
+  \Horizontal@Smaller
+  \H@Reduction{#1}%
+  \else #1\fi\fi}}
+
+\def\Himbt#1{%
+  \def\CadratLine##1{%
+    \vskip 0.05\Htm plus 1fil\hbox to \wd0{%
+      \hfil \H@Reduction{##1}\hfil}}%
+  \def\CadratLineI##1{\hbox to \wd0{\hfil \H@Reduction{##1}\hfil}}%
+  \setbox0=\vbox to \Htm{\offinterlineskip #1}}
+
+
+%% A box containing hieroglyphs and cadrats
+\def\Cadrat@Aux#1{{%
+    \def\strut{\relax}%
+    \setbox0=\vbox{\offinterlineskip\@externalfalse
+      #1}%
+    \ifdim\ht0>\Htm%
+    \ifx\Hta\MInEx%
+    \Himbt{\@externalfalse #1}%
+    \@aligner\hbox{\box0}%
+    \else%
+    \Vertical@Smaller
+    \Cadrat@Aux{\@externalfalse #1}%
+    \fi%
+    \else%
+    \Himbt{\@externalfalse #1}%
+    \@aligner\hbox{\box0}\fi}\strut}
+
+%% Une boite, a` l'inte'rieur, n'a pas de hauteur fixe 
+
+\def\InternalCadrat#1{{%
+\def\CadratLineI##1{\hbox{\H@Reduction{##1}}}%
+\def\CadratLine##1{\vskip 0.05\Htm plus 1fil\hbox{\H@Reduction{##1}}}%
+% First, select base cadra height according to Hauteur
+\ifcase \@Hauteur \or
+\Htm\Htmi\or
+\Htm\Htmii\or
+\Htm\Htmiii\or
+\Htm\Htmiiii\or
+\Htm\Htmiiiii\else
+\message{Too small a sign!}%
+\fi
+\InternalCadratAux{#1}}}
+
+\def\InternalCadratAux#1{{%
+%%% Now, try to fit the box :
+    \setbox0=\vbox{\offinterlineskip #1}%
+%%%If the box is too tall, we'll have to reduce it
+    \ifdim\ht0>\Htm
+%%% Except if the sign size is already the smallest one
+    \ifx\Hta\MInEx
+    \Himbt{#1}\hbox{\box0}%
+    \else%
+%% This procedure was bugged !
+%% our problem : the signs are too tall.
+%% we used to reduce BOTH the *required height* AND
+%% the sign size, which was incorrect.
+    \Vertical@Smaller
+    \InternalCadratAux{#1}%
+    \fi%
+    \else%
+    \Himbt{#1}\hbox{\box0}%
+    \fi
+    }}
+
+%hieroglyphes seuls (centre's ou non)
+
+\def\loneSigne@AuxA#1{{%
+\setbox0=\hbox{#1}%
+\ifdim\ht0>0.75\Htm%
+\setbox0=\hbox{{\box0}}%
+\else
+\setbox0=\hbox{{\vbox to \Htm{\vfil\box0\vfil}}}%
+\fi
+\@aligner\box0\strut}}
+
+\def\loneSigne@AuxB#1{\@aligner\hbox{{#1}}\strut}
+
+\def\Centrer{\def\loneSigne@Aux{\loneSigne@AuxA}}
+\def\SurLigne{\def\loneSigne@Aux{\loneSigne@AuxB}}
+\Centrer
+
+%ligatures Dd et Dt :
+
+\def\ligAROBDd{{\hbox{\vbox{\offinterlineskip%
+\hbox{\Acv{\Hta}GI/42\relax}%
+\ifnum\@Hauteur<3%
+\vskip -1mm\hbox{\Acv{\Hta ii}GD/79\relax}%
+\else
+\ifnum\@Hauteur=3%
+\vskip -1mm\hbox{\Acv{\Hta i}GD/79\relax}%
+\else
+\vskip -1mm\hbox{\Acv{\Hta}GD/79\relax}%
+\fi\fi%
+}}}}
+
+\def\ligAROBDt{{\hbox{\vbox{\offinterlineskip%
+\hbox{\Acv{\Hta}GI/42\relax}%
+\vskip -1mm\hbox{\Acv{\Hta}GX/32\relax}%
+}}}}
+
+\def\ligAROBDra{\hbox{\vbox{\offinterlineskip%
+\hbox{\Acv{\Hta}GI/42\relax}%
+\vskip -1.6mm\hbox{\hskip1mm\Acv{\Hta}GN/36\relax}%
+}}}
+
+
+%%% A CORRIGER **** PATCH INFAME *****
+\def\ligAROBD{\hbox{\vbox{\offinterlineskip%
+\hbox{\Acv{\Hta}GI/42\relax}%
+\hbox{}
+}}}
+
+%%% Les nombres
+\def\hierCC{\hbox{\Acv{\Hta}GV/32\relax\Acv{\Hta}GV/32\relax}}
+% Hachures ?
+
+
+\newbox\HachureBoxII
+\setbox\HachureBoxII=\hbox{{\offinterlineskip%
+\EgypS\vbox{\hbox{C}\hbox{C}\hbox{C}}}}
+
+\newbox\HachureBoxIII
+\setbox\HachureBoxIII=\hbox{\EgypS CCC}
+
+\def\hachure#1{{\leavevmode\def\strut{\relax}%
+    \setbox0=\hbox{\@externalfalse #1}%
+    \@aligner\hbox{\hbox to 0mm{%
+        \HRemplir{\wd0}{1.1\Htm}\hss}\box0}}\strut}
+
+%% let's use shading
+\def\hachure#1{{\@shadedtrue#1}}
+
+% \def\hachure#1{{\leavevmode\def\strut{\relax}%
+%     \setbox0=\hbox{\@externalfalse #1}%
+%     \raisebox{-\@Lower}{\makebox[0em][l]{%
+%       \HRemplir{\wd0}{1.1\Htm}\hss}\box0}}\strut}
+
+%% Potentially better system :
+% \def\hachure#1{{\leavevmode\def\strut{\relax}%
+%     \let\@HachureP=\hachure@Pga%
+%     %\let\@aligner=\relax
+%     \def\HinterSignsSpace{\nolinebreak[1]}% espace entre les signes
+%     \def\HwordSpace{\linebreak[3]}% espace entre les mots
+%     #1}}
+
+
+%% New shading system we indicate which part of a cadrat is shaded.
+%% The first argument tells which part of a cadrat is shaded.
+%% it's a list of four values, each of which can be either ``X'' for ``shaded''
+%% or ``O'' for ``not shaded''
+%% 
+%% 1 2
+%% 3 4
+
+\newbox\ShadingBox
+\newbox\ShadingBoxA
+\newbox\ShadingBoxB
+\newbox\ShadingBoxC
+\newbox\ShadingBoxD
+
+\def\@buildShadingBox#1#2{%
+  \if#2X%
+  \setbox#1=\hbox{\vbox{\offinterlineskip\EgypS\hbox{CC}\hbox{CC}}}%
+  \else
+  \setbox#1=\hbox{\phantom{\vbox{\offinterlineskip\EgypS\hbox{CC}\hbox{CC}}}}%
+  \fi
+  }
+
+\def\@buildShadingBoxes#1#2#3#4{%
+  \@buildShadingBox\ShadingBoxA#1%
+  \@buildShadingBox\ShadingBoxB#2%
+  \@buildShadingBox\ShadingBoxC#3%
+  \@buildShadingBox\ShadingBoxD#4%
+}
+
+%%
+%% \newShading is used to partially shade a cadrat.
+%% it takes two arguments :
+%% the first defines what part of the cadrat is shaded. It's made of four letter. Each letter
+%% is either X (the part is shaded) or O (the part is not shaded).
+\newcommand{\newShading}[2]{%
+  \@buildShadingBoxes#1%
+  \setbox\ShadingBox=\hbox{%
+    \vbox{\offinterlineskip%
+      \hbox{\box\ShadingBoxA\box\ShadingBoxB}%
+      \hbox{\box\ShadingBoxC\box\ShadingBoxD}%
+      }%
+    }%
+  \@aligner\hbox{\@plainOverlap{\box\ShadingBox}{{\let\strut=\relax#2}}}%
+  }
+
+%% shades a cadrat. It's different from \newShading{XXXX}{...}, as its 
+%% will try to stay as small as possible
+
+\newcommand{\fullShade}[1]{{%%
+  \setbox0=\hbox{\EgypS\hbox{C}}%
+  \setbox2=\hbox{{#1}}%
+  \whiledo{\lengthtest{\wd0<\wd2}}{%
+    \setbox0=\hbox{\EgypS{}C\unhbox0}%
+    }%
+  \setbox\ShadingBox=\hbox{%
+    \vbox{\offinterlineskip%
+      \hbox{\copy0}%
+      \hbox{\copy0}%
+      \hbox{\copy0}%
+      \hbox{\box0}%
+      }%
+    }%
+  \@aligner\hbox{\@plainOverlap{\box\ShadingBox}{{\let\strut=\relax#1}}}%
+  }}
+
+\def\hachure@Pga#1{{\def\strut{}%
+    \leavevmode\setbox0=\hbox{\@externalfalse #1}%
+    \hbox{\hbox to 0mm{%
+        \copy0\hss}\HRemplir{\wd0}{1.1\Htm}}}\strut}
+    
+\def\hachuregaux{\@aligner\hbox{\copy\HachureBoxII\copy\HachureBoxII}}
+\def\hachureg{\hachuregaux}
+\def\hachurev{\@aligner\copy\HachureBoxII}
+\def\hachureh{\@aligner\copy\HachureBoxIII}
+\def\hachuret{\@aligner\hbox{\EgypS C}}
+
+\def\hachurega#1{{\def\strut{}%
+    \leavevmode\setbox0=\hbox{\@externalfalse #1}%
+    \@aligner\hbox{\hbox to 0mm{%
+        \copy0\hss}\HRemplir{\wd0}{1.1\Htm}}}\strut}
+
+\def\hachureva#1{{\def\strut{}%
+    \offinterlineskip\setbox0=\hbox{\@externalfalse #1}%
+    \@aligner\hbox to \wd0{%
+      \hbox to 0mm{\vbox to 0mm{\vss\HRemplir{0.5\wd0}{1.1\Htm}}\hss}%
+      \box0}}\strut}
+
+\def\hachureha#1{{\def\strut{}%
+    \offinterlineskip\setbox0=\hbox{\@externalfalse #1}%
+    \@aligner\hbox to \wd0{%
+      \hbox to 0mm{\vbox to 0mm{\vss\vbox to 1.1\Htm{%
+            \HRemplir{\wd0}{0.55\Htm}\vss}}\hss}%
+        \box0}}\strut}
+
+\def\hachureta#1{{\def\strut{}%
+    \offinterlineskip\setbox0=\hbox{\@externalfalse #1}%
+    \@aligner\hbox to \wd0{%
+      \hbox to 0mm{\vbox to 0mm{\vss\vbox to 1.1\Htm{%
+            \HRemplir{0.55\Htm}{0.55\Htm}\vss}}\hss}%
+        \box0}}\strut}
+
+%% Overlap, centering signs
+
+%% Utility functions for overlapping :
+
+%% Overlapping preparation for #1 and #2. put them in boxes 0 and 2
+
+%% 
+\def\HorizontalOverlapAux#1#2{%
+  \setbox0=\hbox{#1}%
+  \setbox2=\hbox{#2}%
+  \setbox0=\hbox{\raise\dp0\box0}% there MUST be another way !!!!!!
+  \setbox2=\hbox{\raise\dp2\box2}%
+  }
+
+\def\hsuperpose#1#2{%
+  \HorizontalOverlapAux{#1}{#2}%
+  \ifdim\ht0>\ht2%
+  \setbox2=\hbox to \wd2{\vbox to \ht0{\offinterlineskip\vss\box2\vss}}%
+  \else
+  \setbox0=\hbox to \wd0{\vbox to \ht2{\offinterlineskip\vss\box0\vss}}%
+  \fi
+  \ifdim\wd0>\wd2%
+  \@aligner\hbox{\rlap{\hbox to\wd0{\hss\box2\hss}}\box0}%
+  \else
+  \@aligner\hbox{\rlap{\hbox to\wd2{\hss\box0\hss}}\box2}%
+  \fi}
+
+%% Overlap, with only horizontal centering
+\def\@plainOverlap#1#2{%
+  \HorizontalOverlapAux{#1}{#2}%
+  \ifdim\wd0>\wd2%
+  \hbox{\rlap{\hbox to\wd0{\hss\box2\hss}}{\box0}}%
+  \else
+  \hbox{\rlap{\hbox to\wd2{\hss\box0\hss}}\box2}%
+  \fi
+  }
+% \def\Hrotate#1#2{% turns a box around its middle
+% % NEEDS PS OUTPUT FACILITY !!!!!
+% \setbox0=\hbox{#2}
+% \special{ps:gsave currentpoint currentpoint translate 
+% #1 rotate neg exch neg exch translate
+% }
+% \box0
+% \special{ ps:currentpoint grestore moveto}%
+% }
+
+
+\def\Hrotate#1#2{%
+  \mbox{\smallSkipAroundSigns{{\def\smallSkipAroundSigns{}%
+        \raisebox{\depth}{\rotatebox[origin=rB]{#1}{#2}}%
+        %%\fbox{\raisebox{\depth}{\rotatebox[origin=c]{#1}{#2}}}%
+    }}}}
+
+%%%\def\Hrotate#1#2{#2}
+% %%% \R[1234] commands
+
+\def\HRXC#1{\HrotateXC{#1}}
+\def\HRXC{\HrotateXC}
+
+\def\HrotateXC#1{
+% turns a box around its middle ??? 
+% NEEDS PS OUTPUT FACILITY !!!!!
+\setbox0=\hbox{#1}%
+\hbox to 0.5\wd0{\hss\vbox to 0.5\ht0{\vss}\vrule\hss}%
+\special{ps:gsave currentpoint currentpoint translate 
+90 rotate neg exch neg exch translate
+}%
+\hbox to 0em{\hss\vbox to 0ex{\vss\box0\vss}\hss}%
+\special{ ps:currentpoint grestore moveto}%
+}
+
+
+\newif\if@displayhieroglyphes
+\@displayhieroglyphestrue
+
+\def\DisplayHieroglyphs{\@displayhieroglyphestrue}
+\def\TextHieroglyphs{\@displayhieroglyphesfalse}
+\def\ch@seHsize{}
+\def\ch@seHsizei{\Htm=\Htmi\Htmi=\Htmii\Htmii=\Htmiii\Htmiii=\Htmiiii\Htmiiii=\Htmiiiii}
+\def\ch@seHsizeii{\Htm=\Htmii\Htmii=\Htmiii\Htmiii=\Htmiiii\Htmiiii=\Htmiiiii}
+\def\ch@seHsizeiii{\Htm=\Htmiii\Htmii=\Htmiiii\Htmiiii=\Htmiiiii}
+\def\ch@seHsizeiiii{\Htm=\Htmiiii\Htmiiii=\Htmiiiii}
+\def\ch@seHsizeiiiii{\Htm=\Htmiiiii}
+\def\SmallerText{\Hsmaller\edef\tmp{\csname ch@seHsize\Hta\endcsname}\tmp}
+
+\def\hieroglyph{%
+\ifvmode\leavevmode\fi%
+\bgroup
+\if@displayhieroglyphes%
+\setbox\strutbox=\hbox{\vrule height 1\Htm depth 0.5\Htm
+  width\z@}\bgroup%
+\else%
+\EnPetit\bgroup%
+\setbox\strutbox=\hbox{\vrule height 1\Htm depth 0.5\Htm
+  width\z@}
+\fi%
+}
+
+\def\endhieroglyph{\egroup\egroup}
+
+\def\EnPetit#1{\bgroup
+  %%\let\strut=\relax
+  \@Smaller\relax\Htm\Htmi\relax #1\egroup}
+ 
+\def\traittexte#1{$\stackrel{\mbox{\rm\tiny #1}}%
+{\vrule width 0.05pt height 1mm}$}
+
+\def\enrouge#1{{\setbox0=\hbox{#1}%
+\dimen\@fillerHeight=\ht0%
+\advance\dimen\@fillerHeight by 7pt%
+\raise -7pt\hbox{\vbox to \dimen\@fillerHeight{\offinterlineskip\box0\vfil\hrule}}}}
+
+% a plain@box has height 0, and no depth (depth 0 is achieved through
+% the vskip 0em !
+\def\plain@box#1{\hbox{\vbox to 0ex{\vss\hbox{#1}\vskip0ex}}}
+%\def\@flat@box#1{\hbox{#1}}
+
+\def\parconstruct#1#2#3{%
+  \bgroup%
+  \setbox0=\hbox{\@externalfalse #3}%
+  \dimen0=\ht0%
+  \setbox0=\hbox{#3}%
+  \loneSymbol{\@aligner\plain@box{$\scriptscriptstyle\left#1\vcenter{\hbox{\vbox to \dimen0{}}}\right.$}}%
+  \unhbox0%
+  \loneSymbol{\@aligner\plain@box{$\scriptscriptstyle\left.\vcenter{\hbox{\vbox to \dimen0{}}}\right#2$}}%
+  \egroup}
+
+\def\xxxparconstruct#1#2#3{%
+  \bgroup%
+  \setbox0=\hbox{\@externalfalse #3}%
+  \dimen0=\ht0%
+  \setbox0=\hbox{#3}%
+  \loneSymbol{\@aligner\plain@box{\hbox{\vrule width 0.5mm height\dimen0}}}%
+  \unhbox0%
+  \loneSymbol{\@aligner\plain@box{\hbox{\vrule width 0.5mm height\dimen0}}}%
+  \egroup}
+
+
+\def\edisuperfet#1{\parconstruct{\{}{\}}{#1}}
+\def\ediefface#1{\parconstruct{[}{]}{#1}}
+\def\edidisparu#1{\parconstruct{\{}{\}}{#1}}
+\def\ediajoutscribe#1{\parconstruct{\{}{\}}{#1}}
+\def\ediajoutauteur#1{\parconstruct{\langle}{\rangle}{#1}}
+
+\def\EnGros{\@displayhieroglyphestrue}
+
+\newdimen\largeur@colonne
+\def\H@I@Reduction#1{%  
+{\ifx\Hta\MInEx%
+#1\else
+\setbox0=\hbox{#1}%
+\ifdim\wd0>\largeur@colonne% 
+\Horizontal@Smaller
+\H@I@Reduction{#1}%
+\else #1\fi\fi}}
+
+\def\EnColonne[#1]#2{{%
+    \def\nouvLigne{}
+    \ifvmode\leavevmode\fi
+    \@horizontalfalse
+                                %
+    \def\Aca ##1/##2/{\setbox0=\hbox{\Acv{}##1/##2\relax}%
+      \ifdim\wd0>.8\Htm@\hbox{\Acv{\HtaW}##1/##2\relax}\else
+      \ifdim\ht0>.5\Htm@\hbox{\Acv{\HtaH}##1/##2\relax}\else
+      \hbox{\Acv{\Hta}##1/##2\relax}\fi\fi}%
+                                %
+    \def\Horizontal@Smaller{%
+      \ifx\Hta\MInEx
+      \else
+      \ifnum\@HauteurW>\@Hauteur\relax
+      \edef\Hta{\Hta i}\advance\@Hauteur by 1%
+      \edef\HtaH{\HtaH i}\advance\@HauteurH by 1%
+      \else
+      \edef\HtaW{\HtaW i}\advance\@HauteurW by 1%
+      \fi\fi}%
+                                %
+    \def\Vertical@Smaller{%
+      \ifx\Hta\MInEx%
+      \else
+      \ifnum\@HauteurH>\@Hauteur\relax
+      \edef\Hta{\Hta i}\advance\@Hauteur by 1%
+      \edef\HtaW{\HtaW i}\advance\@HauteurW by 1%
+      \else
+      \edef\HtaH{\HtaH i}\advance\@HauteurH by 1%
+      \fi\fi}%
+    %
+    \def\HendOfLine{\hskip1mm}%
+    %
+    \largeur@colonne=#1\relax
+    %
+    \def\@aligner{\relax}%
+    %
+    \def\LoneHorizontalLine##1{{%
+        \def\HinterSignsSpace{\hskip 0.1mm plus 1fil}%
+        \def\Cadrat@Aux{\oldHbt}%
+        \def\loneSigne@Aux####1{\hbox{####1}}%
+        \hbox to \largeur@colonne{\H@I@Reduction{##1}}}}%
+    %
+    \let\leavevmode=\relax
+    \let\oldHbt=\Cadrat@Aux
+    \def\strut{\relax}%
+    \def\HinterSignsSpace{\vskip 0.5mm}% space between signs
+    \def\HwordSpace{\vskip 0.5mm}%
+    \def\loneSigne@Aux##1{\hbox to \largeur@colonne{\hss ##1\hss}}%
+    %
+    \def\Cadrat@Aux##1{{%
+        \@externalfalse
+        \setbox0=\vbox{\offinterlineskip ##1}%
+        \wd0\largeur@colonne\relax % We force the cadrat's width to be the same as the column's
+        \ifdim\ht0>\Htm%
+        \ifx\Hta\MInEx%
+        \Himbt{##1}%
+        \hbox to\largeur@colonne{\hss\box0\hss}%
+        \else%
+        \Vertical@Smaller
+        \Cadrat@Aux{##1}%
+        \fi%
+        \else%
+        \Himbt{##1}%
+        \hbox to\largeur@colonne{\hss\box0\hss}\fi}}%
+    %
+    \def\hieroglyph{%
+      \if@displayhieroglyphes\bgroup\else\EnPetit\bgroup\fi
+      \hbox to 1.1\largeur@colonne\bgroup
+      \ColumnSepar\hfil\vtop\bgroup\offinterlineskip\null
+      \hsize\largeur@colonne\relax}%
+    %
+    \def\endhieroglyph{\egroup\hfil\ColumnSepar\egroup\egroup}%
+    %
+    #2}}
+
+\def\HRemplir#1#2{{%
+    \dimen0=#1\relax
+    \dimen2=#2\relax
+    \count4=\dimen0%
+    \setbox0=\hbox{\EgypS C}%
+    \count2=\wd0%
+                                %\ifdim\dimen0<\wd0\relax\dimen0=\wd0\relax\fi
+    \ifdim\dimen2<\ht0\relax\dimen2=\ht0\relax\fi
+    \divide\count4 by \count2%
+    \advance\count4 by 1%
+    \dimen0=\wd0%
+    \multiply\dimen0 by \count4%
+    \hbox{\vbox to \dimen2{\leaders\hbox to \dimen0{%
+          \leaders\box0\hfill}\vfill}}}}
+
+\def\pointrouge{\vbox to\Htm{\hbox{\EgypS o}\vfill}}
+\def\pointnoir{\vbox to\Htm{\hbox{\EgypS O}\vfill}}
+
+\def\pointrouge{\mbox{\EgypS o}}
+\def\pointnoir{\mbox{\EgypS O}}
+
+\def\NoRulesBetweenColumns{\def\ColumnSepar{\relax}}
+\def\RulesBetweenColumns{\def\ColumnSepar{\vrule}}
+\NoRulesBetweenColumns
+
+%% End of pages :
+\def\HendOfPage{\HendOfLine }
+
+%% End of lines :
+
+\def\HendOfLine{\hskip 0em plus 1fil\break}

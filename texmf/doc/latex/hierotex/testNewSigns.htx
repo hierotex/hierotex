@@ -1,0 +1,21 @@
+\documentclass{article}
+
+\usepackage{hiero}
+\declareHieroGlyphicFont{UUU}{titi}
+\begin{document}
+
+#signdecl User04 UUU 32 #enddecl
+#signdecl User05 UUU 33 #enddecl  
+#signdecl User06 UUU 34 #enddecl  
+
+\begin{hieroglyph}
+\end{hieroglyph}
+\begin{hieroglyph}
+User04-User06-User05
+\end{hieroglyph}
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

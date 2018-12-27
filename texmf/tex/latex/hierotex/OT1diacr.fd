@@ -1,7 +1,7 @@
 \def\fileversion{v2.0e}
 %\DeclareFontEncoding{OT1}{}{}
 \DeclareFontFamily{OT1}{diacr}{}
-\DeclareErrorFont{OT1}{diacr}{m}{n}{10}
+%\DeclareErrorFont{OT1}{diacr}{m}{n}{10}
 \DeclareFontShape{OT1}{diacr}{m}{n}{
 <7> diacr7
 <8> diacr8

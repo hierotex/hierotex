@@ -1,0 +1,63 @@
+Tue Apr 22 22:17:15 1997  Serge Rosmorduc  <serge@amenemhat.iut.univ-paris8.fr>
+
+	* printf("}\\end{hieroglyph}\\Hfinligne\\begin{hieroglyph}{\\leavevmode\n");
+	was needed for correct use of Columns macros. 
+
+Wed Jan  1 18:27:16 1997  Serge Rosmorduc  <rosmord@cachicame>
+
+	* seshSource.txt: added quite a few unusefull codes 
+
+	* seshl.l (traite): correction of an error : [...\t-=] was false 
+	because it means "any char from tab to "=". replaced by
+	[...\t=-]. Thanks to a problem signaled by MICHAEL GIERHAKE.
+
+	* fonctions.c (affiche_hiero): -! generates \Hfinligne and not the
+        old messy stuff.
+
+
+Wed Jun  7 11:28:29 1995  Serge Rosmorduc  <rosmord@cachou>
+
+	* mklex.awk, hache.c, CONVENTIONS_CHOISIES, hache.h, mynew.h, general.h, fonctions.h, quadra.c, quadra.h, sesh.y, mkliste.awk, seshl.l, seshSource.txt, Makefile, fonctions.c:
+	*** empty log message ***
+	modifiications cosmetiques.
+
+Thu Oct 27 22:22:04 1994  Serge Rosmorduc  <rosmord@lifac5>
+
+	* lots of additions ! serekh, Hwt, ... general cleaning up
+	of the whole thing.
+	* Column-writing
+	* new way of archiving the files.
+
+Thu Jul 14 17:23:50 1994  Serge Rosmorduc  (serge@khety)
+
+	* Lots of additions :
+	- +rl .... +rl allows right-to-left writing in normal tex
+	- [[ ]] [& &] and co allows some parenthesing
+	- ## is used instead of # for sign overlapping
+	  I could have used #, but it is quite ambiguous
+	- \! can be used for vertical kerning :
+	  D:\!\!\!\!Hr looks fine.
+
+TODO
+Some changes should be done : 
+- overlapping is badly placed in the grammar And isn't treated at the optimal place.
+- the grammar itself should be cleaner; something like that :
+  hieroglyphs = a list of overlapping signs
+  sign= shading, or hieroglyph, followed by modifiers 
+  modifiers = \ (inverse) or \rN rotate by 90degrees
+  or \Rnnn = rotate by 1 degrees step
+  or \sN size N
+- char * strings should be freed ! 
+- There should be a construct to allow putting #def #
+alone, to ease entry
+
+
+Sun Jul 10 18:36:19 1994  Serge Rosmorduc  (serge@khety)
+
+	* I now use  my new memory management system. Something should also be 
+done for char * character strings, As they are currently left alone. sad, sad, 
+sad :-( 
+
+Version de sesh fonctionnant correctement sur neo.tex et 
+Lefebvre.tex. Reste a implementer la gestion de la memoire et 
+les extensions.

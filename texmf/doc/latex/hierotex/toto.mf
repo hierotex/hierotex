@@ -1,0 +1,13 @@
+
+% This file defines the Metafont font toto
+true_design_size# := 14.000pt#;
+input Hibzrstp;
+font_coding_scheme := "Egyptian font toto";
+font_identifier := "toto";
+input toto_font.mf;
+
+def mamodif= identity  reflectedabout((w/2,h), (w/2,0)); enddef;
+def depart= 128; enddef;
+input toto_font.mf;
+bye.
+	

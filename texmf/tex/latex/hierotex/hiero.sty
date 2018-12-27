@@ -148,7 +148,7 @@
 %% (note : in this case, \@rightleft is also true)
 \newif\if@xettexrightleft
 \@xettexrightleftfalse
-%% (can't remember why) 
+%% Used to test if we should add extra \beginL or \beginR to balance the text.
 \newif\if@xettexon
 \@xettexonfalse
 %% Top level or embedded cadrat
@@ -173,7 +173,12 @@
   \count0=#3%
   \if@HUseTypeI%
   \if@rightleft%
-        \smallSkipAroundSigns\reflectbox{{\csname #2#1\endcsname\char\count0}}\smallSkipAroundSigns%
+        %%% The \@ensureLeftToRightEngine is used because pdfelatex (and only it) 
+        %%% disaprove violently of \reflectbox used inside a \beginR ... \endR environment.
+        \smallSkipAroundSigns%
+        \@ensureLeftToRightEngine{%
+          \reflectbox{{\csname #2#1\endcsname\char\count0}}}%
+        \smallSkipAroundSigns%
   \else%
         \smallSkipAroundSigns{\csname #2#1\endcsname\char\count0}\smallSkipAroundSigns%
   \fi%
@@ -279,8 +284,14 @@
 \def\@aligner{\if@external\raise -\@Lower \fi}
 
 % using tex--xet
-\def\leftright{\if@xettexon\endR\fi\beginL\@rightleftfalse\@xettexrightleftfalse\@xettexontrue}
-\def\rightleft{\if@xettexon\endL\fi\beginR\@rightlefttrue\@xettexrightlefttrue\@xettexontrue}
+\def\leftright{\if@xettexon\endR{}\fi\beginL\@rightleftfalse\@xettexrightleftfalse\@xettexontrue}
+\def\rightleft{\if@xettexon\endL{}\fi\beginR\@rightlefttrue\@xettexrightlefttrue\@xettexontrue}
+
+\def\@ensureLeftToRightEngine#1{\if@xettexon{}\beginL\fi#1\if@xettexon{}\endL\fi}
+
+%%\def\leftright{\@rightleftfalse\endR}
+%%\def\rightleft{\beginR\@rightlefttrue}
+
 \def\boxrightleft#1{{\@rightlefttrue{}#1}}
 
 
@@ -1002,7 +1013,7 @@
   %%\let\strut=\relax
   \@Smaller\relax\Htm\Htmi\relax #1\egroup}
  
-\def\traittexte#1{$\stackrel{\mbox{\rm\tiny #1}}%
+\def\traittexte#1{$\stackrel{\mbox{\rmfamily\tiny #1}}%
 {\vrule width 0.05pt height 1mm}$}
 
 \def\enrouge#1{{\setbox0=\hbox{#1}%
