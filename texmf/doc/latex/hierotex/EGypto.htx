@@ -13,6 +13,7 @@
 \def\htimage#1{{#1\relax}}
 
 \begin{document}
+
  \maketitle
 
  \begin{hieroglyph}
@@ -95,6 +96,7 @@ MiKTeX\miktex\config\config.bat
 Then make sure the sesh.exe file in in your path.
 
 \subsection{Unix installation with tetex}
+
 
 If you are using Unix and the tetex distribution, the simpler thing to
 do is:
@@ -183,6 +185,28 @@ p +hierofonts.map
 map +hierofonts.map
 map +diacrFonts.map
 \end{verbatim}
+\end{itemize}
+
+
+\subsection{More recent versions of TeTex}
+
+TeTex has now changed the way fonts were handled. Type 1 files where
+probably too easy to add previously. The process is now the following:
+
+\begin{itemize}
+\item  copy the texmf directory as \$HOME/texmf
+\item  create directory \$HOME/.texmf-config/updmap.d
+\item create a file local.cfg in this directory, with the line
+Map hieroglyphs.map
+\item create \$HOME/.texmf-config/web2c
+\item in \$HOME/.texmf-config, run :
+\begin{verbatim}
+	update-updmap -c updmap.d -o web2c/updmap.cfg
+\end{verbatim}
+It will create a complete web2c/updmap.cfg for you.
+\item run texhash or mktexlsr
+\item run updmap
+\item done.
 \end{itemize}
 
 \section{Typesetting hieroglyphs}
@@ -619,7 +643,7 @@ next ``manuel''.
 
 \subsubsection{Text Orientation}
 
-If you use a version of TeX--Xet (a patch designed to allow you to
+If you use a version of elatex (a patch designed to allow you to
 type right-to-left text as well as left-to-right, with the benefit of
 the line-cutting system), It is possible to reverse a whole part of
 the text. Simply type \verb/+dg/ right-to-left, and \verb/+gd/ for
@@ -629,9 +653,8 @@ left-to-right (this is {\em not\/} part of the {\em manuel\/}).
 \def\beginL{\relax}             %can be compiled anyway.
 \def\beginR{\relax} \def\endR{\relax} \def\endL{\relax}
 
-{\bf BEWARE !!!! this file was not compiled with TeX--Xet, so the
-  example bellow is false. You should have gotten a dvi version of
-  this file (called \verb/doc.dvi/), without this message.} \fi
+{\bf BEWARE !!!! this file was not compiled with elatex, so the
+  example bellow is false.} \fi
 
 Example:
 \begin{hieroglyph}
@@ -660,8 +683,8 @@ example:
  +rl G5 -nTr-ms-w-t:Z2 +lr anx G5 -nTr-ms-w-t:Z2 
 \end{verbatim}
 \begin{hieroglyph}
-   +rl G5 -nTr-ms-w-t:Z2 +lr anx G5 -nTr-ms-w-t:Z2 
-\end{hieroglyph}. It will work in any case.
+   +rl G5 -nTr-ms-w-t:Z2 +lr anx G5 -nTr-ms-w-t:Z2
+\end{hieroglyph}. It will work with any version of latex.
 
 Finally, if your ultimate output is postscript, you can use packages
 like pstricks to invert left-to-right text and make it into

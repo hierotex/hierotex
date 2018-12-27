@@ -1,7 +1,7 @@
 \def\fileversion{v2.0e}
 %\DeclareFontEncoding{DIACR}{}{}
 \DeclareFontFamily{DIACR}{diacr}{}
-\DeclareErrorFont{DIACR}{diacr}{m}{n}{10}
+%\DeclareErrorFont{DIACR}{diacr}{m}{n}{10}
 \DeclareFontShape{DIACR}{diacr}{m}{n}{
 <7> diacr7
 <8> diacr8

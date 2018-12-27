@@ -1,25 +1,18 @@
-(C) 1993,1994,2002 Serge Rosmorduc
-2 rue Ibsen 
-29200 Brest (FRANCE)
-(Attention, ce fichier commence très sérieusement à dater !)
-
-rosmord@iut.univ-paris8.fr
-
-D'abord, la licence: Cet ensemble est distribue' sous les termes de la
-licence "bibliothe`que" de GNU. Pour le redistribuer, vous devez:
-
-* laisser ce fichier intact (en particulier mes coordonne'es)
-* vous ne pouvez restreindre les droits des personnes auquelles vous les
-redistribuez: C'est a` dire que vous ne pouvez pas, me^me si vous
-re'alisez une extension de cet ensemble, en restreindre la distribution
-* par contre, si vous e'crivez un programme qui utilise les fontes
-hie'roglyphiques, vous devrez les fournir avec ledit programme,
-accessibles, afin qu'on puisse les modifier. Vous n'e^tes pas force' de
-fournir le source de votre programme ni de permettre que celui-ci soit
-redistribuable 
+% Copyright 1993-2017 Serge Rosmorduc (serge.rosmorduc@qenherkhopeshef.org)
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+%
+% This work consists of all the files listed in manifest.txt
 
 
-Ceci est une beta version d'un ensemble de fichiers
+Ceci est un ensemble de fichiers
 permettant de taper des textes E'gyptologiques en TeX. 
 
 Il comporte:
